@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <h1>Sightings of <%=birdName%>
+    </h1>
+    <section>
+        <ul>
+            <% sightings.forEach( sighting=> { %>
+                <li class='sighting' data-id='<%=sighting._id%>'>
+                    <span>
+                        <%= sighting.caption %>
+                    </span>
+                    <span>
+                        <%= sighting.date %>
+                    </span>
+                    <!-- <a href="/sightings/<%=sighting._id%>">Sightings</a>
+                    <span class='del'> Delete </span> -->
+                </li>
+                <% }) %>
+        </ul>
+    </section>
+    <form action="/sightings/submitSighting" method="POST">
+        <input type="text" placeholder="caption" name="caption">
+        <input name="birdId" type="hidden" value="<%=birdId%>">
+        <input type="submit">
+    </form>
+
+    <!-- <form action="/todos/createTodo" method='POST'>
+        <input type="text" placeholder="Enter Todo Item" name='todoItem'>
+        <input type="submit"> -->
+    <!-- </form> -->
+
+    <a href="/logout">Logout</a>
+
+    <script src="/js/main.js"></script>
+</body>
+
+</html>
