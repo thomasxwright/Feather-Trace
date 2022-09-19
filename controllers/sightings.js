@@ -30,6 +30,20 @@ module.exports = {
         } catch (err) {
             console.log(err)
         }
+    },
+
+    deleteSighting: async (req, res) => {
+        try {
+            let sighting = await Sighting.findById({ _id: req.params.id})
+            console.log('got the sighting in the database, its cloudinary id is', sighting.cloudinary_id, sighting)
+            await cloudinary.uploader.destroy(sighting.cloudinary_id)
+            await Sighting.remove({ _id: req.params.id})
+            console.log('Deleted sighting')
+            res.redirect('/sightings/' + req.body.birdId)
+        } catch (err) {
+            console.log(err)
+            res.redirect('/sightings/' + req.body.birdId)
+        }
     }
 
 

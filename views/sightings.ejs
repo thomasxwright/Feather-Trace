@@ -25,6 +25,10 @@
                     </span>
                     <!-- <a href="/sightings/<%=sighting._id%>">Sightings</a>
                     <span class='del'> Delete </span> -->
+                    <form action="/sightings/deleteSighting/<%= sighting._id%>?_method=DELETE" method="POST">
+                        <button type="submit">Delete</button>
+                        <input type="hidden" value="<%=birdId%>" name="birdId">
+                    </form>
                 </li>
                 <% }) %>
         </ul>
@@ -33,7 +37,7 @@
     <form action="/sightings/submitSighting" enctype="multipart/form-data" method="POST">
         <label for="notes">Notes (optional)</label>
         <textarea id="notes" name="notes"></textarea>
-        <label for="imgUpload" >Image (optional)</label>
+        <label for="imgUpload">Image (optional)</label>
         <input type="file" id="imgUpload" name="file">
         <button type="submit" value="Upload">Submit</button>
         <input type="hidden" value="<%=birdId%>" name="birdId">

@@ -8,6 +8,6 @@ router.get('/:id', ensureAuth, sightingsController.getSightings)
 
 router.post('/submitSighting', upload.single('file'), sightingsController.submitSighting)
 
-// router.post("/createSightingWithPic", upload.single("file"), sightingsController.createSightingWithPic);
+router.post('/deleteSighting/:id', sightingsController.deleteSighting)
 
 module.exports = router

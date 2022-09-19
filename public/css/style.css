@@ -43,8 +43,6 @@ body {
     justify-content: space-between;
 }
 
-.sighting > * {
-    flex-basis: 30%;
-    flex-grow: 1;
-    flex-shrink: 1;
+.sighting > img {
+    max-width:40%;
 }
