@@ -5,9 +5,9 @@ const { ensureAuth, ensureGuest } = require('../middleware/auth')
 
 router.get('/', ensureAuth, birdsController.getBirds)
 
-router.post('/submitBird', ensureAuth, birdsController.submitBird)
+// router.get('/:id', ensureAuth, birdsController.getBirds)
 
-router.get('/olddb', birdsController.copyBirds)
+router.post('/submitBird', ensureAuth, birdsController.submitBird)
 
 // router.post('/createTodo', todosController.createTodo)
 

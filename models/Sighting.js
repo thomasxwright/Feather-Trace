@@ -1,19 +1,25 @@
 const mongoose = require('mongoose')
 
 const SightingSchema = new mongoose.Schema({
+
   birdId: {
     type: String,
     required: true
   },
-  date: {
+  createdAt: {
     type: Date,
-    required: true
+    default: Date.now
   },
-  photos: [String],
-  caption: String,
+  image: String,
+  cloudinary_id: String,
+  notes: String,
   userId: {
     type: String,
     required: true
+  },
+  location: {
+    lat: Number,
+    lon: Number
   }
 })
 

@@ -2,41 +2,31 @@ const Bird = require('../models/Bird')
 const mongoose = require('mongoose')
 
 module.exports = {
-    getBirds: async (req,res)=>{
+    getBirds: async (req, res) => {
         console.log(req.user)
-        try{
-            const birdData = await Bird.find({
-                nations: { $elemMatch: {
-                    nationCode: 'US',
-                    subnations: { $elemMatch: {
-                        subnationCode: 'AK'
-                    }} 
-                }}
-            }).limit(35).lean()
-            console.log(birdData)
-            res.render('birds.ejs', {birdData: birdData, userId: req.user.id})
-        }catch(err){
+        console.log(req.query)
+        const paramElement = {}
+        const filters = {}
+        for (let queryType in req.query) {
+            queryFunctions[queryType](req.query[queryType], paramElement)
+            filters[queryType] = req.query[queryType]
+        }
+        // if (paramElement.nations)
+        try {
+            const birdData = await Bird.find(paramElement)
+                .limit(35).lean()
+            res.render('birds.ejs', { birdData: birdData, userId: req.user.id, filters: filters })
+        } catch (err) {
             console.log(err)
         }
     },
 
     submitBird: async (req, res) => {
         try {
-            await Bird.create({commonName: req.body.commonName, scientificName: req.body.scientificName, userId: req.user.id})
+            await Bird.create({ commonName: req.body.commonName, scientificName: req.body.scientificName, userId: req.user.id })
             console.log('Bird entry has been created')
             res.redirect('/birds')
-        }catch(err) {
-            console.log(err)
-        }
-    },
-
-    copyBirds: async (req, res) => {
-        try {
-
-            // res.redirect('/birds')
-            // const birdData = await BirdData.find({})
-            // console.log(birdData)
-        }catch(err){
+        } catch (err) {
             console.log(err)
         }
     }
@@ -84,4 +74,21 @@ module.exports = {
     //         console.log(err)
     //     }
     // }
-}    
+}
+
+const queryFunctions = {
+    state: stateSort
+}
+
+function stateSort(state, paramElement) {
+    paramElement.nations = {
+        $elemMatch: {
+            nationCode: 'US',
+            subnations: {
+                $elemMatch: {
+                    subnationCode: state
+                }
+            }
+        }
+    }
+}

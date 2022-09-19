@@ -16,31 +16,19 @@ module.exports = {
 
     submitSighting: async (req, res) => {
         try {
-            await Sighting.create({ birdId: req.body.birdId, date: new Date(), userId: req.user.id, caption: req.body.caption })
+            const result = await cloudinary.uploader.upload(req.file.path);
+
+            await Sighting.create({
+                birdId: req.body.birdId,
+                userId: req.user.id,
+                notes: req.body.notes,
+                image: result.secure_url,
+                cloudinary_id: result.public_id
+            })
             console.log('Bird sighting has been logged')
             res.redirect(`/sightings/${req.body.birdId}`)
         } catch (err) {
             console.log(err)
-        }
-    },
-
-    createSightingWithPic: async (req, res) => {
-        try {
-            // Upload image to cloudinary
-            const result = await cloudinary.uploader.upload(req.file.path);
-
-            await Post.create({
-                title: req.body.title,
-                image: result.secure_url,
-                cloudinaryId: result.public_id,
-                caption: req.body.caption,
-                likes: 0,
-                user: req.user.id,
-            });
-            console.log("Post has been added!");
-            res.redirect("/profile");
-        } catch (err) {
-            console.log(err);
         }
     }
 

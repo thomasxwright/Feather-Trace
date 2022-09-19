@@ -4,7 +4,11 @@ Array.from(deleteBtn).forEach((el)=>{
     el.addEventListener('click', deleteTodo)
 })
 
-document.querySelector('select').addEventListener('change', event => {console.log(event.target.value)})
+document.querySelector('select').addEventListener('change', event => {
+    console.log(event.target.value)
+    const query = new URLSearchParams( event.target.value ? {state: event.target.value} : {} )
+    window.location.href = `/birds?${query.toString()}`
+})
 
 async function deleteTodo(){
     const todoId = this.parentNode.dataset.id

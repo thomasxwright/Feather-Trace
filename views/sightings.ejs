@@ -16,11 +16,12 @@
         <ul>
             <% sightings.forEach( sighting=> { %>
                 <li class='sighting' data-id='<%=sighting._id%>'>
+                    <img src="<%=sighting.image%>">
                     <span>
-                        <%= sighting.caption %>
+                        <%= sighting.notes %>
                     </span>
                     <span>
-                        <%= sighting.date %>
+                        <%= sighting.createdAt %>
                     </span>
                     <!-- <a href="/sightings/<%=sighting._id%>">Sightings</a>
                     <span class='del'> Delete </span> -->
@@ -28,11 +29,22 @@
                 <% }) %>
         </ul>
     </section>
-    <form action="/sightings/submitSighting" method="POST">
+
+    <form action="/sightings/submitSighting" enctype="multipart/form-data" method="POST">
+        <label for="notes">Notes (optional)</label>
+        <textarea id="notes" name="notes"></textarea>
+        <label for="imgUpload" >Image (optional)</label>
+        <input type="file" id="imgUpload" name="file">
+        <button type="submit" value="Upload">Submit</button>
+        <input type="hidden" value="<%=birdId%>" name="birdId">
+    </form>
+
+
+    <!-- <form action="/sightings/submitSightingOld" method="POST">
         <input type="text" placeholder="caption" name="caption">
         <input name="birdId" type="hidden" value="<%=birdId%>">
         <input type="submit">
-    </form>
+    </form> -->
 
     <!-- <form action="/todos/createTodo" method='POST'>
         <input type="text" placeholder="Enter Todo Item" name='todoItem'>

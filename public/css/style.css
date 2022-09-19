@@ -10,7 +10,7 @@ h1{
 }
 
 body > section {
-    width: 500px;
+    width: 800px;
     max-width: 80%;
 }
 
@@ -36,4 +36,15 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.sighting {
+    display: flex;
+    justify-content: space-between;
+}
+
+.sighting > * {
+    flex-basis: 30%;
+    flex-grow: 1;
+    flex-shrink: 1;
 }
