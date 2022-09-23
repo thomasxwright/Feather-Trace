@@ -1,5 +1,6 @@
 const Bird = require('../models/Bird')
 const mongoose = require('mongoose')
+const testFunction = require('../scrape')
 
 module.exports = {
     getBirds: async (req, res) => {
@@ -27,6 +28,29 @@ module.exports = {
             console.log('Bird entry has been created')
             res.redirect('/birds')
         } catch (err) {
+            console.log(err)
+        }
+    },
+
+    testFunction: testFunction,
+
+    getBird: async (req, res) => {
+        try {
+            const bird = await Bird.find({primaryCommonName: req.params.birdName})
+            console.log(bird)
+            res.json(bird)
+        } catch(err) {
+            console.log(err)
+        }
+    },
+
+    getRandomBird: async (req, res) => {
+        try {
+            console.log('get random burd')
+            const bird = await Bird.aggregate([{ $sample: { size: 1 } }])
+            console.log(bird)
+            res.json(bird[0])
+        } catch(err) {
             console.log(err)
         }
     }

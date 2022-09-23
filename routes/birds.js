@@ -9,6 +9,12 @@ router.get('/', ensureAuth, birdsController.getBirds)
 
 router.post('/submitBird', ensureAuth, birdsController.submitBird)
 
+router.get('/testFunction', birdsController.testFunction)
+
+router.get('/random', birdsController.getRandomBird)
+
+router.get('/:birdName', birdsController.getBird)
+
 // router.post('/createTodo', todosController.createTodo)
 
 // router.put('/markComplete', todosController.markComplete)

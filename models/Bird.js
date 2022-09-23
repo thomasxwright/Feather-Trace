@@ -38,7 +38,10 @@ const BirdSchema = new mongoose.Schema({
     completeDistribution: Boolean,
     taxonomicComments: String
   },
-  gRank: String
+  gRank: String,
+  wikiSurname: String,
+  wikiHtml: String,
+  images: [String]
 })
 
 module.exports = mongoose.model('Bird', BirdSchema)
