@@ -13,7 +13,11 @@ router.get('/testFunction', birdsController.testFunction)
 
 router.get('/random', birdsController.getRandomBird)
 
+router.get('/getAllBirds', birdsController.getAllBirds)
+
 router.get('/:birdName', birdsController.getBird)
+
+router.get('/wiki/:wikiUrl', birdsController.getBirdByWikiUrl)
 
 // router.post('/createTodo', todosController.createTodo)
 

@@ -1,4 +1,4 @@
-import {previewBirdWikiData} from './wikiExtraction.js'
+import {printBirdHeadings, printWikipediaDataFromBirdClick, printRandomBirdData} from './wikiExtraction.js'
 const deleteBtn = document.querySelectorAll('.del')
 const birdNames = document.querySelectorAll('.bird .name')
 
@@ -7,7 +7,7 @@ Array.from(deleteBtn).forEach((el) => {
 })
 
 Array.from(birdNames).forEach(bird => {
-    bird.addEventListener('click', previewBirdWikiData)
+    bird.addEventListener('click', printWikipediaDataFromBirdClick)
 })
 
 document.querySelector('select').addEventListener('change', event => {
@@ -16,7 +16,7 @@ document.querySelector('select').addEventListener('change', event => {
     window.location.href = `/birds?${query.toString()}`
 })
 
-document.querySelector('h1').addEventListener('click', previewBirdWikiData)
+document.querySelector('h1').addEventListener('click', printBirdHeadings)
 
 async function deleteTodo() {
     const todoId = this.parentNode.dataset.id

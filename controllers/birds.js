@@ -15,7 +15,8 @@ module.exports = {
         // if (paramElement.nations)
         try {
             const birdData = await Bird.find(paramElement)
-                .limit(35).lean()
+                .limit(35)
+                .lean()
             res.render('birds.ejs', { birdData: birdData, userId: req.user.id, filters: filters })
         } catch (err) {
             console.log(err)
@@ -38,7 +39,17 @@ module.exports = {
         try {
             const bird = await Bird.find({primaryCommonName: req.params.birdName})
             console.log(bird)
-            res.json(bird)
+            res.json(bird[0])
+        } catch(err) {
+            console.log(err)
+        }
+    },
+
+    getBirdByWikiUrl: async (req, res) => {
+        try {
+            const bird = await Bird.find({wikiSurname: req.params.wikiUrl})
+            console.log(bird)
+            res.json(bird[0])
         } catch(err) {
             console.log(err)
         }
@@ -53,7 +64,18 @@ module.exports = {
         } catch(err) {
             console.log(err)
         }
-    }
+    },
+
+    getAllBirds: async (req, res) => {
+        try {
+            const birdData = await Bird.find({})
+                .limit(45)
+                .lean()
+            res.json(birdData)
+            } catch (err) {
+            console.log(err)
+        }
+    },
 
 
 

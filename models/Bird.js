@@ -1,4 +1,5 @@
-const {NationSchema} = require('../models/Nation')
+const { NationSchema } = require('../models/Nation')
+const { InfoSegment } = require('./InfoSegment')
 const mongoose = require('mongoose')
 
 const BirdSchema = new mongoose.Schema({
@@ -41,7 +42,12 @@ const BirdSchema = new mongoose.Schema({
   gRank: String,
   wikiSurname: String,
   wikiHtml: String,
-  images: [String]
+  images: [String],
+
+  infoSegments: {
+    type: [InfoSegment],
+    required: true
+  }
 })
 
 module.exports = mongoose.model('Bird', BirdSchema)

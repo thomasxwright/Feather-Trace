@@ -43,6 +43,7 @@ async function grabWikiHtml() {
     }, 4298)
 }
 
+//saves the wiki page to the db given the wiki url and the birdId in my db
 async function extractBirdWikiPage(wikiSurname, birdId) {
     const response = await fetch(`https://en.wikipedia.org/w/rest.php/v1/page/${wikiSurname}/with_html`)
     if (!response.ok)

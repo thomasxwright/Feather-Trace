@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const {SubnationSchema} = require('../models/Subnation')
+const { SubnationSchema } = require('../models/Subnation')
 
 const NationSchema = new mongoose.Schema({
   nationCode: String,
