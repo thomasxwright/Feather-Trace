@@ -10,4 +10,5 @@ router.post('/submitSighting', upload.single('file'), sightingsController.submit
 
 router.post('/deleteSighting/:id', sightingsController.deleteSighting)
 
+
 module.exports = router

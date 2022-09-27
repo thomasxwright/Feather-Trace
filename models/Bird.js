@@ -1,5 +1,7 @@
 const { NationSchema } = require('../models/Nation')
-const { InfoSegment } = require('./InfoSegment')
+const { InfoSegmentSchema } = require('./InfoSegment')
+const { BirdCallSchema } = require('./BirdCall')
+const { ImageSchema } = require('./Image')
 const mongoose = require('mongoose')
 
 const BirdSchema = new mongoose.Schema({
@@ -13,7 +15,7 @@ const BirdSchema = new mongoose.Schema({
     required: true
   },
   formattedScientificName: String,
-  primaryCommonName: {
+  CommonName: {
     type: String,
     required: true
   },
@@ -40,12 +42,14 @@ const BirdSchema = new mongoose.Schema({
     taxonomicComments: String
   },
   gRank: String,
-  wikiSurname: String,
+  wikiUrl: String,
   wikiHtml: String,
-  images: [String],
 
+  generalDescription: [String],
+  images: [ImageSchema],
+  call: [BirdCallSchema],
   infoSegments: {
-    type: [InfoSegment],
+    type: [InfoSegmentSchema],
     required: true
   }
 })

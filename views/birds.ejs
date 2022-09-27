@@ -80,7 +80,7 @@
             <% birdData.forEach( el=> { %>
                 <li class='bird' data-id='<%=el._id%>'>
                     <span class='name'>
-                        <%= el.primaryCommonName %>
+                        <%= el.commonName %>
                     </span>
                     <a href="/sightings/<%=el._id%>">Sightings</a>
                     <span class='del'> Delete </span>
@@ -100,6 +100,8 @@
     <!-- </form> -->
 
     <a href="/logout">Logout</a>
+
+    <h4>Rename wikiSurname to wikiId</h4>
 
     <script src="js/main.js" type="module"></script>
 </body>

@@ -19,6 +19,8 @@ router.get('/:birdName', birdsController.getBird)
 
 router.get('/wiki/:wikiUrl', birdsController.getBirdByWikiUrl)
 
+router.put('/editBird', birdsController.updateBirdEntryWithParsedWikiData)
+
 // router.post('/createTodo', todosController.createTodo)
 
 // router.put('/markComplete', todosController.markComplete)

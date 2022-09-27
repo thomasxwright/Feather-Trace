@@ -1,9 +1,10 @@
 export class InfoSegment {
     constructor() {
         this._excludedSegments = [
-            'References',
-            'Further reading',
-            'External links',
+            'References',       //exclude
+            'Further reading',  //exclude
+            'External links',   //grab separately
+            'Gallery'           //grab separately
         ]
     }
     get excludedSegments() {
@@ -18,6 +19,9 @@ export class InfoSegment {
     get info() {
         return this._info
     }
+    get output() {
+        return {title: this.title, info: this.info}
+    }
     set info(info) {
         this._info = info
     }
@@ -27,10 +31,7 @@ export class InfoSegment {
     }
 
     processInfoSegment() {
-        this.info = this.info.map(p => p.replace(/\[[0-9]*\]/g, ''))
-    }
-
-    printTidily() {
-        console.log(this.title, this.info)
+        //exclude citation superscript segments like [2] or [citation needed]
+        this.info = this.info.map(p => p.replace(/\[([0-9]+|citation needed)\]/g, ''))
     }
 }

@@ -13,6 +13,7 @@ const SightingSchema = new mongoose.Schema({
   image: String,
   cloudinary_id: String,
   notes: String,
+  caption: String,
   userId: {
     type: String,
     required: true

@@ -1,4 +1,6 @@
+const birdFunctions = require('./bird functions/bird functions')
 const Bird = require('../models/Bird')
+const Sighting = require('../models/Sighting')
 const mongoose = require('mongoose')
 const testFunction = require('../scrape')
 
@@ -37,20 +39,20 @@ module.exports = {
 
     getBird: async (req, res) => {
         try {
-            const bird = await Bird.find({primaryCommonName: req.params.birdName})
-            console.log(bird)
+            const bird = await Bird.find({ commonName: req.params.birdName })
+            // console.log(bird)
             res.json(bird[0])
-        } catch(err) {
+        } catch (err) {
             console.log(err)
         }
     },
 
     getBirdByWikiUrl: async (req, res) => {
         try {
-            const bird = await Bird.find({wikiSurname: req.params.wikiUrl})
+            const bird = await Bird.find({ wikiSurname: req.params.wikiUrl })
             console.log(bird)
             res.json(bird[0])
-        } catch(err) {
+        } catch (err) {
             console.log(err)
         }
     },
@@ -61,7 +63,7 @@ module.exports = {
             const bird = await Bird.aggregate([{ $sample: { size: 1 } }])
             console.log(bird)
             res.json(bird[0])
-        } catch(err) {
+        } catch (err) {
             console.log(err)
         }
     },
@@ -72,11 +74,26 @@ module.exports = {
                 .limit(45)
                 .lean()
             res.json(birdData)
-            } catch (err) {
+        } catch (err) {
             console.log(err)
         }
     },
 
+    updateBirdEntryWithParsedWikiData: async (req, res) => {
+        try {
+            await Bird.findOneAndUpdate({ uniqueId: req.body.uniqueId }, {
+                generalDescription: req.body.generalDescription,
+                images: req.body.images,
+                call: req.body.call,
+                infoSegments: req.body.infoSegments
+            })
+            console.log(`${req.body.uniqueId} was updated in the database!`)
+            res.json({done: req.body.uniqueId})
+        } catch (err) {
+            console.log("had a problem updating the bird's DB entry with the parsed Wiki data")
+            console.log(err)
+        }
+    }
 
 
     // createTodo: async (req, res)=>{

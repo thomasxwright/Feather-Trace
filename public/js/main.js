@@ -1,4 +1,4 @@
-import {printBirdHeadings, printWikipediaDataFromBirdClick, printRandomBirdData} from './wikiExtraction.js'
+import {parseBirdDataAndUpdateItsEntryInDB, printBirdHeadings, printDataFromBirdClick, printRandomBirdData} from './wikiExtraction.js'
 const deleteBtn = document.querySelectorAll('.del')
 const birdNames = document.querySelectorAll('.bird .name')
 
@@ -7,7 +7,12 @@ Array.from(deleteBtn).forEach((el) => {
 })
 
 Array.from(birdNames).forEach(bird => {
-    bird.addEventListener('click', printWikipediaDataFromBirdClick)
+    bird.addEventListener('click', parseBirdDataAndUpdateItsEntryInDB)
+})
+
+document.querySelector('h4').addEventListener('click', async() => {
+    console.log('ok')
+    // const data = await fetch('/birds/editProperty')
 })
 
 document.querySelector('select').addEventListener('change', event => {
