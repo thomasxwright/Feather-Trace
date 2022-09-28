@@ -1,5 +1,4 @@
 //functions used to scrape wikipedia for data, then print and organize the data, and place into the database.
-import { InfoSegment } from './wikiInfoSegment.js'
 import { BirdObj } from './BirdObj.js'
 
 
@@ -17,24 +16,12 @@ export async function printDataFromBirdClick(event) {
 }
 
 // Apply to an element containing a bird's commonName, it'll grab its DB object, parse it, and put it to the endpoint which will update the entry in the DB.
-export async function parseBirdDataAndUpdateItsEntryInDB(event) {
-    // printDataFromBirdClick(event)
+export async function parseBirdClickAndUpdateItsEntryInDB(event) {
     const searchQuery = event.target.innerText.trim()
     try {
         const birdObj = await getBirdObjByCommonName(searchQuery)
-        // birdObj.printBirdData()
-        const birdWikiDataObj = birdObj.output
-
-        console.log(`Making the post call for ${birdObj.commonName}`)
-        const response = await fetch('/birds/editBird', {
-            method: 'put',
-            headers: {'Content-type': 'application/json'},
-            body: JSON.stringify(birdWikiDataObj)
-        })
-        const data = await response.json()
-        console.log(data)
-        // location.reload()
-    } catch(err) {
+        await birdObj.saveDataToDatabase()
+    } catch (err) {
         console.log(err)
     }
 }
@@ -78,6 +65,25 @@ export async function printBirdHeadings() {
         // console.log(bird.wikiId, bird.html)
     })
     console.log(headings)
+}
+
+export async function sendAllBirdsToDB() {
+    try {
+        const failedRequests = []
+        const allBirds = await getAllBirds()
+        console.log('all birds sent to the front end')
+        let tally = 0
+        for (const bird of allBirds) {
+            console.log(tally)
+            tally++
+            const result = await bird.saveDataToDatabase()
+            if (!result) {
+                console.log(`${bird.commonName} failed.`)
+                failedRequests.push(bird.commonName)
+            }
+        }
+        console.log('failed requests:', failedRequests)
+    } catch (err) { console.log(err) }
 }
 
 

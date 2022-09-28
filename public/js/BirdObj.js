@@ -19,8 +19,8 @@ export class BirdObj {
         return this._data.commonName
     }
     get output() {
-        // return this._data
         return {
+            commonName: this.commonName,
             uniqueId: this._data.uniqueId,
             generalDescription: this.extractGeneralDescription(),
             images: this.extractImages(),
@@ -47,8 +47,22 @@ export class BirdObj {
         // console.log(getWikipediaHtmlFromWikipedia(getWikipediaUrl(this.wikiId)))
     }
 
-    saveDataToDatabase() {
-
+    async saveDataToDatabase() {
+        try {
+            console.log(`making the put call for ${this.commonName}`)
+            const response = await fetch('/birds/editBird', {
+                method: 'put',
+                headers: { 'Content-type': 'application/json' },
+                body: JSON.stringify(this.output)
+            })
+            if (!response.ok) {
+                throw new Error('oh nooo')
+            }
+            const data = await response.json()
+            return data
+        } catch (err) {
+            console.log(err)
+        }
     }
 
 
@@ -75,7 +89,7 @@ export class BirdObj {
     }
 
     extractGeneralDescription() {
-        return Array.from(this.dom.querySelectorAll('body > section:nth-of-type(1) p'))
+        return Array.from(this.dom.querySelectorAll('body > section:nth-of-type(1) > p'))
             .map(elem => elem.innerText.replace(/\[([0-9]+|citation needed)\]/g, ''))
             .filter(elem => elem.includes('.')) //bc some elements are little irrelevant fragments, only grab sentences.
     }
@@ -113,42 +127,17 @@ export class BirdObj {
     }
 
 
-    // ----------------------Back end sorting functions-----------------
+    // ------------TO DO: implement these extractors------------------
+    // async extractEndangeredStatus() {
+    //     // nothing, do this later though
+    // }
 
-    getBehavior() {
+    // async extractImageGallery() {
+    //     // nothing, do later though
+    // }
 
-    }
+    // async extractFurtherReading() {
+    //     // nothing, do later though
+    // }
 
-    getBreeding() {
-
-    }
-
-    getConservation() {
-
-    }
-
-    getEcology() {
-
-    }
-
-    getDistribution() {
-
-    }
-
-    getHabitat() {
-
-    }
-
-    // in art, in culture, in popular culture, interesting facts
-    getCulturalTrivia() {
-
-    }
-
-    getDiet() {
-
-    }
-
-    getExternalLinks() {
-
-    }
 }

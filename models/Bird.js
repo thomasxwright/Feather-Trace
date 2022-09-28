@@ -15,7 +15,7 @@ const BirdSchema = new mongoose.Schema({
     required: true
   },
   formattedScientificName: String,
-  CommonName: {
+  commonName: {
     type: String,
     required: true
   },

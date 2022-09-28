@@ -28,6 +28,15 @@ body > section ul {
     background-color:rgb(235, 219, 249);
 
 }
+
+.bird section {
+    flex-basis: 20%;
+}
+
+.bird img {
+    width: 200px;
+}
+
 .bird > * {
     /* margin: 0px 30px; */
 }

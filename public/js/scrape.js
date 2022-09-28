@@ -1,3 +1,5 @@
+// This file is basically outdated, but was originally the playground where I made functions that found the WikiIds and pulled the HTML from those pages, and did a bit of basic parse-previewing of that HTML.
+
 const Bird = require('./models/Bird')
 const mongoose = require('mongoose')
 

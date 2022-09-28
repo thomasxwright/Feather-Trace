@@ -4,7 +4,22 @@ export class InfoSegment {
             'References',       //exclude
             'Further reading',  //exclude
             'External links',   //grab separately
-            'Gallery'           //grab separately
+            'Gallery',          //grab separately
+            'Video',
+            'Videos',
+            'Picture gallery',
+            'Image gallery',
+            'Citations',
+            'Cited sources',
+            'Cited books',
+            'External sources',
+            'Literature cited',
+            'Works cited',
+            'Literature',
+            'Explanatory notes',
+            'Line notes',
+            'General sources',
+            'Study'
         ]
     }
     get excludedSegments() {

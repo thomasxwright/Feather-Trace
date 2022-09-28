@@ -1,12 +1,10 @@
-const birdFunctions = require('./bird functions/bird functions')
+const BirdObj = require('./bird functions/bird functions')
 const Bird = require('../models/Bird')
 const Sighting = require('../models/Sighting')
 const mongoose = require('mongoose')
-const testFunction = require('../scrape')
 
 module.exports = {
     getBirds: async (req, res) => {
-        console.log(req.user)
         console.log(req.query)
         const paramElement = {}
         const filters = {}
@@ -17,39 +15,30 @@ module.exports = {
         // if (paramElement.nations)
         try {
             const birdData = await Bird.find(paramElement)
-                .limit(35)
+                .limit(13)
                 .lean()
-            res.render('birds.ejs', { birdData: birdData, userId: req.user.id, filters: filters })
+            const birdObjs = birdData.map(json => new BirdObj(json).output)
+            res.render('birds.ejs', { birdData: birdObjs, userId: req.user.id, filters: filters })
         } catch (err) {
             console.log(err)
         }
     },
-
-    submitBird: async (req, res) => {
-        try {
-            await Bird.create({ commonName: req.body.commonName, scientificName: req.body.scientificName, userId: req.user.id })
-            console.log('Bird entry has been created')
-            res.redirect('/birds')
-        } catch (err) {
-            console.log(err)
-        }
-    },
-
-    testFunction: testFunction,
 
     getBird: async (req, res) => {
         try {
-            const bird = await Bird.find({ commonName: req.params.birdName })
-            // console.log(bird)
-            res.json(bird[0])
+            const bird = await Bird.find({ commonName: req.params.commonName })
+            const birdObj = new BirdObj(bird[0])
+            console.log(birdObj.output)
+            res.json(birdObj.output)
         } catch (err) {
+            console.log(`couldn't find ${req.params.birdName}`)
             console.log(err)
         }
     },
 
-    getBirdByWikiUrl: async (req, res) => {
+    getBirdByWikiId: async (req, res) => {
         try {
-            const bird = await Bird.find({ wikiSurname: req.params.wikiUrl })
+            const bird = await Bird.find({ wikiId: req.params.wikiId })
             console.log(bird)
             res.json(bird[0])
         } catch (err) {
@@ -59,7 +48,6 @@ module.exports = {
 
     getRandomBird: async (req, res) => {
         try {
-            console.log('get random burd')
             const bird = await Bird.aggregate([{ $sample: { size: 1 } }])
             console.log(bird)
             res.json(bird[0])
@@ -70,9 +58,11 @@ module.exports = {
 
     getAllBirds: async (req, res) => {
         try {
+            console.log('gettin them all')
             const birdData = await Bird.find({})
-                .limit(45)
+                // .limit(200)
                 .lean()
+            console.log('we got em all')
             res.json(birdData)
         } catch (err) {
             console.log(err)
@@ -87,56 +77,13 @@ module.exports = {
                 call: req.body.call,
                 infoSegments: req.body.infoSegments
             })
-            console.log(`${req.body.uniqueId} was updated in the database!`)
-            res.json({done: req.body.uniqueId})
+            console.log(`${req.body.commonName} was updated in the database!`)
+            res.json({ done: req.body.commonName })
         } catch (err) {
-            console.log("had a problem updating the bird's DB entry with the parsed Wiki data")
+            console.log(`had a problem updating ${req.body.commonName}'s DB entry with the parsed Wiki data`)
             console.log(err)
         }
     }
-
-
-    // createTodo: async (req, res)=>{
-    //     try{
-    //         await Todo.create({todo: req.body.todoItem, completed: false, userId: req.user.id})
-    //         console.log('Todo has been added!')
-    //         res.redirect('/todos')
-    //     }catch(err){
-    //         console.log(err)
-    //     }
-    // },
-    // markComplete: async (req, res)=>{
-    //     try{
-    //         await Todo.findOneAndUpdate({_id:req.body.todoIdFromJSFile},{
-    //             completed: true
-    //         })
-    //         console.log('Marked Complete')
-    //         res.json('Marked Complete')
-    //     }catch(err){
-    //         console.log(err)
-    //     }
-    // },
-    // markIncomplete: async (req, res)=>{
-    //     try{
-    //         await Todo.findOneAndUpdate({_id:req.body.todoIdFromJSFile},{
-    //             completed: false
-    //         })
-    //         console.log('Marked Incomplete')
-    //         res.json('Marked Incomplete')
-    //     }catch(err){
-    //         console.log(err)
-    //     }
-    // },
-    // deleteTodo: async (req, res)=>{
-    //     console.log(req.body.todoIdFromJSFile)
-    //     try{
-    //         await Todo.findOneAndDelete({_id:req.body.todoIdFromJSFile})
-    //         console.log('Deleted Todo')
-    //         res.json('Deleted It')
-    //     }catch(err){
-    //         console.log(err)
-    //     }
-    // }
 }
 
 const queryFunctions = {
