@@ -3,7 +3,7 @@ const router = express.Router()
 const birdsController = require('../controllers/birds') 
 const { ensureAuth, ensureGuest } = require('../middleware/auth')
 
-router.get('/', ensureAuth, birdsController.getBirds)
+router.get('/', birdsController.getBirds)
 
 router.get('/random', birdsController.getRandomBird)
 

@@ -12,6 +12,7 @@ export class InfoSegment {
             'Citations',
             'Cited sources',
             'Cited books',
+            'Cited texts',
             'External sources',
             'Literature cited',
             'Works cited',
@@ -19,7 +20,8 @@ export class InfoSegment {
             'Explanatory notes',
             'Line notes',
             'General sources',
-            'Study'
+            'Study',
+            'Notes'
         ]
     }
     get excludedSegments() {
@@ -40,11 +42,11 @@ export class InfoSegment {
     set info(info) {
         this._info = info
     }
-    
+
     shouldBeRecorded() {
         return !this.excludedSegments.includes(this.title) && this.info.length
     }
-
+    
     processInfoSegment() {
         //exclude citation superscript segments like [2] or [citation needed]
         this.info = this.info.map(p => p.replace(/\[([0-9]+|citation needed)\]/g, ''))

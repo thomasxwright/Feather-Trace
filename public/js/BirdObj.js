@@ -43,7 +43,7 @@ export class BirdObj {
         // console.log('info sections', this.printAllParagraphsWithHeadings())
         console.log('General description:', this.extractGeneralDescription())
         console.log(this.extractInfoSegments())
-        console.log(this.html)
+        // console.log(this.html)
         // console.log(getWikipediaHtmlFromWikipedia(getWikipediaUrl(this.wikiId)))
     }
 

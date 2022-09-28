@@ -1,4 +1,4 @@
-const BirdObj = require('./bird functions/bird functions')
+const BirdObj = require('./bird functions/BirdObj')
 const Bird = require('../models/Bird')
 const Sighting = require('../models/Sighting')
 const mongoose = require('mongoose')
@@ -15,10 +15,14 @@ module.exports = {
         // if (paramElement.nations)
         try {
             const birdData = await Bird.find(paramElement)
-                .limit(13)
+                .limit(35)
                 .lean()
-            const birdObjs = birdData.map(json => new BirdObj(json).output)
-            res.render('birds.ejs', { birdData: birdObjs, userId: req.user.id, filters: filters })
+            const birdObjs = birdData.map(json => {
+                const bird = new BirdObj(json)
+                bird.processInfoSegments()
+                return bird.output
+            })
+            res.render('birds.ejs', { birdData: birdObjs, filters: filters })
         } catch (err) {
             console.log(err)
         }
@@ -26,10 +30,9 @@ module.exports = {
 
     getBird: async (req, res) => {
         try {
+            console.log(req.params)
             const bird = await Bird.find({ commonName: req.params.commonName })
-            const birdObj = new BirdObj(bird[0])
-            console.log(birdObj.output)
-            res.json(birdObj.output)
+            res.json(bird[0])
         } catch (err) {
             console.log(`couldn't find ${req.params.birdName}`)
             console.log(err)

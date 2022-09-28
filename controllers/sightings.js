@@ -15,15 +15,19 @@ module.exports = {
 
     submitSighting: async (req, res) => {
         try {
-            const result = await cloudinary.uploader.upload(req.file.path);
-
-            await Sighting.create({
+            const sightingParameters = {
                 birdId: req.body.birdId,
-                userId: req.user.id,
-                notes: req.body.notes,
-                image: result.secure_url,
-                cloudinary_id: result.public_id
-            })
+                userId: req.user.id
+            }
+
+            if (req.file) {
+                const result = await cloudinary.uploader.upload(req.file.path)
+                sightingParameters.image = result.secure_url
+                sightingParameters.cloudinary_id = result.public_id
+            }
+            if (req.body.notes)
+                sightingParameters.notes = req.body.notes
+            await Sighting.create(sightingParameters)
             console.log('Bird sighting has been logged')
             res.redirect(`/sightings/${req.body.birdId}`)
         } catch (err) {
@@ -33,10 +37,13 @@ module.exports = {
 
     deleteSighting: async (req, res) => {
         try {
-            let sighting = await Sighting.findById({ _id: req.params.id})
-            console.log('got the sighting in the database, its cloudinary id is', sighting.cloudinary_id, sighting)
-            await cloudinary.uploader.destroy(sighting.cloudinary_id)
-            await Sighting.remove({ _id: req.params.id})
+            let sighting = await Sighting.findById({ _id: req.params.id })
+            if (sighting.cloudinary_id) {
+                console.log('got the sighting in the database, its cloudinary id is', sighting.cloudinary_id, sighting)
+                await cloudinary.uploader.destroy(sighting.cloudinary_id)
+            }
+
+            await Sighting.remove({ _id: req.params.id })
             console.log('Deleted sighting')
             res.redirect('/sightings/' + req.body.birdId)
         } catch (err) {

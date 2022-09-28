@@ -6,6 +6,7 @@ import { BirdObj } from './BirdObj.js'
 
 export async function printDataFromBirdClick(event) {
     const searchQuery = event.target.innerText.trim()
+    console.log(searchQuery)
     try {
         const birdObj = await getBirdObjByCommonName(searchQuery)
         birdObj.printBirdData()
