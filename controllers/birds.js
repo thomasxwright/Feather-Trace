@@ -5,16 +5,9 @@ const mongoose = require('mongoose')
 
 module.exports = {
     getBirds: async (req, res) => {
-        console.log(req.query)
-        const paramElement = {}
-        const filters = {}
-        for (let queryType in req.query) {
-            queryFunctions[queryType](req.query[queryType], paramElement)
-            filters[queryType] = req.query[queryType]
-        }
-        // if (paramElement.nations)
+        const paramElem = new ParamElement(req.query)
         try {
-            const birdData = await Bird.find(paramElement)
+            const birdData = await Bird.find(paramElem.mongoDbSearchObj)
                 .limit(35)
                 .lean()
             const birdObjs = birdData.map(json => {
@@ -22,7 +15,7 @@ module.exports = {
                 bird.processInfoSegments()
                 return bird.output
             })
-            res.render('birds.ejs', { birdData: birdObjs, filters: filters })
+            res.render('birds.ejs', { birdData: birdObjs, filters: paramElem.query, count: birdObjs.length })
         } catch (err) {
             console.log(err)
         }
@@ -90,7 +83,8 @@ module.exports = {
 }
 
 const queryFunctions = {
-    state: stateSort
+    state: stateSort,
+
 }
 
 function stateSort(state, paramElement) {
@@ -103,5 +97,41 @@ function stateSort(state, paramElement) {
                 }
             }
         }
+    }
+    const family = 'corvidae'
+    const regex = new RegExp(`^${family}$`, 'i')
+    paramElement['speciesGlobal.family'] = { '$regex': regex }
+    console.log(paramElement)
+}
+
+
+class ParamElement {
+    constructor(query) {
+        this._query = query
+        this._paramElem = {}
+
+        if (query.state) {
+            this._paramElem.nations = {
+                $elemMatch: {
+                    nationCode: 'US',
+                    subnations: {
+                        $elemMatch: {
+                            subnationCode: query.state
+                        }
+                    }
+                }
+            }
+        }
+
+        if (query.cladeType && query.cladeInput) {
+            const regex = new RegExp(`^${query.cladeInput}$`, 'i')
+            this._paramElem[`speciesGlobal.${query.cladeType}`] = { '$regex': regex }
+        }
+    }
+    get mongoDbSearchObj() {
+        return this._paramElem
+    }
+    get query() {
+        return this._query
     }
 }

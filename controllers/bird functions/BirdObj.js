@@ -48,6 +48,9 @@ class BirdObj {
         return {
             _id: this._data._id,
             commonName: this.commonName,
+            order: this._data.speciesGlobal.taxorder,
+            family: this._data.speciesGlobal.family,
+            genus: this._data.speciesGlobal.genus,
             images: this.images,
             calls: this.calls,
             infoSegments: this.infoSegments.map(segment => segment.title),

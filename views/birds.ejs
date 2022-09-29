@@ -15,7 +15,7 @@
         <button type="submit">test function</button>
     </form> -->
     <section>
-        <label for="state-select">Choose a state:</label>
+        <label for="state-select">By state:</label>
 
         <select name="states" id="state-select">
             <%if (!filters.state){%>
@@ -72,8 +72,27 @@
                         <option value="WA" <%=filters.state==='WA' ? 'selected' : '' %>>Washington</option>
                         <option value="WV" <%=filters.state==='WV' ? 'selected' : '' %>>West Virginia</option>
                         <option value="WI" <%=filters.state==='WI' ? 'selected' : '' %>>Wisconsin</option>
-                        <option value="WY">Wyoming</option>
+                        <option value="WY" <%=filters.state==='WY' ? 'selected' : '' %>>Wyoming</option>
         </select>
+
+        <label for="clade-select">By clade:</label>
+
+        <select name="clades" id="clade-select">
+            <%if (!filters.clade){%>
+                <option value="" selected>--</option>
+            <%} else {%>
+                <option value="">--</option>
+            <%}%>
+            <option value="taxorder" <%=filters.cladeType==='taxorder' ? 'selected' : '' %>>Order</option>
+            <option value="family" <%=filters.cladeType==='family' ? 'selected' : '' %>>Family</option>
+            <option value="genus" <%=filters.cladeType==='genus' ? 'selected' : '' %>>Genus</option>
+            <option value="species" <%=filters.cladeType==='species' ? 'selected' : '' %>>Species</option>
+        </select>
+        
+        <input type="text" value="<%=filters.cladeInput ? filters.cladeInput : ''%>">
+        
+        <h3><%=count%> birds displayed:</h3>
+
     </section>
     <section>
         <ul>
@@ -82,6 +101,9 @@
                     <section><img src=<%=el.images[0]%>></section>
                     <span class='name'>
                         <%= el.commonName %>
+                    </span>
+                    <span>
+                        <%=`${el.order} ${el.family} ${el.genus}`%>
                     </span>
                     <a href="/sightings/<%=el._id%>">Sightings</a>
                     <section>

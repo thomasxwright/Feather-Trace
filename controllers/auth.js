@@ -37,6 +37,7 @@ const User = require('../models/User')
   }
   
   exports.logout = (req, res) => {
+    console.log('let us log out please')
     req.logout()
     req.session.destroy((err) => {
       if (err) console.log('Error : Failed to destroy the session during logout.', err)
