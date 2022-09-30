@@ -10,7 +10,7 @@ h1{
 }
 
 body > section {
-    width: 800px;
+    width: 950px;
     max-width: 80%;
 }
 
@@ -35,10 +35,35 @@ body > section ul {
 
 .bird img {
     width: 200px;
+    border-radius: 13px;
 }
 
 .bird > * {
     /* margin: 0px 30px; */
+}
+
+.order,.family,.genus,.species {
+    padding: 18px 5px;
+    margin: 18px 5px;
+    list-style-type: none;
+    border-radius: 13px;
+}
+
+.order {
+    background-color: #B4A7C5;
+}
+
+.family {
+    background-color: #C2C4D8;
+}
+
+.genus {
+    background-color: #D9E6EA;
+}
+
+.species {
+    background-color: #FFFFFF;
+    padding: 10px;
 }
 
 body {

@@ -11,9 +11,6 @@
 
 <body>
     <h1>Bird Branch</h1>
-    <!-- <form action="/birds/testFunction" method="POST">
-        <button type="submit">test function</button>
-    </form> -->
     <section>
         <label for="state-select">By state:</label>
 
@@ -90,43 +87,59 @@
         </select>
         
         <input type="text" value="<%=filters.cladeInput ? filters.cladeInput : ''%>">
+
+        <h4 id="run-query">Filter!</h4>
         
         <h3><%=count%> birds displayed:</h3>
 
     </section>
+    
     <section>
+        <span>Aves (all birds)</span>
         <ul>
-            <% birdData.forEach( el=> { %>
-                <li class='bird' data-id='<%=el._id%>'>
-                    <section><img src=<%=el.images[0]%>></section>
-                    <span class='name'>
-                        <%= el.commonName %>
-                    </span>
-                    <span>
-                        <%=`${el.order} ${el.family} ${el.genus}`%>
-                    </span>
-                    <a href="/sightings/<%=el._id%>">Sightings</a>
-                    <section>
-                        <%=el.infoSegments%>
-                    </section>
+            <%  Object.entries(cladisticBirdData).forEach(order => {  %>
+                <li class="order">
+                    <span>Order: <%=order[0]%></span>
+                    <ul>
+                    <% Object.entries(order[1]).forEach(family => {  %>
+                        <li class="family">
+                            <span>Family: <%=family[0]%></span>
+                            <ul>
+                            <% Object.entries(family[1]).forEach(genus => {%>
+                                <li class="genus">
+                                    <span>Genus: <%=genus[0]%></span>
+                                    <ul>
+                                    <% Object.entries(genus[1]).forEach(species => {%>
+                                        <% species = species[1] %>
+                                        <li class='species bird' data-id='<%=species._id%>'>
+                                            <section><img src=<%=species.images[0]%>></section>
+                                            <span class='name'>
+                                                <%= species.commonName %>
+                                            </span>
+                                            <span>
+                                                <%=`${species.order} ${species.family} ${species.genus}`%>
+                                            </span>
+                                            <a href="/sightings/<%=species._id%>">Sightings</a>
+                                            <section>
+                                                <%=species.infoSegments%>
+                                            </section>
+                                        </li>
+
+                                    <%  })  %>
+                                    </ul>
+
+                                </li>
+                           <% })  %>
+                            </ul>
+                        </li>
+                    <%   })  %>
+                    </ul>
                 </li>
-                <% }) %>
+            <%  })   %>
         </ul>
     </section>
-    <form action="/birds/submitBird" method="POST">
-        <input type="text" placeholder="common name" name="commonName">
-        <input type="text" placeholder="scientific name" name="scientificName">
-        <input type="submit">
-    </form>
-
-    <!-- <form action="/todos/createTodo" method='POST'>
-        <input type="text" placeholder="Enter Todo Item" name='todoItem'>
-        <input type="submit"> -->
-    <!-- </form> -->
 
     <a href="/logout">Logout</a>
-
-    <h4>Rename wikiSurname to wikiId</h4>
 
     <script src="/js/main.js" type="module"></script>
 </body>

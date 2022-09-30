@@ -7,15 +7,22 @@ module.exports = {
     getBirds: async (req, res) => {
         const paramElem = new ParamElement(req.query)
         try {
-            const birdData = await Bird.find(paramElem.mongoDbSearchObj)
-                .limit(35)
+            console.log('fetching', paramElem.mongoDbSearchObj)
+            let start = new Date()
+            const birdData = await Bird.find(paramElem.mongoDbSearchObj, {wikiHtml: false})
+                .limit(130)
                 .lean()
+                console.log('birds retrieved from db:', birdData.length)
             const birdObjs = birdData.map(json => {
                 const bird = new BirdObj(json)
                 bird.processInfoSegments()
                 return bird.output
             })
-            res.render('birds.ejs', { birdData: birdObjs, filters: paramElem.query, count: birdObjs.length })
+            console.log('processed the bird info segments')
+            console.log(`it took ${new Date() - start} ms to get this stuff`)
+            const cladisticStructure = getCladisticStructure(birdObjs)
+            console.log('organized the birds cladistically')
+            res.render('birds.ejs', { birdData: birdObjs, filters: paramElem.query, count: birdObjs.length, cladisticBirdData: cladisticStructure })
         } catch (err) {
             console.log(err)
         }
@@ -134,4 +141,19 @@ class ParamElement {
     get query() {
         return this._query
     }
+}
+
+function getCladisticStructure(birdArr) {
+    const cladisticStructure = {}
+    for (let bird of birdArr) {
+        if (!cladisticStructure[bird.order])
+            cladisticStructure[bird.order]                          = { [bird.family]: { [bird.genus]: [] } }
+        else if (!cladisticStructure[bird.order][bird.family])
+            cladisticStructure[bird.order][bird.family]              = { [bird.genus]: [] }
+        else if (!cladisticStructure[bird.order][bird.family][bird.genus])
+            cladisticStructure[bird.order][bird.family][bird.genus]  = []
+        
+        cladisticStructure[bird.order][bird.family][bird.genus].push(bird)
+    }
+    return cladisticStructure
 }
