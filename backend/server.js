@@ -10,6 +10,7 @@ const connectDB = require('./config/database')
 const mainRoutes = require('./routes/main')
 const birdRoutes = require('./routes/birds')
 const sightingRoutes = require('./routes/sightings')
+const cors = require('cors')
 
 require('dotenv').config({ path: './config/.env' })
 
@@ -19,6 +20,7 @@ require('./config/passport')(passport)
 connectDB()
 
 app.set('view engine', 'ejs')
+app.use(cors())
 app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true, limit: '2mb' }))
 app.use(express.json({ limit: '2mb' }))
