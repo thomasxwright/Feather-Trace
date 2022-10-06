@@ -22,7 +22,8 @@ module.exports = {
             console.log(`it took ${new Date() - start} ms to get this stuff`)
             const cladisticStructure = getCladisticStructure(birdObjs)
             console.log('organized the birds cladistically')
-            res.render('birds.ejs', { birdData: birdObjs, filters: paramElem.query, count: birdObjs.length, cladisticBirdData: cladisticStructure })
+            res.json({birdData: birdObjs, filters: paramElem.query, cladisticBirdData: cladisticStructure})
+            // res.render('birds.ejs', { birdData: birdObjs, filters: paramElem.query, count: birdObjs.length, cladisticBirdData: cladisticStructure })
         } catch (err) {
             console.log(err)
         }
