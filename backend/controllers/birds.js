@@ -10,7 +10,7 @@ module.exports = {
             console.log('fetching', paramElem.mongoDbSearchObj)
             let start = new Date()
             const birdData = await Bird.find(paramElem.mongoDbSearchObj, {wikiHtml: false})
-                .limit(130)
+                .limit(120)
                 .lean()
                 console.log('birds retrieved from db:', birdData.length)
             const birdObjs = birdData.map(json => {

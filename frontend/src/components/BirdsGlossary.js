@@ -1,28 +1,21 @@
-import Bird from "./Bird"
+import Order from "./Order"
 
-const BirdsGlossary = ({ birds }) => {
+const BirdsGlossary = ({ birds, cladisticData }) => {
 
     const styling = {
-        bird: {
-            margin: '15px 0',
-            padding: '20px',
-            listStyle: 'none',
-            display: 'flex',
-            justifyContent: 'space-between',
-            backgroundColor: 'rgb(235, 219, 249)'
-        },
         outer: {
             display: 'flex',
             flexDirection: 'column',
+            listStyleType: 'none'
         }
     }
 
     return (
         <ul style={styling.outer}>
-            {birds.map(bird => {
+            {Object.entries(cladisticData).map(order => {
                 return (
-                    <li style={styling.bird} key={bird._id}>
-                        <Bird bird={bird} />
+                    <li key={order[0]}>
+                        <Order orderData={order[1]} orderName={order[0]} />
                     </li>
                 )
             })}

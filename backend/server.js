@@ -52,4 +52,4 @@ app.listen(process.env.PORT, () => {
   // const adverb2 = adverbs[Math.floor(Math.random() * adverbs.length)].toLowerCase()
   const adjective = adjectives[Math.floor(Math.random() * adjectives.length)].toLowerCase()
   console.log(`Server is running! It seems ${adverb1} ${adjective}.`)
-})    
+})

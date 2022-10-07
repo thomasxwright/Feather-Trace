@@ -23,8 +23,14 @@ class BirdObj {
     get wikiId() {
         return this._data.wikiId
     }
+    get generalDescription() {
+        return this._data.generalDescription
+    }
     get wikiUrl() {
         return `https://en.wikipedia.org/wiki/${this.wikiId}`
+    }
+    get species() {
+        return this._data.scientificName.split(' ').slice(1).join(' ')
     }
     get topics() {
         return this._topics
@@ -51,8 +57,10 @@ class BirdObj {
             order: this._data.speciesGlobal.taxorder,
             family: this._data.speciesGlobal.family,
             genus: this._data.speciesGlobal.genus,
+            species: this.species,
             images: this.images,
             calls: this.calls,
+            generalDescription: this.generalDescription,
             infoSegments: this.infoSegments.map(segment => segment.title),
             wikiUrl: this.wikiUrl
         }

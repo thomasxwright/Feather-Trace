@@ -4,8 +4,8 @@ const SearchTags = ({ filters, onClick }) => {
 
     return (
         <>
-            {filters.map(filter => {
-                return <SearchTag filter={filter} onClick={onClick}/>
+            {filters.map((filter, i) => {
+                return <SearchTag filter={filter} onClick={onClick} key={i}/>
             })}
         </>
     )
