@@ -1,6 +1,16 @@
 # Introduction
 
-Bird Branch is a digital glossary for North American bird info lookups. If you make an account, you can also create a "bird watchlist" and track your sightings of each bird you find.
+Bird Branch is a hub for North American bird lovers.
+
+---
+
+# What can it do?
+
+It has TWO primary features:
+
+-An expansive encyclopedia of North American birds. Take a look and learn about the birds in your area! See photos, hear their calls, and read about each species.
+
+-A hub where bird watchers who make accounts can keep track of their favorite species and log sightings of each bird they find in the wild!
 
 ---
 
