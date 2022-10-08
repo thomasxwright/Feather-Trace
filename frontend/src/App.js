@@ -4,6 +4,7 @@ import BirdsGlossary from "./components/BirdsGlossary"
 import SearchTags from "./components/SearchTags"
 import { BirdObj } from './js/BirdObj.js'
 import './App.css';
+import BackToTop from './components/BackToTop';
 
 function App() {
 
@@ -57,6 +58,7 @@ function App() {
             <BirdsGlossary birds={birds} cladisticData={cladisticData} />
           </section>
         </div>
+        <BackToTop/>
       </div>
   )
 }

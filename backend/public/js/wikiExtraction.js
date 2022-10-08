@@ -1,7 +1,6 @@
 //functions used to scrape wikipedia for data, then print and organize the data, and place into the database.
 import { BirdObj } from './BirdObj.js'
 
-
 // -------------------METHODS TO PRINT BIRD DATA-----------
 
 export async function printDataFromBirdClick(event) {
@@ -87,6 +86,14 @@ export async function sendAllBirdsToDB() {
     } catch (err) { console.log(err) }
 }
 
+// This function finds all the birds who have subspecies.
+export async function extractBirdsWithSubspecies() {
+    const allBirds = await getAllBirds()
+    const allBirdsWithSubspecies = filterBirdsWithSubspecies(allBirds).map(bird => {return {commonName: bird._data.commonName, scientificName: bird._data.scientificName, wikiId: bird._data.wikiId, uniqueId: bird._data.uniqueId}})
+    console.log(allBirdsWithSubspecies)
+    return allBirdsWithSubspecies
+}
+
 
 // ----------------GET A BIRD OBJECT---------------------
 
@@ -166,8 +173,8 @@ export function HeadingsObject() {
 }
 
 function filterUniqueBirds(birds) {
-    var flags = {}
-    var uniqueBirds = birds.filter(function (bird) {
+    let flags = {}
+    let uniqueBirds = birds.filter(function (bird) {
         if (flags[bird.wikiId]) {
             return false
         }
@@ -176,4 +183,13 @@ function filterUniqueBirds(birds) {
     })
     console.log(uniqueBirds.length, 'unique bird pages')
     return uniqueBirds
+}
+
+function filterBirdsWithSubspecies(birds) {
+    let flags = {}
+    birds.forEach(bird => {
+        flags[bird.wikiId] = (flags[bird.wikiId] || 0) + 1
+        console.log(bird.wikiId)
+    })
+    return birds.filter(bird => flags[bird.wikiId] > 1)
 }

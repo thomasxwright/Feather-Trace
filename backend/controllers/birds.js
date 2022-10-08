@@ -9,10 +9,10 @@ module.exports = {
         try {
             console.log('fetching', paramElem.mongoDbSearchObj)
             let start = new Date()
-            const birdData = await Bird.find(paramElem.mongoDbSearchObj, {wikiHtml: false})
+            const birdData = await Bird.find(paramElem.mongoDbSearchObj, { wikiHtml: false })
                 .limit(120)
                 .lean()
-                console.log('birds retrieved from db:', birdData.length)
+            console.log('birds retrieved from db:', birdData.length)
             const birdObjs = birdData.map(json => {
                 const bird = new BirdObj(json)
                 bird.processInfoSegments()
@@ -87,6 +87,36 @@ module.exports = {
             console.log(`had a problem updating ${req.body.commonName}'s DB entry with the parsed Wiki data`)
             console.log(err)
         }
+    },
+
+    //  would use input as shaped in the duplicates file
+    attachSubspecies: async (req, res) => {
+        try {
+            Object.values(duplicates)
+            for (let parentBird of Object.values(duplicates)) {
+                await attachSubspeciesToABird(parentBird[0], parentBird.slice(1))
+            }
+            // const bird = Bird.find()
+            res.json(duplicates)
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+
+
+}
+
+async function attachSubspeciesToABird(parentSpecies, subspecies) {
+    await Bird.findOneAndUpdate({ uniqueId: parentSpecies.uniqueId }, {
+        subspecies: subspecies.map(thing => ({ uniqueId: thing.uniqueId, scientificName: thing.scientificName }))
+    })
+    console.log(`added subspecies to ${parentSpecies.commonName} at ${parentSpecies.wikiId}`)
+    for (let oneSubspecies of subspecies) {
+        await Bird.findOneAndUpdate({ uniqueId: oneSubspecies.uniqueId }, {
+            parentSpecies: { uniqueId: parentSpecies.uniqueId, scientificName: parentSpecies.scientificName }
+        })
+        console.log(`added the parent species ${parentSpecies.scientificName} to ${oneSubspecies.scientificName}`)
     }
 }
 
@@ -135,9 +165,11 @@ class ParamElement {
             const regex = new RegExp(`^${query.cladeInput}$`, 'i')
             this._paramElem[`speciesGlobal.${query.cladeType}`] = { '$regex': regex }
         }
+
+
     }
     get mongoDbSearchObj() {
-        return this._paramElem
+        return {...this._paramElem, parentSpecies: {$exists: false}}
     }
     get query() {
         return this._query
@@ -148,12 +180,12 @@ function getCladisticStructure(birdArr) {
     const cladisticStructure = {}
     for (let bird of birdArr) {
         if (!cladisticStructure[bird.order])
-            cladisticStructure[bird.order]                          = { [bird.family]: { [bird.genus]: [] } }
+            cladisticStructure[bird.order] = { [bird.family]: { [bird.genus]: [] } }
         else if (!cladisticStructure[bird.order][bird.family])
-            cladisticStructure[bird.order][bird.family]              = { [bird.genus]: [] }
+            cladisticStructure[bird.order][bird.family] = { [bird.genus]: [] }
         else if (!cladisticStructure[bird.order][bird.family][bird.genus])
-            cladisticStructure[bird.order][bird.family][bird.genus]  = []
-        
+            cladisticStructure[bird.order][bird.family][bird.genus] = []
+
         cladisticStructure[bird.order][bird.family][bird.genus].push(bird)
     }
     return cladisticStructure

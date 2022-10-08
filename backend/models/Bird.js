@@ -2,6 +2,7 @@ const { NationSchema } = require('../models/Nation')
 const { InfoSegmentSchema } = require('./InfoSegment')
 const { BirdCallSchema } = require('./BirdCall')
 const { ImageSchema } = require('./Image')
+const { SpeciesShorthandSchema } = require('./SpeciesShorthand')
 const mongoose = require('mongoose')
 
 const BirdSchema = new mongoose.Schema({
@@ -51,7 +52,9 @@ const BirdSchema = new mongoose.Schema({
   infoSegments: {
     type: [InfoSegmentSchema],
     required: true
-  }
+  },
+  subspecies: [SpeciesShorthandSchema],
+  parentSpecies: SpeciesShorthandSchema
 })
 
 module.exports = mongoose.model('Bird', BirdSchema)

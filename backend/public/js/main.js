@@ -1,4 +1,4 @@
-import { parseBirdClickAndUpdateItsEntryInDB, sendAllBirdsToDB, printDataFromBirdClick, printRandomBirdData } from './wikiExtraction.js'
+import { parseBirdClickAndUpdateItsEntryInDB, sendAllBirdsToDB, printDataFromBirdClick, printRandomBirdData, extractBirdsWithSubspecies } from './wikiExtraction.js'
 const deleteBtn = document.querySelectorAll('.del')
 const birdNames = document.querySelectorAll('.bird .name')
 
