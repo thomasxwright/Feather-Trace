@@ -13,7 +13,7 @@ const Order = ({ orderData, orderName }) => {
     return (
         <ul className="order" style={isExpanded ? {position: 'relative'} : {position: 'relative', cursor: 'pointer'}}>
             <BlockingOverlay styling={styling.overlay} isExpanded={isExpanded} setIsExpanded={setIsExpanded} colors={[180, 167, 197]} zIndex={4}/>
-            <CladeHeader isExpanded={isExpanded} setIsExpanded={setIsExpanded} cladeName={orderName} hoverColor={styling.hoverColor}/>
+            <CladeHeader isExpanded={isExpanded} setIsExpanded={setIsExpanded} cladeName={orderName} cladeType={'order'} hoverColor={styling.hoverColor}/>
             {Object.entries(orderData).map(family => {
                 return (
                     <li key={family[0]}>

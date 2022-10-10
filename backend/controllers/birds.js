@@ -79,6 +79,19 @@ module.exports = {
         }
     },
 
+    getAllSpecies: async (req, res) => {
+        try {
+            const birdData = await Bird.aggregate([
+                { $match: {parentSpecies: {$exists: false}}},
+                { $project: { 'speciesGlobal.taxorder': 1, 'speciesGlobal.family': 1, 'speciesGlobal.genus': 1  } }
+            ])
+            let mapped = birdData.map(bird => ({order: bird.speciesGlobal.taxorder, genus: bird.speciesGlobal.genus, family: bird.speciesGlobal.family}))
+            res.json(getFrequency(mapped))
+        } catch (err) {
+            console.log(err)
+        }
+    },
+
     updateBirdEntryWithParsedWikiData: async (req, res) => {
         try {
             await Bird.findOneAndUpdate({ uniqueId: req.body.uniqueId }, {
@@ -111,6 +124,18 @@ module.exports = {
 
 
 
+}
+
+function getFrequency(input) {
+    const orders = {}
+    const families = {}
+    const genuses = {}
+    for (let bird of input) {
+        orders[bird.order] = (orders[bird.order] || 0) + 1
+        families[bird.family] = (families[bird.family] || 0) + 1
+        genuses[bird.genus] = (genuses[bird.genus] || 0) + 1
+    }
+    return {orders, families, genuses}
 }
 
 async function attachSubspeciesToABird(parentSpecies, subspecies) {

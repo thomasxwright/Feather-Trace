@@ -9,6 +9,8 @@ router.get('/random', birdsController.getRandomBird)
 
 router.get('/getAllBirds', birdsController.getAllBirds)
 
+router.get('/getAllSpecies', birdsController.getAllSpecies)
+
 router.put('/editBird', birdsController.updateBirdEntryWithParsedWikiData)
 
 router.get('/:commonName', birdsController.getBird)

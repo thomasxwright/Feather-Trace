@@ -1,8 +1,9 @@
 import expandContract from "../utils/expandContract"
 import arrow from "../images/arrow down.svg"
 import { useState } from "react"
+const cladeNumbers = require('../utils/cladeNumbers.json')
 
-const CladeHeader = ({ isExpanded, setIsExpanded, cladeName, hoverColor }) => {
+const CladeHeader = ({ isExpanded, setIsExpanded, cladeName, cladeType, hoverColor }) => {
 
     const [isHovered, setIsHovered] = useState(false)
 
@@ -24,8 +25,16 @@ const CladeHeader = ({ isExpanded, setIsExpanded, cladeName, hoverColor }) => {
         image: {
             height: '23px',
             opacity: '0.25'
+        },
+        tally: {
+            // marginLeft: '35px',
+            opacity: '0.12',
+            position: 'absolute',
+            left: '20%',
+            transition: 'opacity 0.3s'
         }
     }
+
     return (
         <section
             style={isHovered ? { ...styling.frame, backgroundColor: hoverColor } : styling.frame}
@@ -34,6 +43,7 @@ const CladeHeader = ({ isExpanded, setIsExpanded, cladeName, hoverColor }) => {
             onMouseLeave={handleMouseLeave}>
             <img src={arrow} style={isExpanded ? styling.image : { ...styling.image, transform: 'rotate(-90deg)' }} />
             <span>{cladeName}</span>
+            {cladeNumbers[cladeType] && <span style={isHovered ? {...styling.tally, opacity: 0.6} : styling.tally}>{cladeNumbers[cladeType][cladeName]} bird{cladeNumbers[cladeType][cladeName] > 1 && 's'}</span>}
         </section>
     )
 }
