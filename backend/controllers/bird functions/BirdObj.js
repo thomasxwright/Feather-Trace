@@ -61,7 +61,7 @@ class BirdObj {
             images: this.images,
             calls: this.calls,
             generalDescription: this.generalDescription,
-            infoSegments: this.infoSegments.map(segment => segment.title),
+            infoSegments: this.infoSegments,
             wikiUrl: this.wikiUrl
         }
     }

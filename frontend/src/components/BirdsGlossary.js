@@ -1,6 +1,6 @@
 import Order from "./Order"
 
-const BirdsGlossary = ({ birds, cladisticData }) => {
+const BirdsGlossary = ({ cladisticData }) => {
 
     const styling = {
         outer: {

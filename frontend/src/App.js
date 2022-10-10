@@ -10,7 +10,6 @@ function App() {
 
 
   const [filters, setFilters] = useState(['by state', 'Add a Filter', 'by Order', 'sd', 'bongo', 'binsdfoine', 'sleifj', 'lsijfelsifsefi', 'lisjfelsij', 'lsifejeilj', 'lsiefjsleij'])
-  const [birds, setBirds] = useState([])
   const [cladisticData, setCladisticData] = useState([])
 
   const styling = {
@@ -26,7 +25,6 @@ function App() {
   useEffect(() => {
     const getBirds = async () => {
       const birdsFromServer = await fetchBirds()
-      setBirds(birdsFromServer.birdData)
       setCladisticData(birdsFromServer.cladisticBirdData)
       console.log(birdsFromServer)
       // birdsFromServer = birdsFromServer.map(birdJson => new BirdObj(birdJson))
@@ -55,7 +53,7 @@ function App() {
           </section>
 
           <section>
-            <BirdsGlossary birds={birds} cladisticData={cladisticData} />
+            <BirdsGlossary cladisticData={cladisticData} />
           </section>
         </div>
         <BackToTop/>

@@ -1,21 +1,20 @@
+import { useState } from "react"
+import BlockingOverlay from "./BlockingOverlay"
 import Bird from "./Bird"
+import CladeHeader from "./CladeHeader"
 
 const Genus = ({ genusData, genusName }) => {
 
     const styling = {
-        bird: {
-            margin: '15px 0',
-            padding: '20px',
-            listStyle: 'none',
-            display: 'flex',
-            justifyContent: 'space-between',
-            backgroundColor: 'rgb(235, 219, 249)'
-        }
+        hoverColor: 'rgba(255, 255, 255, 0.37)'
     }
 
+    const [isExpanded, setIsExpanded] = useState(true)
+
     return (
-        <ul className="genus">
-            <span>{genusName}</span>
+        <ul className="genus" style={isExpanded ? { position: 'relative' } : { position: 'relative', cursor: 'pointer' }}>
+            <BlockingOverlay styling={styling} isExpanded={isExpanded} setIsExpanded={setIsExpanded} colors={[217, 230, 234]} zIndex={2}/>
+            <CladeHeader isExpanded={isExpanded} setIsExpanded={setIsExpanded} cladeName={genusName} hoverColor={styling.hoverColor} />
             {Object.entries(genusData).map(species => {
                 return (
                     <li key={species[1]._id}>

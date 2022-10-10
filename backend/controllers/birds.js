@@ -9,20 +9,26 @@ module.exports = {
         try {
             console.log('fetching', paramElem.mongoDbSearchObj)
             let start = new Date()
-            const birdData = await Bird.find(paramElem.mongoDbSearchObj, { wikiHtml: false })
-                .limit(120)
-                .lean()
+            // const birdData = await Bird.find(paramElem.mongoDbSearchObj, { wikiHtml: false })
+            const birdData = await Bird.aggregate([
+                { $match: paramElem.mongoDbSearchObj },
+                { $sample: { size: 130 } },
+                { $project: { wikiHtml: 0 } }
+            ])
+                // .limit(120)
+                // .lean()
             console.log('birds retrieved from db:', birdData.length)
             const birdObjs = birdData.map(json => {
                 const bird = new BirdObj(json)
                 bird.processInfoSegments()
                 return bird.output
             })
+            // .filter(bird => bird.call)
             console.log('processed the bird info segments')
             console.log(`it took ${new Date() - start} ms to get this stuff`)
             const cladisticStructure = getCladisticStructure(birdObjs)
             console.log('organized the birds cladistically')
-            res.json({birdData: birdObjs, filters: paramElem.query, cladisticBirdData: cladisticStructure})
+            res.json({ filters: paramElem.query, cladisticBirdData: cladisticStructure })
             // res.render('birds.ejs', { birdData: birdObjs, filters: paramElem.query, count: birdObjs.length, cladisticBirdData: cladisticStructure })
         } catch (err) {
             console.log(err)
@@ -169,7 +175,7 @@ class ParamElement {
 
     }
     get mongoDbSearchObj() {
-        return {...this._paramElem, parentSpecies: {$exists: false}}
+        return { ...this._paramElem, parentSpecies: { $exists: false } }
     }
     get query() {
         return this._query
