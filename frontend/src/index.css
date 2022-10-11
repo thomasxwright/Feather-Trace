@@ -62,3 +62,15 @@ code {
 .expanded {
   height: auto;
 }
+
+
+
+
+.filter-tag {
+  display: flex;
+  align-items: center;
+    height: '45px';
+    background-color: aquamarine;
+    margin: 7px 15px;
+    padding: 5px 5px 5px 0;
+}

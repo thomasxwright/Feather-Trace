@@ -1,11 +1,11 @@
-const SearchTag = ({ filter, onClick }) => {
+const AddFilter = () => {
 
     const styling = {
         outerBox: {
             display: 'flex',
             alignItems: 'center',
             height: '45px',
-            backgroundColor: '#F0E7F5',
+            backgroundColor: '#E7ECF5',
             margin: '7px 15px',
             padding: '5px 5px 5px 0'
         },
@@ -24,18 +24,13 @@ const SearchTag = ({ filter, onClick }) => {
         }
     }
 
-    const addFilterStyle = {
-        ...styling,
-        outerBox: { ...styling.outerBox, backgroundColor: '#E7ECF5' }
-    }
-    console.log('filter', filter)
 
     return (
-        <div style={filter.title === 'Add a Filter' ? addFilterStyle.outerBox : styling.outerBox}>
-            <img style={styling.image} src={require('../images/close_FILL0_wght400_GRAD0_opsz48.png')} onClick={() => onClick(filter)} />
-            <span style={styling.words}>{filter.content}</span>
+        <div style={styling.outerBox} onClick={()=>console.log('go')}>
+            <img style={styling.image} src={require('../../images/add_FILL0_wght400_GRAD0_opsz48.png')} />
+            <span style={styling.words}>Add a filter</span>
         </div>
     )
 }
 
-export default SearchTag
+export default AddFilter

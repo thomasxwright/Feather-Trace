@@ -28,7 +28,7 @@ const CladeHeader = ({ isExpanded, setIsExpanded, cladeName, cladeType, hoverCol
         },
         tally: {
             // marginLeft: '35px',
-            opacity: '0.12',
+            opacity: isExpanded ? '0.12' : '0.5',
             position: 'absolute',
             left: '20%',
             transition: 'opacity 0.3s'

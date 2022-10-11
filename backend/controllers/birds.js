@@ -12,7 +12,8 @@ module.exports = {
             // const birdData = await Bird.find(paramElem.mongoDbSearchObj, { wikiHtml: false })
             const birdData = await Bird.aggregate([
                 { $match: paramElem.mongoDbSearchObj },
-                { $sample: { size: 130 } },
+                { $limit: 80 },
+                // { $sample: { size: 80 } },
                 { $project: { wikiHtml: 0 } }
             ])
                 // .limit(120)
