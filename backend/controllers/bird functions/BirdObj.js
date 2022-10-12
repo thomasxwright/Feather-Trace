@@ -54,7 +54,7 @@ class BirdObj {
         return {
             _id: this._data._id,
             commonName: this.commonName,
-            order: this._data.speciesGlobal.taxorder,
+            order: this._data.speciesGlobal.order,
             family: this._data.speciesGlobal.family,
             genus: this._data.speciesGlobal.genus,
             species: this.species,

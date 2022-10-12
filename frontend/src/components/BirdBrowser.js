@@ -32,11 +32,15 @@ function BirdBrowser() {
         }
         console.log('useeffect')
         getBirds()
+        console.log('done')
     }, [state])
 
     const fetchBirds = async () => {
+        console.log(`http://localhost:4000/birds${state.search}`)
         const res = await fetch(`http://localhost:4000/birds${state.search}`)
+        console.log('in fetchbirds')
         const data = await res.json()
+        console.log('we got from the backend', data)
         return data
     }
 
@@ -44,7 +48,7 @@ function BirdBrowser() {
         <div style={styling.outer}>
             <div>
                 <section style={{ display: 'flex', flexWrap: 'wrap' }}>
-                    <SearchTags setCladisticData={setCladisticData} />
+                    <SearchTags/>
                 </section>
 
                 <section>

@@ -52,6 +52,12 @@ const UsStateSelect = ({ place, setPlace }) => {
         WY: 'Wyoming',
     }
 
+    const styling = {
+        select: {
+            
+        }
+    }
+
     return (
 
         <select name="states" defaultValue={place} onChange={e => setPlace(e.target.value)}>

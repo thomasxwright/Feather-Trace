@@ -2,8 +2,10 @@ import { useState } from "react"
 import { Link, useLocation } from "react-router-dom"
 import AddFilter from "./filterTags/AddFilter"
 import CladeFilter from "./filterTags/CladeFilter"
+import FilterTag from "./filterTags/FilterTag"
+import IsLoggedFilter from "./filterTags/IsLoggedFilter"
 import PlaceFilter from "./filterTags/PlaceFilter"
-import SearchTag from "./SearchTag"
+// import SearchTag from "./SearchTag"
 
 const SearchTags = ({ setCladisticData }) => {
     const search = new URLSearchParams(useLocation().search)
@@ -13,41 +15,46 @@ const SearchTags = ({ setCladisticData }) => {
         cladeInput: search.get('cladeInput'),
         isLogged: search.get('isLogged')
     }
-    const [placeShown, setPlaceShown] = useState(Boolean(searches.place))
     const [place, setPlace] = useState(searches.place)
+    const [isLogged, setIsLogged] = useState(search.get('isLogged'))
 
-    // const [isLoggedShown, setIsLoggedShown] = useState(search.get('isLogged') !== null)
-    // const [isLogged, setIsLogged] = useState(search.get('isLogged'))
-
-
-    const cladeObj = (searches.cladeType && searches.cladeInput) ? { cladeType: searches.cladeType, cladeInput: searches.cladeInput } : {cladeType: '', cladeInput: ''}
+    const cladeObj = {cladeType: searches.cladeType, cladeInput: searches.cladeInput}
     const [clade, setClade] = useState(cladeObj)
-    const [cladeShown, setCladeShown] = useState(Boolean(clade.cladeType && clade.cladeInput))
-    
-    // const [amTrackingShown, setAmTrackingShown] = useState(Boolean(search.amTracking))
     // const [amTracking, setAmTracking] = useState(search.amTracking)
 
     function getQueryParamsFromTags() {
         const cladeParams = clade.cladeType && clade.cladeInput ? clade : {}
-        const params = { state: place,
+        const params = {
+            ...place && {state: place},
             ...cladeParams,
-            // isLogged: isLogged
+            ...isLogged && {isLogged: isLogged}
         }
+        console.log(params)
+        console.log(new URLSearchParams(params).toString())
         return new URLSearchParams(params).toString()
+    }
+
+    const styling = {
+        outer: {
+            display: 'flex'
+        }
     }
 
 
     return (
-        <section>
+        <section style={styling.outer}>
+
+            <FilterTag innerTag={<CladeFilter clade={clade} setClade={setClade} imgSrc='../../images/close_FILL0_wght400_GRAD0_opsz48.png' />} />
+            <FilterTag innerTag={<PlaceFilter place={place} setPlace={setPlace} imgSrc='../../images/close_FILL0_wght400_GRAD0_opsz48.png' />} />
+            <FilterTag innerTag={<IsLoggedFilter isLogged={isLogged} setIsLogged={setIsLogged} imgSrc='../../images/close_FILL0_wght400_GRAD0_opsz48.png' />} />
+
+            {/* {amTrackingShown && <amTrackingFilter amTracking={amTracking} setFilter={setAmTracking}/>} */}
+            {/* <button>Send</button> */}
+            
+            
             <Link to={`?${getQueryParamsFromTags()}`}>
                 <AddFilter />
             </Link>
-
-            {placeShown && <PlaceFilter place={place} setPlace={setPlace} setPlaceShown={setPlaceShown} />}
-            {/* {isLoggedShown && <isLoggedFilter isLogged={isLogged} setFilter={setIsLogged}/>}
-            {amTrackingShown && <amTrackingFilter amTracking={amTracking} setFilter={setAmTracking}/>} */}
-            {cladeShown && <CladeFilter clade={clade} setClade={setClade} setCladeShown={setCladeShown}/>}
-            <button>Send</button>
         </section>
     )
 }

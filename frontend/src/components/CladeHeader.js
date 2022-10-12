@@ -20,7 +20,8 @@ const CladeHeader = ({ isExpanded, setIsExpanded, cladeName, cladeType, hoverCol
             display: 'flex',
             alignItems: 'center',
             borderRadius: '4px',
-            cursor: 'pointer'
+            cursor: 'pointer',
+            transition: 'background-color 0.2s'
         },
         image: {
             height: '23px',
