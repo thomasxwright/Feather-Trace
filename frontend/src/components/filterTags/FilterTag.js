@@ -1,13 +1,13 @@
 import { useState } from 'react'
 
-const FilterTag = ({ innerTag }) => {
+const FilterTag = ({ innerTag, tagColor }) => {
 
     const styling = {
         outerBox: {
             display: 'flex',
             alignItems: 'center',
             height: '45px',
-            backgroundColor: 'aqua',
+            backgroundColor: tagColor,
             margin: '7px 15px',
             padding: '5px 5px 5px 0'
         },

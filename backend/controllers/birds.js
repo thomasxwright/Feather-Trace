@@ -33,13 +33,24 @@ module.exports = {
         }
     },
 
-    getBird: async (req, res) => {
+    getBirdByCommonName: async (req, res) => {
         try {
             console.log(req.params)
-            const bird = await Bird.find({ commonName: req.params.commonName })
-            res.json(bird[0])
+            const bird = await Bird.findOne({ commonName: req.params.commonName })
+            res.json(bird)
         } catch (err) {
             console.log(`couldn't find ${req.params.birdName}`)
+            console.log(err)
+        }
+    },
+
+    getBirdById: async (req, res) => {
+        try {
+            console.log(req.params)
+            const bird = await Bird.findOne({ _id: req.params.id })
+            res.json(bird)
+        } catch (err) {
+            console.log(`couldn't find ${req.params.id}`)
             console.log(err)
         }
     },

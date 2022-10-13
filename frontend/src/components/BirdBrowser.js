@@ -12,16 +12,6 @@ function BirdBrowser() {
     const state = useLocation()
     console.log(state.search)
 
-    const styling = {
-        outer: {
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            width: '75%',
-            margin: '0px auto'
-        }
-    }
-
     useEffect(() => {
         const getBirds = async () => {
             const birdsFromServer = await fetchBirds()
@@ -45,10 +35,10 @@ function BirdBrowser() {
     }
 
     return (
-        <div style={styling.outer}>
+        <div>
             <div>
                 <section style={{ display: 'flex', flexWrap: 'wrap' }}>
-                    <SearchTags/>
+                    <SearchTags tagColor='#F0E7F5'/>
                 </section>
 
                 <section>

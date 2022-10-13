@@ -5,9 +5,13 @@ const Bird = require('../models/Bird')
 module.exports = {
     getSightings: async (req, res) => {
         try {
-            const sightingsData = await Sighting.find({ userId: req.user.id, birdId: req.params.id })
-            const bird = await Bird.findOne({ _id: req.params.id })
-            res.render('sightings.ejs', { birdName: bird.commonName, birdId: req.params.id, sightings: sightingsData, imgSrc: bird.images[0].src })
+            const sightingsData = await Sighting.find({ birdId: req.params.id })
+            // const sightingsData = await Sighting.find({ userId: req.user.id, birdId: req.params.id })
+            res.json(sightingsData)
+            
+            // const bird = await Bird.findOne({ _id: req.params.id })
+            // const sightingsData = await Sighting.find({ userId: req.user.id, birdId: req.params.id })
+            // res.render('sightings.ejs', { birdName: bird.commonName, birdId: req.params.id, sightings: sightingsData, imgSrc: bird.images[0].src })
         } catch (err) {
             console.log(err)
         }

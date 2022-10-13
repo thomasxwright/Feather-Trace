@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { NavLink } from "react-router-dom"
 import BirdCall from "./BirdCall"
 import BirdPhoto from "./BirdPhoto"
 import BlockingOverlay from "./BlockingOverlay"
@@ -21,6 +22,10 @@ const Bird = ({ bird }) => {
             margin: '20px 0',
             fontWeight: '550',
             fontSize: '24px'
+        },
+        link: {
+            padding: '12px',
+            backgroundColor: 'rgb(217, 230, 234, 0.3)'
         }
     }
 
@@ -41,15 +46,18 @@ const Bird = ({ bird }) => {
             <CladeHeader isExpanded={isExpanded} setIsExpanded={setIsExpanded} cladeName={bird.species} hoverColor={styling.hoverColor} />
             <section style={styling.name} >{bird.commonName}</section>
             <section style={styling.inner}>
-                <section style={{...styling.column, width: '250px'}}>
+                <section style={{ ...styling.column, width: '250px' }}>
                     <BirdPhoto src={bird.images[0]} isExpanded={isExpanded} />
                     {/* {console.log('call:', bird.call)} */}
                     {/* <BirdCall call={bird.call} /> */}
                     <BirdCall call={'hi!'} />
+                    <NavLink style={styling.link} to={`/sightings/${bird._id}`}>
+                        Log Sightings
+                    </NavLink>
                 </section>
                 {/* <section><img src={bird.images[0]} style={styling.image} /></section> */}
 
-                <section style={{...styling.column, paddingLeft: '55px', maxWidth: '65%' }}>
+                <section style={{ ...styling.column, paddingLeft: '55px', maxWidth: '65%' }}>
                     {bird.generalDescription.map((paragraph, i) => <p key={i} style={i === 0 ? { marginTop: '0', lineHeight: '1.75' } : { lineHeight: '1.75' }}>{paragraph}</p>)}
                     {bird.infoSegments.map((segment, i) => <InfoSegment key={i} title={segment.title} info={segment.info} />)}
                 </section>

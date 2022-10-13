@@ -13,7 +13,9 @@ router.get('/getAllSpecies', birdsController.getAllSpecies)
 
 router.put('/editBird', birdsController.updateBirdEntryWithParsedWikiData)
 
-router.get('/:commonName', birdsController.getBird)
+router.get('/:commonName', birdsController.getBirdByCommonName)
+
+router.get('/id/:id', birdsController.getBirdById)
 
 router.get('/wiki/:wikiId', birdsController.getBirdByWikiId)
 

@@ -7,7 +7,7 @@ import IsLoggedFilter from "./filterTags/IsLoggedFilter"
 import PlaceFilter from "./filterTags/PlaceFilter"
 // import SearchTag from "./SearchTag"
 
-const SearchTags = ({ setCladisticData }) => {
+const SearchTags = ({ setCladisticData, tagColor }) => {
     const search = new URLSearchParams(useLocation().search)
     const searches = {
         place: search.get('state'),
@@ -36,7 +36,8 @@ const SearchTags = ({ setCladisticData }) => {
 
     const styling = {
         outer: {
-            display: 'flex'
+            display: 'flex',
+            flexWrap: 'wrap'
         }
     }
 
@@ -44,9 +45,9 @@ const SearchTags = ({ setCladisticData }) => {
     return (
         <section style={styling.outer}>
 
-            <FilterTag innerTag={<CladeFilter clade={clade} setClade={setClade} imgSrc='../../images/close_FILL0_wght400_GRAD0_opsz48.png' />} />
-            <FilterTag innerTag={<PlaceFilter place={place} setPlace={setPlace} imgSrc='../../images/close_FILL0_wght400_GRAD0_opsz48.png' />} />
-            <FilterTag innerTag={<IsLoggedFilter isLogged={isLogged} setIsLogged={setIsLogged} imgSrc='../../images/close_FILL0_wght400_GRAD0_opsz48.png' />} />
+            <FilterTag tagColor={tagColor} innerTag={<CladeFilter clade={clade} setClade={setClade} imgSrc='../../images/close_FILL0_wght400_GRAD0_opsz48.png' />} />
+            <FilterTag tagColor={tagColor} innerTag={<PlaceFilter place={place} setPlace={setPlace} imgSrc='../../images/close_FILL0_wght400_GRAD0_opsz48.png' />} />
+            <FilterTag tagColor={tagColor} innerTag={<IsLoggedFilter isLogged={isLogged} setIsLogged={setIsLogged} imgSrc='../../images/close_FILL0_wght400_GRAD0_opsz48.png' />} />
 
             {/* {amTrackingShown && <amTrackingFilter amTracking={amTracking} setFilter={setAmTracking}/>} */}
             {/* <button>Send</button> */}
