@@ -7,9 +7,13 @@ const { ensureAuth, ensureGuest } = require('../middleware/auth')
 // router.get('/:id', ensureAuth, sightingsController.getSightings)
 router.get('/:id', sightingsController.getSightings)
 
-router.post('/submitSighting', upload.single('file'), sightingsController.submitSighting)
+router.post('/submitSighting', upload.single('birdFile'), sightingsController.submitSighting)
 
 router.post('/deleteSighting/:id', sightingsController.deleteSighting)
 
 
 module.exports = router
+
+
+
+// https://damiandev.com/blog/Multer-File-Upload-with-React-and-Node

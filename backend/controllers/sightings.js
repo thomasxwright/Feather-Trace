@@ -19,21 +19,27 @@ module.exports = {
 
     submitSighting: async (req, res) => {
         try {
-            const sightingParameters = {
-                birdId: req.body.birdId,
-                userId: req.user.id
-            }
+            console.log('yoo')
+            console.log('here is req.body:', req.body)
+            console.log('here is req.file:', req.file)
+            // const sightingParameters = {
+            //     birdId: req.body.birdId,
+            //     userId: '63224ab4d8b1963324e4336b' //req.user.id
+            // }
 
-            if (req.file) {
-                const result = await cloudinary.uploader.upload(req.file.path)
-                sightingParameters.image = result.secure_url
-                sightingParameters.cloudinary_id = result.public_id
-            }
-            if (req.body.notes)
-                sightingParameters.notes = req.body.notes
-            await Sighting.create(sightingParameters)
-            console.log('Bird sighting has been logged')
-            res.redirect(`/sightings/${req.body.birdId}`)
+            // if (req.file) {
+            //     const result = await cloudinary.uploader.upload(req.file.path)
+            //     sightingParameters.image = result.secure_url
+            //     sightingParameters.cloudinary_id = result.public_id
+            // }
+            // if (req.body.notes)
+            //     sightingParameters.notes = req.body.notes
+            // await Sighting.create(sightingParameters)
+            // console.log('Bird sighting has been logged')
+            // res.json(sightingParameters)
+
+            res.json({yea:'no'})
+            // res.redirect(`/sightings/${req.body.birdId}`)
         } catch (err) {
             console.log(err)
         }

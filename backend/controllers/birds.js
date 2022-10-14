@@ -47,7 +47,7 @@ module.exports = {
     getBirdById: async (req, res) => {
         try {
             console.log(req.params)
-            const bird = await Bird.findOne({ _id: req.params.id })
+            const bird = await Bird.findOne({ _id: req.params.id }, {wikiHtml: 0})
             res.json(bird)
         } catch (err) {
             console.log(`couldn't find ${req.params.id}`)
@@ -186,7 +186,7 @@ function stateSort(state, paramElement) {
     const family = 'corvidae'
     const regex = new RegExp(`^${family}$`, 'i')
     paramElement['speciesGlobal.family'] = { '$regex': regex }
-    console.log(paramElement)
+    // console.log(paramElement)
 }
 
 
@@ -240,7 +240,7 @@ class ParamElement {
             { $sample: { size: 80 } },
             { $project: { wikiHtml: 0 } },
         ]
-        console.log('DA PIPELINE:', this.fullPipeline)
+        // console.log('DA PIPELINE:', this.fullPipeline)
     }
     get mongoDbSearchObj() {
         return { ...this._paramElem, parentSpecies: { $exists: false } }
