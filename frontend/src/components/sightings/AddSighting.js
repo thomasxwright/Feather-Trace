@@ -1,6 +1,6 @@
 import SightingForm from "./SightingForm"
 
-const AddSighting = () => {
+const AddSighting = ({birdId}) => {
 
     const styling = {
         outer: {
@@ -9,11 +9,7 @@ const AddSighting = () => {
     }
 
     return (
-        <SightingForm/>
-        // <section style={styling.outer}>
-        //     <div>hi</div>
-        //     <div>hi1</div>
-        // </section>
+        <SightingForm birdId={birdId}/>
     )
 }
 
