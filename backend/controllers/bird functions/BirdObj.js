@@ -45,7 +45,7 @@ class BirdObj {
         return this._data.images.map(image => image.src)
     }
     get calls() {
-        return this._data.call.map(call => call.src)
+        return this._data.call // .map(call => call.src)
     }
     get infoSegments() {
         return this._data.infoSegments

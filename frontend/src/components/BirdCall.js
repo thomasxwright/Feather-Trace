@@ -1,11 +1,10 @@
-const BirdCall = ({ call }) => {
-    call = [{ fileData: 'http://upload.wikimedia.org/wikipedia/commons/e/e1/Accipiter_gentilis_-_Northern_Goshawk_XC124806.ogg', type: 'audio/ogg' }]
+const BirdCall = ({ calls }) => {
+    let vor = [{ src: 'http://upload.wikimedia.org/wikipedia/commons/transcoded/f/f…sserculus_sandwichensis_-_Savannah_Sparrow_-_XC82760.ogg.mp3', fileType: 'audio/ogg' }]
     return (
-        <audio controls>
-            {call.map((fileData, i) => {
-                <source key={i} src={fileData.src} type={fileData.fileType} />
-            }
-            )}
+
+        <audio
+            controls
+            src={calls[0].src}>
         </audio>
     )
 }

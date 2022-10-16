@@ -50,7 +50,8 @@ const Bird = ({ bird }) => {
                     <BirdPhoto src={bird.images[0]} isExpanded={isExpanded} />
                     {/* {console.log('call:', bird.call)} */}
                     {/* <BirdCall call={bird.call} /> */}
-                    <BirdCall call={'hi!'} />
+                    {/* {console.log(bird.calls)} */}
+                    {Boolean(bird.calls.length) && <BirdCall calls={bird.calls} />}
                     <NavLink style={styling.link} to={`/sightings/${bird._id}`}>
                         Log Sightings
                     </NavLink>
