@@ -21,6 +21,15 @@ const Sightings = () => {
         console.log(bird, sightings)
     }, [])
 
+    const addNewSighting = sighting => {
+        setSightings(sightings.concat(sighting))
+    }
+
+    const hideDeletedSighting = (id) => {
+        const newSightings = sightings.filter(sighting => sighting._id !== id)
+        setSightings(newSightings)
+    }
+
     const fetchFromLink = async (link) => {
         const res = await fetch(`http://localhost:4000${link}`)
         const data = await res.json()
@@ -42,15 +51,15 @@ const Sightings = () => {
     return (
         <>
             <h1>Sightings of {bird.commonName}</h1>
-            {bird.images && (<img style={styling.image} src={bird.images[0].src} alt={`photo of ${bird.commonName}`}/>)}
+            {bird.images && (<img style={styling.image} src={bird.images[0].src} alt={`photo of ${bird.commonName}`} />)}
 
-            <AddSighting birdId={bird._id}/>
+            <AddSighting birdId={bird._id} addNewSighting={addNewSighting} />
 
             <ul style={styling.list}>
                 {sightings.map(sighting => {
                     return (
                         <li key={sighting._id}>
-                            <Sighting sighting={sighting} />
+                            <Sighting sighting={sighting} hideDeletedSighting={hideDeletedSighting} />
                         </li>
                     )
                 })}

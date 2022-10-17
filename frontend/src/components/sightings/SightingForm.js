@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 
-const SightingForm = ({ birdId }) => {
+const SightingForm = ({ birdId, addNewSighting }) => {
 
     const [input, setInput] = useState({ notes: '', file: React.createRef() })
 
@@ -21,6 +21,7 @@ const SightingForm = ({ birdId }) => {
         }
         const result = await fetch('http://localhost:4000/sightings/submitSighting', requestOptions)
         const json = await result.json()
+        addNewSighting(json)
     }
 
 

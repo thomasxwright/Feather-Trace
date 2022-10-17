@@ -1,4 +1,4 @@
-const Sighting = ({ sighting }) => {
+const Sighting = ({ sighting, hideDeletedSighting }) => {
 
   const styling = {
     outer: {
@@ -17,6 +17,16 @@ const Sighting = ({ sighting }) => {
       padding: '15px'
     }
   }
+
+  const deleteSighting = async () => {
+    const result = await fetch(`http://localhost:4000/sightings/deleteSighting/${sighting._id}`, {method: 'DELETE', headers: {'Content-Type': 'application/json'}})
+    const json = await result.json()
+    if (json.deleted) {
+      hideDeletedSighting(sighting._id)
+    }
+  }
+
+
   return (
     <section style={styling.outer}>
       <div style={styling.imageContainer}>
@@ -25,7 +35,7 @@ const Sighting = ({ sighting }) => {
       <div style={styling.details}>
         <p>{new Date(sighting.createdAt).toLocaleString()}</p>
         <p>{sighting.notes}</p>
-        <button>Delete</button>
+        <button onClick={deleteSighting}>Delete</button>
       </div>
     </section>
   )

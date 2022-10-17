@@ -1,6 +1,6 @@
 import SightingForm from "./SightingForm"
 
-const AddSighting = ({birdId}) => {
+const AddSighting = ({birdId, addNewSighting}) => {
 
     const styling = {
         outer: {
@@ -9,7 +9,7 @@ const AddSighting = ({birdId}) => {
     }
 
     return (
-        <SightingForm birdId={birdId}/>
+        <SightingForm birdId={birdId} addNewSighting={addNewSighting}/>
     )
 }
 

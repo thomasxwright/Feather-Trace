@@ -36,10 +36,10 @@ module.exports = {
             if (req.body.notes)
                 sightingParameters.notes = req.body.notes
 
-            await Sighting.create(sightingParameters)
+            const result = await Sighting.create(sightingParameters)
 
-            console.log('new sighting added! the data I used is ', sightingParameters)
-            res.json(sightingParameters)
+            console.log('new sighting added! the data I got from the request is ', result)
+            res.json(result)
         } catch (err) {
             console.log(err)
         }
@@ -47,7 +47,9 @@ module.exports = {
 
     deleteSighting: async (req, res) => {
         try {
+            console.log('ha, delete')
             let sighting = await Sighting.findById({ _id: req.params.id })
+            console.log(req.params, sighting)
             if (sighting.cloudinary_id) {
                 console.log('got the sighting in the database, its cloudinary id is', sighting.cloudinary_id, sighting)
                 await cloudinary.uploader.destroy(sighting.cloudinary_id)
@@ -55,10 +57,11 @@ module.exports = {
 
             await Sighting.remove({ _id: req.params.id })
             console.log('Deleted sighting')
-            res.redirect('/sightings/' + req.body.birdId)
+            res.json({deleted: true})
+            // res.redirect('/sightings/' + req.body.birdId)
         } catch (err) {
             console.log(err)
-            res.redirect('/sightings/' + req.body.birdId)
+            res.json({deleted: false}) //('/sightings/' + req.body.birdId)
         }
     }
 }    

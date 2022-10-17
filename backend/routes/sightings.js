@@ -9,7 +9,7 @@ router.get('/:id', sightingsController.getSightings)
 
 router.post('/submitSighting', upload.single('birdFile'), sightingsController.submitSighting)
 
-router.post('/deleteSighting/:id', sightingsController.deleteSighting)
+router.delete('/deleteSighting/:id', sightingsController.deleteSighting)
 
 
 module.exports = router
