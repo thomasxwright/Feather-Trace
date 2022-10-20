@@ -4,6 +4,7 @@ const BirdCall = ({ calls }) => {
 
         <audio
             controls
+            preload='none'
             src={calls[0].src}>
         </audio>
     )

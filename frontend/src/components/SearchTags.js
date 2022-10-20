@@ -29,8 +29,6 @@ const SearchTags = ({ setCladisticData, tagColor }) => {
             ...cladeParams,
             ...isLogged && {isLogged: isLogged}
         }
-        console.log(params)
-        console.log(new URLSearchParams(params).toString())
         return new URLSearchParams(params).toString()
     }
 

@@ -167,28 +167,6 @@ async function attachSubspeciesToABird(parentSpecies, subspecies) {
     }
 }
 
-const queryFunctions = {
-    state: stateSort,
-
-}
-
-function stateSort(state, paramElement) {
-    paramElement.nations = {
-        $elemMatch: {
-            nationCode: 'US',
-            subnations: {
-                $elemMatch: {
-                    subnationCode: state
-                }
-            }
-        }
-    }
-    const family = 'corvidae'
-    const regex = new RegExp(`^${family}$`, 'i')
-    paramElement['speciesGlobal.family'] = { '$regex': regex }
-    // console.log(paramElement)
-}
-
 
 class ParamElement {
     constructor(query) {
@@ -235,10 +213,10 @@ class ParamElement {
 
         this._fullPipeline = [
             ...query.isLogged ? this.birdsWithSightingsPipeline : [],  //isLogged?
+            { $project: { wikiHtml: 0 } },
             { $match: this.mongoDbSearchObj },     //clade, state
             // { $limit: 80 },                         //how many?
-            { $sample: { size: 80 } },
-            { $project: { wikiHtml: 0 } },
+            { $sample: { size: 120 } },
         ]
         // console.log('DA PIPELINE:', this.fullPipeline)
     }

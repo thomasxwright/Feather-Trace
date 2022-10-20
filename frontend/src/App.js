@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import { useState, useEffect } from 'react'
 import './App.css'
+import { RequireAuth } from './auth/RequireAuth';
 import BirdBrowser from './components/BirdBrowser'
 // import { Routes, Route } from 'react-router-dom'
 import { Routes, Route, BrowserRouter as Router } from 'react-router-dom'
@@ -20,13 +21,19 @@ function App() {
 
   return (
     <div style={styling.outer}>
-      <Router>
-        <Routes>
-          <Route path='/browse/*' element={<BirdBrowser />} />
-          <Route path='/sightings/*' element={<Sightings />} />
-          <Route path='/game' element={<p>play da game</p>} />
-        </Routes>
-      </Router>
+      <Routes>
+        {/* <Route path='/' element={<p>nothing here!</p>} /> */}
+        <Route path='/*' element={<BirdBrowser />} />
+        <Route path='/browse/*' element={<BirdBrowser />} />
+        <Route
+          path='/sightings/*'
+          element={
+            <RequireAuth>
+              <Sightings />
+            </RequireAuth>
+          } />
+        <Route path='/game' element={<p>play da game</p>} />
+      </Routes>
     </div >
   )
 }

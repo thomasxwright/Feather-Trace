@@ -4,7 +4,6 @@ const mongoose = require('mongoose')
 const passport = require('passport')
 const session = require('express-session')
 const MongoStore = require('connect-mongo')(session)
-const flash = require('express-flash')
 const logger = require('morgan')
 const connectDB = require('./config/database')
 const mainRoutes = require('./routes/main')
@@ -19,8 +18,10 @@ require('./config/passport')(passport)
 
 connectDB()
 
-app.set('view engine', 'ejs')
-app.use(cors())
+app.use(cors({
+  credentials: true,
+  origin: 'http://localhost:3000',
+}))
 app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true, limit: '2mb' }))
 app.use(express.json({ limit: '2mb' }))
@@ -38,8 +39,6 @@ app.use(
 // Passport middleware
 app.use(passport.initialize())
 app.use(passport.session())
-
-app.use(flash())
 
 app.use('/', mainRoutes)
 app.use('/birds', birdRoutes)

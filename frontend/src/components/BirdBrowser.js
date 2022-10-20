@@ -5,14 +5,20 @@ import { BirdObj } from '../js/BirdObj.js'
 import '../App.css';
 import BackToTop from './BackToTop';
 import { useLocation } from 'react-router-dom';
+import useAuth from '../auth/useAuth'
+import GainAccess from './Login/GainAccess';
+import SignOut from './Login/SignOut';
+import AccountSection from './Login/AccountSection';
 
 function BirdBrowser() {
 
+    const { authed } = useAuth()
+    
     const [cladisticData, setCladisticData] = useState([])
     const state = useLocation()
-    console.log(state.search)
-
+    
     useEffect(() => {
+        console.log(authed)
         const getBirds = async () => {
             const birdsFromServer = await fetchBirds()
             setCladisticData(birdsFromServer.cladisticBirdData)
@@ -22,27 +28,27 @@ function BirdBrowser() {
         }
         console.log('useeffect')
         getBirds()
-        console.log('done')
     }, [state])
 
     const fetchBirds = async () => {
-        console.log(`http://localhost:4000/birds${state.search}`)
+        // console.log(`http://localhost:4000/birds${state.search}`)
         const res = await fetch(`http://localhost:4000/birds${state.search}`)
         console.log('in fetchbirds')
         const data = await res.json()
-        console.log('we got from the backend', data)
+        // console.log('we got from the backend', data)
         return data
     }
 
     return (
         <div>
+            <AccountSection/>
             <div>
                 <section style={{ display: 'flex', flexWrap: 'wrap' }}>
-                    <SearchTags tagColor='#F0E7F5'/>
+                    <SearchTags tagColor='#F0E7F5' />
                 </section>
 
                 <section>
-                    <BirdsGlossary cladisticData={cladisticData}/>
+                    <BirdsGlossary cladisticData={cladisticData} />
                 </section>
             </div>
             <BackToTop />
