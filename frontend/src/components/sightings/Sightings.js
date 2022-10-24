@@ -20,9 +20,7 @@ const Sightings = () => {
             setSightings(sightingsLogged)
             setBird(birdInfo)
         }
-        console.log('useeffect')
         getSightings()
-        console.log(bird, sightings)
     }, [])
 
     const addNewSighting = sighting => {
@@ -56,14 +54,14 @@ const Sightings = () => {
     return (
         <>
             <div style={{ display: 'flex' }}>
-                {bird.images && (<img style={styling.image} src={bird.images[0].src} alt={`photo of ${bird.commonName}`} />)}
+                {bird.images && bird.images.length > 0 && (<img style={styling.image} src={bird.images[0].src} alt={`photo of ${bird.commonName}`} />)}
                 <section>
                     <h1>{bird.commonName}</h1>
-                    <SightingsCount count={7}/>
+                    <SightingsCount count={sightings.length}/>
                 </section>
             </div>
 
-            <AddSighting birdId={bird._id} addNewSighting={addNewSighting} />
+            <AddSighting birdId={bird._id} addNewSighting={addNewSighting} sightings={sightings} />
 
             <ul style={styling.list}>
                 {sightings.map(sighting => {

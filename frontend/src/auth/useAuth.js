@@ -18,7 +18,6 @@ function useAuth() {
 					url: 'http://localhost:4000/authenticated',
 					withCredentials: true,
 				});
-				console.log('From Server:', response);
 				if (response.status === 200) {
 					setAuthed(true);
 					setUser(response.data);

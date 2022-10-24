@@ -19,8 +19,8 @@ const SightingSchema = new mongoose.Schema({
     required: true
   },
   location: {
-    lat: Number,
-    lon: Number
+    latitude: Number,
+    longitude: Number
   }
 })
 

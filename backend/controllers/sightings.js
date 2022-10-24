@@ -34,6 +34,8 @@ module.exports = {
             }
             if (req.body.notes)
                 sightingParameters.notes = req.body.notes
+            if (req.body.location)
+                sightingParameters.location = JSON.parse(req.body.location)
 
             const result = await Sighting.create(sightingParameters)
 
@@ -56,11 +58,11 @@ module.exports = {
 
             await Sighting.remove({ _id: req.params.id })
             console.log('Deleted sighting')
-            res.json({deleted: true})
+            res.json({ deleted: true })
             // res.redirect('/sightings/' + req.body.birdId)
         } catch (err) {
             console.log(err)
-            res.json({deleted: false}) //('/sightings/' + req.body.birdId)
+            res.json({ deleted: false }) //('/sightings/' + req.body.birdId)
         }
     }
 }    

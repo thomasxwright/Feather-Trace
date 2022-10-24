@@ -4,10 +4,17 @@ import SignOut from "./SignOut"
 
 const AccountSection = () => {
 
-    const {authed} = useAuth()
+  const { authed, user } = useAuth()
 
-  return (authed ? <SignOut/> : <GainAccess/>)
-  
+  return (authed ?
+    (<>
+      <div>{user.userName}</div>
+      < SignOut />
+    </>
+    )
+    :
+    <GainAccess />)
+
 }
 
 export default AccountSection

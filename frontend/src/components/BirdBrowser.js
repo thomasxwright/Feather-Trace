@@ -18,7 +18,6 @@ function BirdBrowser() {
     const state = useLocation()
     
     useEffect(() => {
-        console.log(authed)
         const getBirds = async () => {
             const birdsFromServer = await fetchBirds()
             setCladisticData(birdsFromServer.cladisticBirdData)
@@ -26,16 +25,13 @@ function BirdBrowser() {
             // birdsFromServer = birdsFromServer.map(birdJson => new BirdObj(birdJson))
             // console.log(birdsFromServer[3])
         }
-        console.log('useeffect')
         getBirds()
     }, [state])
 
     const fetchBirds = async () => {
         // console.log(`http://localhost:4000/birds${state.search}`)
         const res = await fetch(`http://localhost:4000/birds${state.search}`, {credentials: 'include'})
-        console.log('in fetchbirds')
         const data = await res.json()
-        // console.log('we got from the backend', data)
         return data
     }
 

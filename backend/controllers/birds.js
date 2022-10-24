@@ -10,10 +10,7 @@ module.exports = {
         try {
             console.log('fetching', paramElem.mongoDbSearchObj)
             let start = new Date()
-            // const birdData = await Bird.find(paramElem.mongoDbSearchObj, { wikiHtml: false })
-
             let birdData = await Bird.aggregate(paramElem.fullPipeline)
-            // res.json({ birdData: birdData })
 
             console.log('birds retrieved from db:', birdData.length)
             const birdObjs = birdData.map(json => {
@@ -21,11 +18,8 @@ module.exports = {
                 bird.processInfoSegments()
                 return bird.output
             })
-            // .filter(bird => bird.call)
-            console.log('processed the bird info segments')
             console.log(`it took ${new Date() - start} ms to get this stuff`)
             const cladisticStructure = getCladisticStructure(birdObjs)
-            console.log('organized the birds cladistically')
             res.json({ filters: paramElem.query, cladisticBirdData: cladisticStructure })
             // res.render('birds.ejs', { birdData: birdObjs, filters: paramElem.query, count: birdObjs.length, cladisticBirdData: cladisticStructure })
         } catch (err) {
@@ -139,11 +133,6 @@ module.exports = {
         } catch (err) {
             console.log(err)
         }
-    },
-
-    test: async (req, res) => {
-        console.log('yeaj', new Date().toLocaleTimeString(), req.user)
-        res.json({ ysl: 'j' })
     }
 }
 
@@ -198,7 +187,6 @@ class ParamElement {
             this._paramElem[`speciesGlobal.${query.cladeType}`] = { '$regex': regex }
         }
 
-        console.log('ffisishsh-------------', user._id)
         //TO DO: you need to actually sanitize the isLogged parameter. it contains a string 'true' or 'false'. right now i only check if it's one of those
         if (query.isLogged && ['true', 'false'].includes(query.isLogged)) {
             const shouldMatchEmptyArr = query.isLogged === 'true' ? '$ne' : '$eq'
@@ -238,7 +226,7 @@ class ParamElement {
             { $project: { wikiHtml: 0 } },
             { $match: this.mongoDbSearchObj },     //clade, state
             // { $limit: 80 },                         //how many?
-            { $sample: { size: 120 } },
+            { $sample: { size: 80 } },
         ]
         // console.log('DA PIPELINE:', this.fullPipeline)
     }
