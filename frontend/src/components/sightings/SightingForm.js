@@ -1,6 +1,22 @@
 import React, { useState } from "react"
 
-const SightingForm = ({ birdId, addNewSighting }) => {
+const SightingForm = ({ birdId, addNewSighting, showForm }) => {
+
+    const styling = {
+        form: {
+            display: 'flex',
+            flexDirection: 'column',
+            width: '100%',
+            margin: '30px'
+        },
+        inner: {
+            margin: '16px 0'
+        },
+        notes: {
+            height: '170px',
+            width: '60%'
+        }
+    }
 
     const [input, setInput] = useState({ notes: '', file: React.createRef() })
 
@@ -17,28 +33,37 @@ const SightingForm = ({ birdId, addNewSighting }) => {
         formData.append('birdId', birdId)
         const requestOptions = {
             method: 'POST',
-            body: formData
+            body: formData,
+            credentials: 'include',
         }
         const result = await fetch('http://localhost:4000/sightings/submitSighting', requestOptions)
         const json = await result.json()
         addNewSighting(json)
+        showForm(false)
     }
 
 
     return (
-        <form onSubmit={handleSubmit}>
-            <label>
-                Notes (optional)
-                <textarea name='notes' value={input.notes} onChange={handleInputChange} ></textarea>
-            </label>
+        <>
+            <form onSubmit={handleSubmit} style={styling.form}>
+                <label style={styling.inner}>
+                    <div>Notes (optional):</div>
+                    <textarea name='notes' value={input.notes} onChange={handleInputChange} style={styling.notes}></textarea>
+                </label>
 
-            <label>
-                Photo (optional)
-                <input name='file' type='file' ref={input.file} />
-            </label>
+                <label style={styling.inner}>
+                    <div>
+                        Photo (optional):
+                    </div>
+                    <input name='file' type='file' ref={input.file} />
+                </label>
 
-            <input type='submit' value='Submit' />
-        </form>
+                <div style={{ display: 'flex' }}>
+                    <input type='submit' value='Submit' style={styling.inner} />
+                    <button onClick={() => showForm(false)}>Cancel</button>
+                </div>
+            </form>
+        </>
     )
 }
 

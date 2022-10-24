@@ -5,7 +5,8 @@ const Bird = require('../models/Bird')
 module.exports = {
     getSightings: async (req, res) => {
         try {
-            const sightingsData = await Sighting.find({ birdId: req.params.id })
+            const sightingsData = await Sighting.find({ birdId: req.params.id, userId: req.user.id })
+            console.log('req.user is.............................', req.user)
             // const sightingsData = await Sighting.find({ userId: req.user.id, birdId: req.params.id })
             res.json(sightingsData)
 
@@ -19,12 +20,10 @@ module.exports = {
 
     submitSighting: async (req, res) => {
         try {
-            console.log('here is req.body:', req.body)
-            // console.log('here is req.file:', req.file)
-
+            // console.log(req.user)
             const sightingParameters = {
                 birdId: req.body.birdId,
-                userId: '63224ab4d8b1963324e4336b' //req.user.id
+                userId: req.user.id //req.user.id
             }
 
             // If a file was added, send it to cloudinary and put that into our parameters.

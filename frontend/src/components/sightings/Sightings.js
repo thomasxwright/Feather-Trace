@@ -3,9 +3,10 @@ import { useLocation, useParams } from 'react-router-dom';
 import AddSighting from './AddSighting';
 import Sighting from './Sighting';
 import useAuth from '../../auth/useAuth';
+import SightingsCount from './SightingsCount';
 
 const Sightings = () => {
-	const { user } = useAuth();
+    const { user } = useAuth();
 
     const state = useLocation()
     const params = useParams()
@@ -34,14 +35,15 @@ const Sightings = () => {
     }
 
     const fetchFromLink = async (link) => {
-        const res = await fetch(`http://localhost:4000${link}`)
+        const res = await fetch(`http://localhost:4000${link}`, {credentials: 'include'})
         const data = await res.json()
         return data
     }
 
     const styling = {
         image: {
-            width: '300px'
+            width: '300px',
+            marginRight: '50px'
         },
         list: {
             listStyleType: 'none',
@@ -53,9 +55,13 @@ const Sightings = () => {
 
     return (
         <>
-        <p>{user.userName}</p>
-            <h1>Sightings of {bird.commonName}</h1>
-            {bird.images && (<img style={styling.image} src={bird.images[0].src} alt={`photo of ${bird.commonName}`} />)}
+            <div style={{ display: 'flex' }}>
+                {bird.images && (<img style={styling.image} src={bird.images[0].src} alt={`photo of ${bird.commonName}`} />)}
+                <section>
+                    <h1>{bird.commonName}</h1>
+                    <SightingsCount count={7}/>
+                </section>
+            </div>
 
             <AddSighting birdId={bird._id} addNewSighting={addNewSighting} />
 

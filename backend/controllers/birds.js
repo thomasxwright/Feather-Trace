@@ -6,7 +6,7 @@ const { query } = require('express')
 
 module.exports = {
     getBirds: async (req, res) => {
-        const paramElem = new ParamElement(req.query)
+        const paramElem = new ParamElement(req.query, req.user)
         try {
             console.log('fetching', paramElem.mongoDbSearchObj)
             let start = new Date()
@@ -47,7 +47,7 @@ module.exports = {
     getBirdById: async (req, res) => {
         try {
             console.log(req.params)
-            const bird = await Bird.findOne({ _id: req.params.id }, {wikiHtml: 0})
+            const bird = await Bird.findOne({ _id: req.params.id }, { wikiHtml: 0 })
             res.json(bird)
         } catch (err) {
             console.log(`couldn't find ${req.params.id}`)
@@ -139,6 +139,11 @@ module.exports = {
         } catch (err) {
             console.log(err)
         }
+    },
+
+    test: async (req, res) => {
+        console.log('yeaj', new Date().toLocaleTimeString(), req.user)
+        res.json({ ysl: 'j' })
     }
 }
 
@@ -169,7 +174,7 @@ async function attachSubspeciesToABird(parentSpecies, subspecies) {
 
 
 class ParamElement {
-    constructor(query) {
+    constructor(query, user) {
         this._query = query
         this._paramElem = {}
         this._birdsWithSightingsPipeline = []
@@ -193,6 +198,7 @@ class ParamElement {
             this._paramElem[`speciesGlobal.${query.cladeType}`] = { '$regex': regex }
         }
 
+        console.log('ffisishsh-------------', user._id)
         //TO DO: you need to actually sanitize the isLogged parameter. it contains a string 'true' or 'false'. right now i only check if it's one of those
         if (query.isLogged && ['true', 'false'].includes(query.isLogged)) {
             const shouldMatchEmptyArr = query.isLogged === 'true' ? '$ne' : '$eq'
@@ -200,14 +206,30 @@ class ParamElement {
 
                 { $addFields: { "_id": { '$toString': '$_id' } } }, //get its id as an object
                 {
-                    $lookup: {         //cross check with the birds collection
-                        "from": "sightings",
-                        "localField": "_id",
-                        "foreignField": "birdId",
-                        "as": "sightings"
+                    $lookup:
+                    {
+                        from: "sightings",
+                        let: { myBirdId: "$_id" },
+                        pipeline: [
+                            {
+                                $match:
+                                {
+                                    $expr:
+                                    {
+                                        $and:
+                                            [
+                                                { $eq: ["$birdId", "$$myBirdId"] },                    //compare the birdId from sighting to the id of the bird entry
+                                                { $eq: [user.id, "$userId"] }   //compare the request's user ID with the sighting's saved user ID
+                                            ]
+                                    }
+                                }
+                            },
+                            // { $project: { stock_item: 0, _id: 0 } }
+                        ],
+                        as: "sightings"
                     }
                 },
-                {$match: {sightings: {$type: 'array', [shouldMatchEmptyArr]: []}}}
+                { $match: { sightings: { $type: 'array', [shouldMatchEmptyArr]: [] } } }    // Either matches the birds that came up with or without logs attached depending on the query parameter.
             ]
         }
 

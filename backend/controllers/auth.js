@@ -2,15 +2,6 @@ const passport = require('passport')
 const validator = require('validator')
 const User = require('../models/User')
 
-//  exports.getLogin = (req, res) => {
-//     if (req.user) {
-//       return res.redirect('/browse')
-//     }
-//     res.render('login', {
-//       title: 'Login'
-//     })
-//   }
-
 exports.postLogin = (req, res, next) => {
   if (!validator.isEmail(req.body.email)) {
     res.status(400).json({
@@ -51,6 +42,7 @@ exports.postLogin = (req, res, next) => {
       if (err) {
         return next(err);
       }
+      console.log('req.user is ', req.user)
       res.status(201).json({
         user: user,
         message: {

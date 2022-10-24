@@ -32,7 +32,7 @@ function BirdBrowser() {
 
     const fetchBirds = async () => {
         // console.log(`http://localhost:4000/birds${state.search}`)
-        const res = await fetch(`http://localhost:4000/birds${state.search}`)
+        const res = await fetch(`http://localhost:4000/birds${state.search}`, {credentials: 'include'})
         console.log('in fetchbirds')
         const data = await res.json()
         // console.log('we got from the backend', data)
