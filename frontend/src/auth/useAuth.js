@@ -1,14 +1,14 @@
-import * as React from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import * as React from 'react'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
-const authContext = React.createContext();
+const authContext = React.createContext()
 
 function useAuth() {
 	let navigate = useNavigate();
 
-	const [authed, setAuthed] = React.useState(false);
-	const [user, setUser] = React.useState({});
+	const [authed, setAuthed] = React.useState(false)
+	const [user, setUser] = React.useState({})
 
 	React.useEffect(() => {
 		(async () => {
@@ -17,26 +17,26 @@ function useAuth() {
 					method: 'GET',
 					url: 'http://localhost:4000/authenticated',
 					withCredentials: true,
-				});
+				})
 				if (response.status === 200) {
-					setAuthed(true);
-					setUser(response.data);
+					setAuthed(true)
+					setUser(response.data)
 				} else {
-					setAuthed(false);
-					setUser({});
+					setAuthed(false)
+					setUser({})
 				}
 			} catch (err) {
-				console.log(err);
+				console.log(err)
 			}
-		})();
-	}, []);
+		})()
+	}, [])
 
 	return {
 		authed,
 		user,
 		handleLogin(user) {
-			setAuthed(true);
-			setUser(user);
+			setAuthed(true)
+			setUser(user)
 		},
 		async handleLogout() {
 			try {
@@ -44,24 +44,26 @@ function useAuth() {
 					method: 'GET',
 					url: 'http://localhost:4000/logout',
 					withCredentials: true,
-				});
-				console.log('From Server:', response.data.message.msgBody);
-				setAuthed(false);
-				setUser(null);
+				})
+				console.log('From Server:', response.data.message.msgBody)
+				setAuthed(false)
+				setUser(null)
 				// navigate('/');
 			} catch (err) {
-				console.log(err);
+				console.log(err)
 			}
-		},
-	};
+		}
+	}
 }
 
 export function AuthProvider({ children }) {
-	const auth = useAuth();
+	const auth = useAuth()
 
-	return <authContext.Provider value={auth}>{children}</authContext.Provider>;
+	return <authContext.Provider value={auth}>
+		{children}
+	</authContext.Provider>
 }
 
 export default function AuthConsumer() {
-	return React.useContext(authContext);
+	return React.useContext(authContext)
 }

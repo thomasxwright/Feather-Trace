@@ -1,4 +1,5 @@
-import Order from "./Order"
+import Order from "./Taxonomies/Order"
+// import Order from "./Order"
 
 const BirdsGlossary = ({ cladisticData }) => {
 

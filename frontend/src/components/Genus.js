@@ -13,7 +13,7 @@ const Genus = ({ genusData, genusName }) => {
 
     return (
         <ul className="genus" style={isExpanded ? { position: 'relative' } : { position: 'relative', cursor: 'pointer' }}>
-            <BlockingOverlay styling={styling} isExpanded={isExpanded} setIsExpanded={setIsExpanded} colors={[217, 230, 234]} zIndex={2}/>
+            <BlockingOverlay isExpanded={isExpanded} setIsExpanded={setIsExpanded} colors={[217, 230, 234]} zIndex={2}/>
             <CladeHeader isExpanded={isExpanded} setIsExpanded={setIsExpanded} cladeName={genusName} cladeType={'genus'} hoverColor={styling.hoverColor} />
             {Object.entries(genusData).map(species => {
                 return (

@@ -1,16 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap');
 
-.order,
+/* .order,
 .family,
 .genus,
 .species {
   padding: 18px 8px 8px;
-  margin: 18px 8px 8px;
+  margin: 18px 5px 8px;
   list-style-type: none;
   border-radius: 13px;
-}
+} */
 
-.order>span,
+/* .order>span,
 .family>span,
 .genus>span,
 .species>span {
@@ -34,6 +34,10 @@
   background-color: #FFFFFF;
   padding: 10px;
   text-emphasis-color: #eaf1f3;
+} */
+
+ul {
+  padding-left: 0px;
 }
 
 body {

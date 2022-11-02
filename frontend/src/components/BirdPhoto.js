@@ -13,7 +13,7 @@ const BirdPhoto = ({ src, isExpanded }) => {
     }
 
     return (
-        <section><img src={src} style={isExpanded ? styling.normal : { ...styling.normal, ...styling.masked }} /></section>
+        <img src={src} style={isExpanded ? styling.normal : { ...styling.normal, ...styling.masked }} />
     )
 }
 

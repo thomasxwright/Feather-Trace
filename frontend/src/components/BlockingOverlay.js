@@ -1,10 +1,9 @@
 import expandContract from "../utils/expandContract"
 
-const BlockingOverlay = ({ styling, isExpanded, setIsExpanded, colors, zIndex }) => {
+const BlockingOverlay = ({ isExpanded, setIsExpanded, colors, zIndex }) => {
 
     const [r, g, b] = colors
-    styling = {
-        ...styling,
+    const styling = {
         width: '100%',
         height: '100%',
         bottom: '0px',

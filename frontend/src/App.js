@@ -5,24 +5,29 @@ import { RequireAuth } from './auth/RequireAuth';
 import BirdBrowser from './components/BirdBrowser'
 // import { Routes, Route } from 'react-router-dom'
 import { Routes, Route, BrowserRouter as Router } from 'react-router-dom'
-import Sightings from './components/sightings/Sightings';
+import Sightings from './components/sightings/Sightings'
+import { useScreenModeContext } from './auth/useScreenMode';
 
-function App() {
-
-  const styling = {
-    outer: {
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      width: '70%',
-      margin: '0px auto'
+const styling = {
+  outer: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    width: '70%',
+    margin: '0px auto',
+    narrow: {
+      width: '100%'
     }
   }
+}
+
+function App() {
+  const screenMode = useScreenModeContext()
+
 
   return (
-    <div style={styling.outer}>
+    <div style={{...styling.outer, ...styling.outer[screenMode]}}>
       <Routes>
-        {/* <Route path='/' element={<p>nothing here!</p>} /> */}
         <Route path='/*' element={<BirdBrowser />} />
         <Route path='/browse/*' element={<BirdBrowser />} />
         <Route

@@ -48,11 +48,14 @@ const Sightings = () => {
             margin: '0',
             padding: '0',
             width: '100%'
+        },
+        outer: {
+            width: '100%'
         }
     }
 
     return (
-        <>
+        <div style={styling.outer}>
             <div style={{ display: 'flex' }}>
                 {bird.images && bird.images.length > 0 && (<img style={styling.image} src={bird.images[0].src} alt={`photo of ${bird.commonName}`} />)}
                 <section>
@@ -72,7 +75,7 @@ const Sightings = () => {
                     )
                 })}
             </ul>
-        </>
+        </div>
     )
 }
 

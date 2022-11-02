@@ -1,11 +1,12 @@
 import { useState } from "react"
 import { NavLink } from "react-router-dom"
-import { useScreenModeContext } from "../auth/useScreenMode"
-import BirdCall from "./BirdCall"
-import BirdPhoto from "./BirdPhoto"
-import BlockingOverlay from "./BlockingOverlay"
-import CladeHeader from "./CladeHeader"
-import InfoSegment from "./InfoSegment"
+import { useScreenModeContext } from "../../auth/useScreenMode"
+import BirdCall from "../BirdCall"
+import BirdPhoto from "../BirdPhoto"
+import BlockingOverlay from "../BlockingOverlay"
+import CladeHeader from "../CladeHeader"
+import InfoSegment from "../InfoSegment"
+import Taxonomy from "./Taxonomy"
 
 const Bird = ({ bird }) => {
 
@@ -22,6 +23,7 @@ const Bird = ({ bird }) => {
             flexDirection: 'column'
         },
         hoverColor: 'rgb(217, 230, 234, 0.3)',
+        backgroundColor: 'white',
         name: {
             margin: '20px 0',
             fontWeight: '550',
@@ -57,11 +59,25 @@ const Bird = ({ bird }) => {
         })
     }
 
+
+    const values = {
+        isExpanded,
+        setIsExpanded,
+        zIndex: 1,
+        cladeName: bird.species,
+        cladeType: 'species',
+        backgroundColor: 'white',
+        headerColor: [234, 241, 243],
+        additionalStyle: {
+            padding: '8px'
+        }
+
+    }
+
     return (
-        <section className='species unexpanded' style={isExpanded ? { position: 'relative' } : { position: 'relative', cursor: 'pointer' }}>
+        <Taxonomy values={values}>
+            {/* <section className='unexpanded' style={isExpanded ? { position: 'relative'} : { position: 'relative', cursor: 'pointer' }}> */}
             {/* <BlockingOverlay styling={styling} isExpanded={isExpanded} setIsExpanded={setIsExpanded} colors={[217, 230, 234]} zIndex={0} opacity={0.5}/> */}
-            <BlockingOverlay isExpanded={isExpanded} setIsExpanded={setIsExpanded} colors={[234, 241, 243]} zIndex={0} />
-            <CladeHeader isExpanded={isExpanded} setIsExpanded={setIsExpanded} cladeName={bird.species} hoverColor={styling.hoverColor} />
             <section style={styling.name} >{bird.commonName}</section>
 
             {screenMode === 'narrow' ?
@@ -84,29 +100,32 @@ const Bird = ({ bird }) => {
 
 
 
-            <section style={styling.inner}>
-                <section style={{ ...styling.column, width: '250px' }}>
-                    <BirdPhoto src={bird.images[0]} isExpanded={isExpanded} />
-                    {/* {console.log('call:', bird.call)} */}
-                    {/* <BirdCall call={bird.call} /> */}
-                    {/* {console.log(bird.calls)} */}
-                    {Boolean(bird.calls.length) && <BirdCall calls={bird.calls} />}
-                    <NavLink style={styling.link} to={`/sightings/${bird._id}`}>
-                        Log Sightings
-                    </NavLink>
-                </section>
-                {/* <section><img src={bird.images[0]} style={styling.image} /></section> */}
+            {
+                screenMode !== 'narrow' && <section style={styling.inner}>
+                    <section style={{ ...styling.column, width: '250px' }}>
+                        <BirdPhoto src={bird.images[0]} isExpanded={isExpanded} />
+                        {/* {console.log('call:', bird.call)} */}
+                        {/* <BirdCall call={bird.call} /> */}
+                        {/* {console.log(bird.calls)} */}
+                        {Boolean(bird.calls.length) && <BirdCall calls={bird.calls} />}
+                        <NavLink style={styling.link} to={`/sightings/${bird._id}`}>
+                            Log Sightings
+                        </NavLink>
+                    </section>
+                    {/* <section><img src={bird.images[0]} style={styling.image} /></section> */}
 
-                <section style={{ ...styling.column, paddingLeft: '55px', maxWidth: '65%' }}>
-                    {bird.generalDescription.map((paragraph, i) => <p key={i} style={i === 0 ? { marginTop: '0', lineHeight: '1.75' } : { lineHeight: '1.75' }}>{paragraph}</p>)}
-                    {bird.infoSegments.map((segment, i) => <InfoSegment key={i} title={segment.title} info={segment.info} />)}
-                </section>
-                {/* <a href={`/sightings/${bird._id}`}>Sightings</a> */}
-                {/* <section>
+                    <section style={{ ...styling.column, paddingLeft: '55px', maxWidth: '65%' }}>
+                        {bird.generalDescription.map((paragraph, i) => <p key={i} style={i === 0 ? { marginTop: '0', lineHeight: '1.75' } : { lineHeight: '1.75' }}>{paragraph}</p>)}
+                        {bird.infoSegments.map((segment, i) => <InfoSegment key={i} title={segment.title} info={segment.info} />)}
+                    </section>
+                    {/* <a href={`/sightings/${bird._id}`}>Sightings</a> */}
+                    {/* <section>
                     {bird.infoSegments}
                 </section> */}
-            </section>
-        </section>
+                </section>
+            }
+            {/* </section> */}
+        </Taxonomy>
         // </div>
     )
 }
