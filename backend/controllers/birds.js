@@ -169,6 +169,9 @@ class ParamElement {
         this._birdsWithSightingsPipeline = []
         this._fullPipeline = []
 
+        if (query.hasOwnProperty('isLogged') && !user)
+            delete query.isLogged
+
         if (query.state) {
             this._paramElem.nations = {
                 $elemMatch: {
@@ -226,7 +229,7 @@ class ParamElement {
             { $project: { wikiHtml: 0 } },
             { $match: this.mongoDbSearchObj },     //clade, state
             // { $limit: 80 },                         //how many?
-            { $sample: { size: 80 } },
+            // { $sample: { size: 400 } },
         ]
         // console.log('DA PIPELINE:', this.fullPipeline)
     }
