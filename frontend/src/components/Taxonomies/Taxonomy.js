@@ -33,7 +33,7 @@ const Taxonomy = ({values, children}) => {
         <section style={{ ...styling.outer, ...styling.outer[screenMode], ...additionalStyle }}>
             <BlockingOverlay isExpanded={isExpanded} setIsExpanded={setIsExpanded} colors={headerColor} zIndex={zIndex} />
             <CladeHeader isExpanded={isExpanded} setIsExpanded={setIsExpanded} cladeName={cladeName} cladeType={cladeType} hoverColor={styling.hoverColor} />
-            <ul style={{ listStyle: 'none' }}>
+            <ul style={{ listStyle: 'none', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around' }}>
                 {children}
             </ul>
         </section>

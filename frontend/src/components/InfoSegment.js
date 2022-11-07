@@ -2,7 +2,7 @@ import { useState } from "react"
 
 const InfoSegment = ({ title, info }) => {
 
-    const [visibility, setVisibility] = useState(false)
+    const [visibility, setVisibility] = useState(info.join('').length < 250)
 
     const styling = {
         title: {
@@ -25,6 +25,7 @@ const InfoSegment = ({ title, info }) => {
         <section onClick={!visibility ? handleClick : undefined} style={visibility ? {} : {cursor: 'pointer'}}>
             <h5 style={styling.title} >{title}</h5>
             <section style={styling.info}>
+                {/* {visibility ? <p>visible {info.join('').length}</p> : <p>not visible {info.length}</p>} */}
                 {!visibility ? <p>{abbreviatedInfoSegment(info)}</p> : info.map((p, i) => (
                     <p key={i}>
                         {p}

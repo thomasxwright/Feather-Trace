@@ -102,7 +102,7 @@ const Bird = ({ bird }) => {
 
             {
                 screenMode !== 'narrow' && <section style={styling.inner}>
-                    <section style={{ ...styling.column, width: '250px' }}>
+                    <section style={{ ...styling.column, width: '40%' }}>
                         <BirdPhoto src={bird.images[0]} isExpanded={isExpanded} />
                         {/* {console.log('call:', bird.call)} */}
                         {/* <BirdCall call={bird.call} /> */}
@@ -114,7 +114,7 @@ const Bird = ({ bird }) => {
                     </section>
                     {/* <section><img src={bird.images[0]} style={styling.image} /></section> */}
 
-                    <section style={{ ...styling.column, paddingLeft: '55px', maxWidth: '65%' }}>
+                    <section style={{ ...styling.column, paddingLeft: '4%', maxWidth: '65%' }}>
                         {bird.generalDescription.map((paragraph, i) => <p key={i} style={i === 0 ? { marginTop: '0', lineHeight: '1.75' } : { lineHeight: '1.75' }}>{paragraph}</p>)}
                         {bird.infoSegments.map((segment, i) => <InfoSegment key={i} title={segment.title} info={segment.info} />)}
                     </section>

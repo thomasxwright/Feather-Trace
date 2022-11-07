@@ -6,8 +6,7 @@ import Taxonomy from "./Taxonomy"
 
 const Order = ({ orderData, orderName }) => {
     const howManySubgroups = Object.values(orderData).length
-    const [isExpanded, setIsExpanded] = useState(howManySubgroups < 2)
-    console.log(orderName, orderData)
+    const [isExpanded, setIsExpanded] = useState(true)
 
     const styling = {
         hoverColor: 'rgba(255, 255, 255, 0.15)'

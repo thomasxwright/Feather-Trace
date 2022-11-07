@@ -11,8 +11,8 @@ const Genus = ({ genusData, genusName }) => {
         bgColor: 'rgb(217, 230, 234)'
     }
     const howManySubgroups = Object.values(genusData).length
-    const [isExpanded, setIsExpanded] = useState(howManySubgroups < 2)
-    // const [isExpanded, setIsExpanded] = useState(false)
+    // const [isExpanded, setIsExpanded] = useState(howManySubgroups === 1)
+    const [isExpanded, setIsExpanded] = useState(false)
 
     const values = {
         isExpanded,
