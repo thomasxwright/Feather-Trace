@@ -13,7 +13,7 @@ const BlockingOverlay = ({ isExpanded, setIsExpanded, colors, zIndex }) => {
         pointerEvents: isExpanded ? 'none' : 'auto',
         opacity: isExpanded ? '0' : '1',
         transition: 'opacity 0.25s',
-        background: `linear-gradient(to top, rgba(${r}, ${g}, ${b}, 1) 2%, rgba(${r}, ${g}, ${b}, 0.2) 26%, rgba(${r}, ${g}, ${b}, 0) 80% )`,
+        background: `linear-gradient(to top, rgba(${r}, ${g}, ${b}, 1) 2%, rgba(${r}, ${g}, ${b}, 0.2) 6%, rgba(${r}, ${g}, ${b}, 0) 80% )`,
         zIndex: zIndex
     }
 

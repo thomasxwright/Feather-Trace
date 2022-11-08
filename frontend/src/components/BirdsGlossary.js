@@ -7,6 +7,7 @@ const BirdsGlossary = ({ cladisticData }) => {
         outer: {
             display: 'flex',
             flexDirection: 'column',
+            alignItems: 'center',
             listStyleType: 'none',
             padding: '0'
         }

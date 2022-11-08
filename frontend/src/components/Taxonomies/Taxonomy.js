@@ -13,7 +13,7 @@ const Taxonomy = ({values, children}) => {
         hoverColor: 'rgba(255, 255, 255, 0.15)',
         outer: {
             cursor: isExpanded ? 'auto' : 'pointer',
-            maxHeight: isExpanded ? 'none' : '330px',
+            maxHeight: isExpanded ? 'none' : '550px',
             // height: 'fit-content',
             overflow: isExpanded ? 'visible' : 'hidden',
             position: 'relative',
@@ -33,7 +33,7 @@ const Taxonomy = ({values, children}) => {
         <section style={{ ...styling.outer, ...styling.outer[screenMode], ...additionalStyle }}>
             <BlockingOverlay isExpanded={isExpanded} setIsExpanded={setIsExpanded} colors={headerColor} zIndex={zIndex} />
             <CladeHeader isExpanded={isExpanded} setIsExpanded={setIsExpanded} cladeName={cladeName} cladeType={cladeType} hoverColor={styling.hoverColor} />
-            <ul style={{ listStyle: 'none', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around' }}>
+            <ul style={{ listStyle: 'none', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around', alignItems: 'center' }}>
                 {children}
             </ul>
         </section>

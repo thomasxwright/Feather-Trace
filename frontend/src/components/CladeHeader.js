@@ -32,8 +32,8 @@ const CladeHeader = ({ isExpanded, setIsExpanded, cladeName, cladeType, hoverCol
         tally: {
             // marginLeft: '35px',
             opacity: isExpanded ? '0.12' : '0.5',
-            position: 'absolute',
-            left: '20%',
+            // position: 'absolute',
+            // left: '20%',
             transition: 'opacity 0.3s'
         }
     }
@@ -45,8 +45,10 @@ const CladeHeader = ({ isExpanded, setIsExpanded, cladeName, cladeType, hoverCol
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}>
             <img src={arrow} style={isExpanded ? styling.image : { ...styling.image, transform: 'rotate(-90deg)' }} />
-            <span>{cladeName}</span>
-            {cladeNumbers[cladeType] && <span style={isHovered ? {...styling.tally, opacity: 0.6} : styling.tally}>{cladeNumbers[cladeType][cladeName]} bird{cladeNumbers[cladeType][cladeName] > 1 && 's'}</span>}
+            <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+                <span>{cladeName}</span>
+                {cladeNumbers[cladeType] && <span style={isHovered ? { ...styling.tally, opacity: 0.6 } : styling.tally}>{cladeNumbers[cladeType][cladeName]} bird{cladeNumbers[cladeType][cladeName] > 1 && 's'}</span>}
+            </div>
         </section>
     )
 }

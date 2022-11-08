@@ -22,6 +22,15 @@ const Family = ({ familyData, familyName }) => {
         headerColor: [194, 196, 216]
     }
 
+    let condensedWidth = 'auto'
+    if (howManySubgroups > 3 && howManySubgroups < 8)
+        condensedWidth = '450px'
+    else if (howManySubgroups < 18)
+        condensedWidth = '650px'
+    else if (howManySubgroups >= 18)
+        condensedWidth = '100%'
+
+
     return (
         <Taxonomy values={values}>
             {isExpanded ?
@@ -33,12 +42,12 @@ const Family = ({ familyData, familyName }) => {
                     )
                 })
                 :
-                <ul style={{ display: 'flex', flexWrap: 'wrap', listStyle: 'none' }}>
+                <ul style={{ display: 'flex', flexWrap: 'wrap', listStyle: 'none', alignItems: 'center', justifyContent: 'center', width: condensedWidth }}>
                     {Object.entries(familyData).map(genus => {
                         return (
                             <li key={genus[0]}>
                                 <div>
-                                    <img src={Object.values(genus[1])[0].images[0]} style={{ width: '120px' }}
+                                    <img src={Object.values(genus[1])[0].images[0]} style={{ height: '150px' }}
                                     />
                                 </div>
                                 {/* <img src={Object.entries(family[0])[0][0].images[0]} /> */}

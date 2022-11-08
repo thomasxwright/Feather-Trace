@@ -45,12 +45,12 @@ console.log(isExpanded, genusData)
                     )
                 })
                 :
-                <ul style={{ display: 'flex', flexWrap: 'wrap', listStyle: 'none' }}>
+                <ul style={{ display: 'flex', flexWrap: 'wrap', listStyle: 'none', alignItems: 'center', justifyContent: 'center' }}>
                     {genusData.map(species => {
                         return (
                             <li key={species._id}>
                                 <div>
-                                    <img src={species.images[0]} style={{ width: '120px' }}
+                                    <img src={species.images[0]} style={{ height: '150px' }}
                                     />
                                 </div>
                                 {/* <img src={Object.entries(family[0])[0][0].images[0]} /> */}
