@@ -19,11 +19,11 @@ function BirdBrowser() {
             width: '100%'
         }
     }
-    console.log('loaded teh birds section', new Date().getMilliseconds())
+    console.log('loaded teh birds section', new Date().toLocaleTimeString())
 
     
     useEffect(() => {
-    console.log('getting da birds', new Date().getMilliseconds())
+    console.log('getting da birds', new Date().toLocaleTimeString())
 
         const getBirds = async () => {
             const birdsFromServer = await fetchBirds()

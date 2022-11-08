@@ -41,6 +41,9 @@ class BirdObj {
     get commonName() {
         return this._data.commonName
     }
+    get smallImages() {
+        return this._data.images.map(image => image.src.replace('800px', '200px'))
+    }
     get images() {
         return this._data.images.map(image => image.src)
     }

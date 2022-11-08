@@ -228,7 +228,7 @@ class ParamElement {
             ...query.isLogged ? this.birdsWithSightingsPipeline : [],  //isLogged?
             { $project: { wikiHtml: 0 } },
             { $match: this.mongoDbSearchObj },     //clade, state
-            // { $limit: 80 },                         //how many?
+            // { $limit: 160 },                         //how many?
             // { $sample: { size: 400 } },
         ]
         // console.log('DA PIPELINE:', this.fullPipeline)

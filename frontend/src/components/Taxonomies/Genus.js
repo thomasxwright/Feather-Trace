@@ -23,7 +23,19 @@ const Genus = ({ genusData, genusName }) => {
         backgroundColor: '#D9E6EA',
         headerColor: [217, 230, 234]
     }
-console.log(isExpanded, genusData)
+
+    let condensedWidth = 'auto'
+    if (howManySubgroups > 3 && howManySubgroups < 8)
+        condensedWidth = '450px'
+    else if (howManySubgroups < 18)
+        condensedWidth = '650px'
+    else if (howManySubgroups >= 18)
+        condensedWidth = '100%'
+
+
+        console.log(`loaded genus ${genusName}  ${new Date().getSeconds()}`)
+
+
     return (
         <Taxonomy values={values}>
             {/* {Object.entries(genusData).map(species => {
@@ -45,12 +57,12 @@ console.log(isExpanded, genusData)
                     )
                 })
                 :
-                <ul style={{ display: 'flex', flexWrap: 'wrap', listStyle: 'none', alignItems: 'center', justifyContent: 'center' }}>
+                <ul style={{ display: 'flex', flexWrap: 'wrap', listStyle: 'none', justifyContent: 'center', maxWidth: condensedWidth, paddingRight: '4px' }}>
                     {genusData.map(species => {
                         return (
                             <li key={species._id}>
-                                <div>
-                                    <img src={species.images[0]} style={{ height: '150px' }}
+                                <div style={{lineHeight: '0'}}>
+                                    <img src={species.images[0]} style={{ height: '150px', outline: '4px solid white', margin: '4px 0 0 4px' }} loading='lazy'
                                     />
                                 </div>
                                 {/* <img src={Object.entries(family[0])[0][0].images[0]} /> */}

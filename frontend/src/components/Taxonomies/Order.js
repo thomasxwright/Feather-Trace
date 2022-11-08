@@ -22,6 +22,16 @@ const Order = ({ orderData, orderName }) => {
         headerColor: [180, 167, 197]
     }
 
+    let condensedWidth = 'auto'
+    if (howManySubgroups > 3 && howManySubgroups < 8)
+        condensedWidth = '450px'
+    else if (howManySubgroups < 18)
+        condensedWidth = '650px'
+    else if (howManySubgroups >= 18)
+        condensedWidth = '100%'
+
+        console.log(`loaded order ${orderName}   ${new Date().getSeconds()}`)
+
     return (
         <Taxonomy values={values}>
             {isExpanded ?
@@ -33,12 +43,12 @@ const Order = ({ orderData, orderName }) => {
                     )
                 })
                 :
-                <ul style={{ display: 'flex', flexWrap: 'wrap', listStyle: 'none', alignItems: 'center' }}>
+                <ul style={{ display: 'flex', flexWrap: 'wrap', listStyle: 'none', justifyContent: 'center', maxWidth: condensedWidth, paddingRight: '4px' }}>
                     {Object.entries(orderData).map(family => {
                         return (
                             <li key={family[0]}>
-                                <div>
-                                    <img src={Object.values(family[1])[0][0].images[0]} style={{ height: '150px' }}
+                                <div style={{lineHeight: '0'}}>
+                                    <img src={Object.values(family[1])[0][0].images[0]} style={{ height: '150px', outline: '4px solid white', margin: '4px 0 0 4px' }} loading='lazy'
                                     />
                                 </div>
                                 {/* <img src={Object.entries(family[0])[0][0].images[0]} /> */}

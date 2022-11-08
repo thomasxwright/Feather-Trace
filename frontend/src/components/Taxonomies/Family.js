@@ -30,6 +30,8 @@ const Family = ({ familyData, familyName }) => {
     else if (howManySubgroups >= 18)
         condensedWidth = '100%'
 
+        console.log(`loaded family ${familyName}  ${new Date().getSeconds()}`)
+
 
     return (
         <Taxonomy values={values}>
@@ -42,12 +44,12 @@ const Family = ({ familyData, familyName }) => {
                     )
                 })
                 :
-                <ul style={{ display: 'flex', flexWrap: 'wrap', listStyle: 'none', alignItems: 'center', justifyContent: 'center', width: condensedWidth }}>
+                <ul style={{ display: 'flex', flexWrap: 'wrap', listStyle: 'none', justifyContent: 'center', maxWidth: condensedWidth, paddingRight: '4px' }}>
                     {Object.entries(familyData).map(genus => {
                         return (
                             <li key={genus[0]}>
-                                <div>
-                                    <img src={Object.values(genus[1])[0].images[0]} style={{ height: '150px' }}
+                                <div style={{lineHeight: '0'}}>
+                                    <img src={Object.values(genus[1])[0].images[0]} style={{ height: '150px', outline: '4px solid white', margin: '4px 0 0 4px' }} loading='lazy'
                                     />
                                 </div>
                                 {/* <img src={Object.entries(family[0])[0][0].images[0]} /> */}

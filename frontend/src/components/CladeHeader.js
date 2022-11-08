@@ -44,10 +44,11 @@ const CladeHeader = ({ isExpanded, setIsExpanded, cladeName, cladeType, hoverCol
             onClick={e => expandContract(e.currentTarget.parentElement, isExpanded, setIsExpanded)}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}>
+                {cladeNumbers[cladeType] && <span style={isHovered ? { ...styling.tally, opacity: 0.6 } : styling.tally}>{cladeNumbers[cladeType][cladeName]}</span>}
             <img src={arrow} style={isExpanded ? styling.image : { ...styling.image, transform: 'rotate(-90deg)' }} />
             <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
                 <span>{cladeName}</span>
-                {cladeNumbers[cladeType] && <span style={isHovered ? { ...styling.tally, opacity: 0.6 } : styling.tally}>{cladeNumbers[cladeType][cladeName]} bird{cladeNumbers[cladeType][cladeName] > 1 && 's'}</span>}
+                {/* {cladeNumbers[cladeType] && <span style={isHovered ? { ...styling.tally, opacity: 0.6 } : styling.tally}>{cladeNumbers[cladeType][cladeName]} bird{cladeNumbers[cladeType][cladeName] > 1 && 's'}</span>} */}
             </div>
         </section>
     )
