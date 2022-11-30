@@ -33,7 +33,7 @@ function BirdBrowser() {
     }, [state])
 
     const fetchBirds = async () => {
-        const res = await fetch(`http://localhost:4000/birds${state.search}`, {credentials: 'include'})
+        const res = await fetch(`/birds${state.search}`, {credentials: 'include'})
         const data = await res.json()
         return data
     }

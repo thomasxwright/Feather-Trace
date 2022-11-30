@@ -33,7 +33,7 @@ const Sightings = () => {
     }
 
     const fetchFromLink = async (link) => {
-        const res = await fetch(`http://localhost:4000${link}`, {credentials: 'include'})
+        const res = await fetch(link, {credentials: 'include'})
         const data = await res.json()
         return data
     }

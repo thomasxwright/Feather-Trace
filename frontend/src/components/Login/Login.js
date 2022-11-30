@@ -35,7 +35,7 @@ const Login = () => {
                     email: loginData.email,
                     password: loginData.password,
                 },
-                url: 'http://localhost:4000/login',
+                url: '/login',
                 withCredentials: true,
             })
             console.log('From Server:', response.data.user);

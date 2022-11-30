@@ -63,7 +63,7 @@ const SightingForm = ({ birdId, addNewSighting, showForm }) => {
             body: formData,
             credentials: 'include',
         }
-        const result = await fetch('http://localhost:4000/sightings/submitSighting', requestOptions)
+        const result = await fetch('/sightings/submitSighting', requestOptions)
         const json = await result.json()
         addNewSighting(json)
         showForm(false)

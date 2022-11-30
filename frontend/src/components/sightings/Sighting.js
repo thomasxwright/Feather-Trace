@@ -54,7 +54,7 @@ const Sighting = ({ sighting, hideDeletedSighting }) => {
   }
 
   const deleteSighting = async () => {
-    const result = await fetch(`http://localhost:4000/sightings/deleteSighting/${sighting._id}`, { method: 'DELETE', headers: { 'Content-Type': 'application/json' } })
+    const result = await fetch(`/sightings/deleteSighting/${sighting._id}`, { method: 'DELETE', headers: { 'Content-Type': 'application/json' } })
     const json = await result.json()
     if (json.deleted) {
       hideDeletedSighting(sighting._id)

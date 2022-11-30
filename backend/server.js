@@ -24,7 +24,7 @@ app.use(cors({
   credentials: true,
   origin: 'http://localhost:3000',
 }))
-app.use(express.static('public'))
+app.use(express.static('build'))
 app.use(express.urlencoded({ extended: true, limit: '2mb' }))
 app.use(express.json({ limit: '2mb' }))
 app.use(logger('dev'))

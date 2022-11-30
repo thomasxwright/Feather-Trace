@@ -15,7 +15,7 @@ function useAuth() {
 			try {
 				const response = await axios({
 					method: 'GET',
-					url: 'http://localhost:4000/authenticated',
+					url: '/authenticated',
 					withCredentials: true,
 				})
 				if (response.status === 200) {
@@ -42,7 +42,7 @@ function useAuth() {
 			try {
 				const response = await axios({
 					method: 'GET',
-					url: 'http://localhost:4000/logout',
+					url: '/logout',
 					withCredentials: true,
 				})
 				console.log('From Server:', response.data.message.msgBody)
