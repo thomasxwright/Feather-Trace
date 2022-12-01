@@ -62,7 +62,7 @@ const Genus = ({ genusData, genusName }) => {
                         return (
                             <li key={species._id}>
                                 <div style={{lineHeight: '0'}}>
-                                    <img src={species.images[0]} style={{ height: '150px', outline: '4px solid white', margin: '4px 0 0 4px' }} loading='lazy'
+                                    <img src={species.images[0]} style={{ height: '150px', outline: '4px solid white', margin: '4px 0 0 4px', maxWidth: '350px' }} loading='lazy'
                                     />
                                 </div>
                                 {/* <img src={Object.entries(family[0])[0][0].images[0]} /> */}
