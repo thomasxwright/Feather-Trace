@@ -48,7 +48,7 @@ const Order = ({ orderData, orderName }) => {
                         return (
                             <li key={family[0]}>
                                 <div style={{lineHeight: '0'}}>
-                                    <img src={Object.values(family[1])[0][0].images[0]} style={{ height: '150px', outline: '4px solid white', margin: '4px 0 0 4px', maxWidth: '350px' }} loading='lazy'
+                                    <img src={Object.values(family[1])[0][0].images[0]} style={{ height: '150px', outline: '4px solid white', margin: '4px 0 0 4px', maxWidth: '320px' }} loading='lazy'
                                     />
                                 </div>
                                 {/* <img src={Object.entries(family[0])[0][0].images[0]} /> */}
