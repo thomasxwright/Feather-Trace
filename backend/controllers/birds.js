@@ -13,12 +13,19 @@ module.exports = {
             let birdData = await Bird.aggregate(paramElem.fullPipeline)
 
             console.log('birds retrieved from db:', birdData.length)
-            const birdObjs = birdData.map(json => {
-                const bird = new BirdObj(json)
-                bird.processInfoSegments()
-                return bird.output
+            console.log(`it took ${new Date() - start} ms to get the birds from the database`)
+
+            const birdObjs = birdData.map(bird => {
+                bird.species = bird.scientificName.split(' ').slice(1).join(' ')
+                delete bird.scientificName
+                return bird
             })
-            console.log(`it took ${new Date() - start} ms to get this stuff`)
+            // this code is from when i sent the full bird document from the database.
+            // const birdObjs = birdData.map(json => {
+            //     const bird = new BirdObj(json)
+            //     bird.processInfoSegments()
+            //     return bird.output
+            // })
             const cladisticStructure = getCladisticStructure(birdObjs)
             res.json({ filters: paramElem.query, cladisticBirdData: cladisticStructure })
             // res.render('birds.ejs', { birdData: birdObjs, filters: paramElem.query, count: birdObjs.length, cladisticBirdData: cladisticStructure })
@@ -226,8 +233,10 @@ class ParamElement {
 
         this._fullPipeline = [
             ...query.isLogged ? this.birdsWithSightingsPipeline : [],  //isLogged?
-            { $project: { wikiHtml: 0 } },
+            // { $project: { wikiHtml: 0 } },
             { $match: this.mongoDbSearchObj },     //clade, state
+            { $addFields: { firstImg: { $first: "$images" } } },
+            { $project: { commonName: 1, 'order': '$speciesGlobal.order', 'family': '$speciesGlobal.family', 'genus': '$speciesGlobal.genus', scientificName: 1, 'image': '$firstImg.src', _id: 0 } },
             // { $limit: 160 },                         //how many?
             // { $sample: { size: 400 } },
         ]

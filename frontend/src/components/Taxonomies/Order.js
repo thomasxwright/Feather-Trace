@@ -6,7 +6,7 @@ import Taxonomy from "./Taxonomy"
 
 const Order = ({ orderData, orderName }) => {
     const howManySubgroups = Object.values(orderData).length
-    const [isExpanded, setIsExpanded] = useState(true)
+    const [isExpanded, setIsExpanded] = useState(false)
 
     const styling = {
         hoverColor: 'rgba(255, 255, 255, 0.15)'
@@ -48,7 +48,8 @@ const Order = ({ orderData, orderName }) => {
                         return (
                             <li key={family[0]}>
                                 <div style={{lineHeight: '0'}}>
-                                    <img src={Object.values(family[1])[0][0].images[0]} style={{ height: '150px', outline: '4px solid white', margin: '4px 0 0 4px', maxWidth: '320px' }} loading='lazy'
+                                    {/* <img src={Object.values(family[1])[0][0].images[0]} style={{ outline: '4px solid white', margin: '4px 0 0 4px', maxWidth: '320px' }} height='90px' width='90px' loading='lazy' */}
+                                    <img src={Object.values(family[1])[0][0].image} style={{ height: '90px', outline: '4px solid white', margin: '4px 0 0 4px', maxWidth: '320px' }} loading='lazy'
                                     />
                                 </div>
                                 {/* <img src={Object.entries(family[0])[0][0].images[0]} /> */}

@@ -49,7 +49,7 @@ const Family = ({ familyData, familyName }) => {
                         return (
                             <li key={genus[0]}>
                                 <div style={{lineHeight: '0'}}>
-                                    <img src={Object.values(genus[1])[0].images[0]} style={{ height: '150px', outline: '4px solid white', margin: '4px 0 0 4px', maxWidth: '320px' }} loading='lazy'
+                                    <img src={Object.values(genus[1])[0].image} style={{ height: '90px', outline: '4px solid white', margin: '4px 0 0 4px', maxWidth: '320px' }} loading='lazy'
                                     />
                                 </div>
                                 {/* <img src={Object.entries(family[0])[0][0].images[0]} /> */}
