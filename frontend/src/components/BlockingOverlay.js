@@ -1,6 +1,4 @@
-import expandContract from "../utils/expandContract"
-
-const BlockingOverlay = ({ isExpanded, setIsExpanded, colors, zIndex }) => {
+const BlockingOverlay = ({ expandGroup, isExpanded, setIsExpanded, colors, zIndex }) => {
 
     const [r, g, b] = colors
     const styling = {
@@ -18,7 +16,7 @@ const BlockingOverlay = ({ isExpanded, setIsExpanded, colors, zIndex }) => {
     }
 
     const handleClick = e => {
-        expandContract(e, isExpanded, setIsExpanded)
+        expandGroup(e, isExpanded, setIsExpanded)
         // if (e.classList.contains('species'))
         e.scrollIntoView({ behavior: 'smooth' })
     }

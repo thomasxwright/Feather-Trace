@@ -2,9 +2,10 @@ import { useState } from "react"
 import { useScreenModeContext } from "../../auth/useScreenMode"
 import BlockingOverlay from "../BlockingOverlay"
 import CladeHeader from "../CladeHeader"
+import expandContract from "../../utils/expandContract"
 
 const Taxonomy = ({values, children}) => {
-    const { cladeName, cladeType, isExpanded, setIsExpanded, zIndex, backgroundColor, headerColor, additionalStyle } = values
+    const { cladeName, cladeType, expandGroup = expandContract, isExpanded, setIsExpanded, zIndex, backgroundColor, headerColor, additionalStyle } = values
     // console.log(values)
     // const [isExpanded, setIsExpanded] = useState(true)
     const screenMode = useScreenModeContext()
@@ -31,8 +32,8 @@ const Taxonomy = ({values, children}) => {
 
     return (
         <section style={{ ...styling.outer, ...styling.outer[screenMode], ...additionalStyle }}>
-            <BlockingOverlay isExpanded={isExpanded} setIsExpanded={setIsExpanded} colors={headerColor} zIndex={zIndex} />
-            <CladeHeader isExpanded={isExpanded} setIsExpanded={setIsExpanded} cladeName={cladeName} cladeType={cladeType} hoverColor={styling.hoverColor} />
+            <BlockingOverlay expandGroup={expandGroup} isExpanded={isExpanded} setIsExpanded={setIsExpanded} colors={headerColor} zIndex={zIndex} />
+            <CladeHeader expandGroup={expandGroup} isExpanded={isExpanded} setIsExpanded={setIsExpanded} cladeName={cladeName} cladeType={cladeType} hoverColor={styling.hoverColor} />
             <ul style={{ listStyle: 'none', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around', alignItems: 'center' }}>
                 {children}
             </ul>

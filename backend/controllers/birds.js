@@ -34,6 +34,22 @@ module.exports = {
         }
     },
 
+    getCompleteDataForBirds: async (req, res) => {
+        // req includes an array of bird IDs to request.  Use $in mongodb query to find the bird data for all birds in that array in one single response.
+        try {
+            const idsList = req.query.ids.split(',')
+            let birdData = await Bird.find( { _id: { $in: idsList }})  // you could add a second argument here: an object like { nsxUrl: 0 } to not send useless parameters.
+            const birdObjs = birdData.map(json => {
+                const bird = new BirdObj(json)
+                bird.processInfoSegments()
+                return bird.output
+            })
+            res.json(birdObjs)
+        } catch(err) {
+            console.log(err)
+        }
+    },
+
     getBirdByCommonName: async (req, res) => {
         try {
             console.log(req.params)
@@ -236,7 +252,7 @@ class ParamElement {
             // { $project: { wikiHtml: 0 } },
             { $match: this.mongoDbSearchObj },     //clade, state
             { $addFields: { firstImg: { $first: "$images" } } },
-            { $project: { commonName: 1, 'order': '$speciesGlobal.order', 'family': '$speciesGlobal.family', 'genus': '$speciesGlobal.genus', scientificName: 1, 'image': '$firstImg.src', _id: 0 } },
+            { $project: { commonName: 1, 'order': '$speciesGlobal.order', 'family': '$speciesGlobal.family', 'genus': '$speciesGlobal.genus', scientificName: 1, 'image': '$firstImg.src' } },
             // { $limit: 160 },                         //how many?
             // { $sample: { size: 400 } },
         ]

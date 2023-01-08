@@ -10,11 +10,49 @@ const Genus = ({ genusData, genusName }) => {
         hoverColor: 'rgba(255, 255, 255, 0.2)',
         bgColor: 'rgb(217, 230, 234)'
     }
+    const speciesIds = genusData.map(species => species._id)
+
     const howManySubgroups = Object.values(genusData).length
     // const [isExpanded, setIsExpanded] = useState(howManySubgroups === 1)
     const [isExpanded, setIsExpanded] = useState(false)
 
+    // TODO: possibly just have it do the request and then call the existing function for expandgroup?
+    const expandGroup = (target, isExpanded, setIsExpanded) => {
+        if (!isExpanded) {    //EXPAND IT!
+
+            const findSpeciesData = async () => {
+                const res = await fetch(`/birds/completeData?ids=${speciesIds.join(',')}`, {credentials: 'include'})
+                const data = await res.json()
+                return data
+            }
+
+            const birds = findSpeciesData()
+            console.log(birds)
+
+            target.style.maxHeight = 'none'
+            // setTimeout(() => {target.style.maxHeight = target.clientHeight}, 500)
+            // target.style.maxHeight = 'auto'
+            target.style.overflow = 'visible'
+    
+            // target.classList.remove('unexpanded')
+            // target.classList.add('expanded')
+            setIsExpanded(true)
+        }
+        else {   //SHRINK IT!
+            // target.style.transition = 'max-height 0s'
+            // target.style.maxHeight = `${target.clientHeight + 10}px`
+            // target.style.transition = 'max-height 55s'
+            target.style.maxHeight = '330px'
+            target.style.overflow = 'hidden'
+            target.style.cursor = 'pointer'
+            // target.classList.remove('expanded')
+            // target.classList.add('unexpanded')
+            setIsExpanded(false)
+        }
+    }
+
     const values = {
+        expandGroup,
         isExpanded,
         setIsExpanded,
         zIndex: 2,
