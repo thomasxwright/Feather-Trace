@@ -4,7 +4,7 @@ import CladeHeader from "../CladeHeader"
 import Family from "./Family"
 import Taxonomy from "./Taxonomy"
 
-const Order = ({ orderData, orderName }) => {
+const Order = ({ orderData, orderName, setGenusData }) => {
     const howManySubgroups = Object.values(orderData).length
     const [isExpanded, setIsExpanded] = useState(false)
 
@@ -30,15 +30,13 @@ const Order = ({ orderData, orderName }) => {
     else if (howManySubgroups >= 18)
         condensedWidth = '100%'
 
-        console.log(`loaded order ${orderName}   ${new Date().getSeconds()}`)
-
     return (
         <Taxonomy values={values}>
             {isExpanded ?
                 Object.entries(orderData).map(family => {
                     return (
                         <li key={family[0]}>
-                            <Family familyData={family[1]} familyName={family[0]} />
+                            <Family familyData={family[1]} familyName={family[0]} setGenusData={setGenusData} order={orderName} />
                         </li>
                     )
                 })
@@ -49,7 +47,7 @@ const Order = ({ orderData, orderName }) => {
                             <li key={family[0]}>
                                 <div style={{lineHeight: '0'}}>
                                     {/* <img src={Object.values(family[1])[0][0].images[0]} style={{ outline: '4px solid white', margin: '4px 0 0 4px', maxWidth: '320px' }} height='90px' width='90px' loading='lazy' */}
-                                    <img src={Object.values(family[1])[0][0].image} style={{ height: '90px', outline: '4px solid white', margin: '4px 0 0 4px', maxWidth: '320px' }} loading='lazy'
+                                    <img src={Object.values(family[1])[0][0].images[0]} style={{ height: '90px', outline: '4px solid white', margin: '4px 0 0 4px', maxWidth: '320px' }} loading='lazy'
                                     />
                                 </div>
                                 {/* <img src={Object.entries(family[0])[0][0].images[0]} /> */}

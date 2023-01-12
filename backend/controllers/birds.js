@@ -18,6 +18,8 @@ module.exports = {
             const birdObjs = birdData.map(bird => {
                 bird.species = bird.scientificName.split(' ').slice(1).join(' ')
                 delete bird.scientificName
+                bird.images = [bird.image]
+                delete bird.image
                 return bird
             })
             // this code is from when i sent the full bird document from the database.

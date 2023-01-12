@@ -4,7 +4,7 @@ import CladeHeader from "../CladeHeader"
 import Genus from "./Genus"
 import Taxonomy from "./Taxonomy"
 
-const Family = ({ familyData, familyName }) => {
+const Family = ({ familyData, familyName, setGenusData, order }) => {
 
     const styling = {
         hoverColor: 'rgba(255, 255, 255, 0.2)'
@@ -30,16 +30,13 @@ const Family = ({ familyData, familyName }) => {
     else if (howManySubgroups >= 18)
         condensedWidth = '100%'
 
-        console.log(`loaded family ${familyName}  ${new Date().getSeconds()}`)
-
-
     return (
         <Taxonomy values={values}>
             {isExpanded ?
                 Object.entries(familyData).map(genus => {
                     return (
                         <li key={genus[0]}>
-                            <Genus genusData={genus[1]} genusName={genus[0]} />
+                            <Genus genusData={genus[1]} genusName={genus[0]} setGenusData={setGenusData} order={order} family={familyName} />
                         </li>
                     )
                 })
@@ -49,7 +46,7 @@ const Family = ({ familyData, familyName }) => {
                         return (
                             <li key={genus[0]}>
                                 <div style={{lineHeight: '0'}}>
-                                    <img src={Object.values(genus[1])[0].image} style={{ height: '90px', outline: '4px solid white', margin: '4px 0 0 4px', maxWidth: '320px' }} loading='lazy'
+                                    <img src={Object.values(genus[1])[0].images[0]} style={{ height: '90px', outline: '4px solid white', margin: '4px 0 0 4px', maxWidth: '320px' }} loading='lazy'
                                     />
                                 </div>
                                 {/* <img src={Object.entries(family[0])[0][0].images[0]} /> */}

@@ -3,8 +3,9 @@ import BlockingOverlay from "../BlockingOverlay"
 import CladeHeader from "../CladeHeader"
 import Bird from "./Bird"
 import Taxonomy from "./Taxonomy"
+import expandContract from "../../utils/expandContract"
 
-const Genus = ({ genusData, genusName }) => {
+const Genus = ({ genusData, genusName, setGenusData, order, family }) => {
 
     const styling = {
         hoverColor: 'rgba(255, 255, 255, 0.2)',
@@ -13,42 +14,25 @@ const Genus = ({ genusData, genusName }) => {
     const speciesIds = genusData.map(species => species._id)
 
     const howManySubgroups = Object.values(genusData).length
+    const isAbbreviated = !Boolean(genusData[0].wikiUrl)
     // const [isExpanded, setIsExpanded] = useState(howManySubgroups === 1)
     const [isExpanded, setIsExpanded] = useState(false)
+    const [isLoading, setIsLoading] = useState(isAbbreviated)
 
     // TODO: possibly just have it do the request and then call the existing function for expandgroup?
     const expandGroup = (target, isExpanded, setIsExpanded) => {
-        if (!isExpanded) {    //EXPAND IT!
+        if (!isExpanded && isAbbreviated) {    //Fetch the bird data!
 
             const findSpeciesData = async () => {
-                const res = await fetch(`/birds/completeData?ids=${speciesIds.join(',')}`, {credentials: 'include'})
+                const res = await fetch(`/birds/completeData?ids=${speciesIds.join(',')}`, { credentials: 'include' })
                 const data = await res.json()
+                setGenusData(order, family, genusName, data)
+                setIsLoading(false)
                 return data
             }
-
             const birds = findSpeciesData()
-            console.log(birds)
-
-            target.style.maxHeight = 'none'
-            // setTimeout(() => {target.style.maxHeight = target.clientHeight}, 500)
-            // target.style.maxHeight = 'auto'
-            target.style.overflow = 'visible'
-    
-            // target.classList.remove('unexpanded')
-            // target.classList.add('expanded')
-            setIsExpanded(true)
         }
-        else {   //SHRINK IT!
-            // target.style.transition = 'max-height 0s'
-            // target.style.maxHeight = `${target.clientHeight + 10}px`
-            // target.style.transition = 'max-height 55s'
-            target.style.maxHeight = '330px'
-            target.style.overflow = 'hidden'
-            target.style.cursor = 'pointer'
-            // target.classList.remove('expanded')
-            // target.classList.add('unexpanded')
-            setIsExpanded(false)
-        }
+        expandContract(target, isExpanded, setIsExpanded)
     }
 
     const values = {
@@ -70,10 +54,6 @@ const Genus = ({ genusData, genusName }) => {
     else if (howManySubgroups >= 18)
         condensedWidth = '100%'
 
-
-        console.log(`loaded genus ${genusName}  ${new Date().getSeconds()}`)
-
-
     return (
         <Taxonomy values={values}>
             {/* {Object.entries(genusData).map(species => {
@@ -90,7 +70,7 @@ const Genus = ({ genusData, genusName }) => {
                 Object.entries(genusData).map(species => {
                     return (
                         <li key={species[1]._id}>
-                            <Bird bird={species[1]} />
+                            <Bird bird={species[1]} isLoading={isLoading} />
                         </li>
                     )
                 })
@@ -99,8 +79,8 @@ const Genus = ({ genusData, genusName }) => {
                     {genusData.map(species => {
                         return (
                             <li key={species._id}>
-                                <div style={{lineHeight: '0'}}>
-                                    <img src={species.image} style={{ height: '90px', outline: '4px solid white', margin: '4px 0 0 4px', maxWidth: '320px' }} loading='lazy'
+                                <div style={{ lineHeight: '0' }}>
+                                    <img src={species.images[0]} style={{ height: '90px', outline: '4px solid white', margin: '4px 0 0 4px', maxWidth: '320px' }} loading='lazy'
                                     />
                                 </div>
                                 {/* <img src={Object.entries(family[0])[0][0].images[0]} /> */}

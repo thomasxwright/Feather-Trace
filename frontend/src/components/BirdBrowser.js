@@ -47,7 +47,7 @@ function BirdBrowser() {
                 </section>
 
                 <section>
-                    <BirdsGlossary cladisticData={cladisticData} />
+                    <BirdsGlossary cladisticData={cladisticData} setCladisticData={setCladisticData} />
                 </section>
             </div>
             <BackToTop />
