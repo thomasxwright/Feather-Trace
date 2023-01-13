@@ -14,7 +14,7 @@ const Taxonomy = ({values, children}) => {
         hoverColor: 'rgba(255, 255, 255, 0.15)',
         outer: {
             cursor: isExpanded ? 'auto' : 'pointer',
-            maxHeight: isExpanded ? 'none' : '550px',
+            // maxHeight: isExpanded ? 'none' : '550px',
             // height: 'fit-content',
             overflow: isExpanded ? 'visible' : 'hidden',
             position: 'relative',

@@ -65,7 +65,7 @@ class BirdObj {
             calls: this.calls,
             generalDescription: this.generalDescription,
             infoSegments: this.infoSegments,
-            wikiUrl: this.wikiUrl
+            wikiUrl: this.wikiId
         }
     }
 
