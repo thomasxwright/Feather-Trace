@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import BirdsGlossary from "./BirdsGlossary"
+import BirdsGlossary from "./folders/BirdsGlossary"
 import SearchTags from "./SearchTags"
 import { BirdObj } from '../js/BirdObj.js'
 import '../App.css';
