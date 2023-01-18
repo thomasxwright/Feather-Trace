@@ -6,6 +6,7 @@ const RoundedBlock = ({ color, taxonomyBlock = false, children, stylingAdjustmen
         borderRadius: '25px',
         backgroundColor: color,
         width: 'fit-content',
+        position: 'relative',
         ...stylingAdjustments
     }
 

@@ -1,11 +1,16 @@
 import React from 'react'
 import RoundedBlock from './RoundedBlock'
 
-const TaxonomyTag = ({ name, color = 'orange' }) => {
+const TaxonomyTag = ({ taxonomy, color = 'orange', stylingAdjustments = {}, setActiveTaxonomy }) => {
+
+  const [currentLevel, taxonomyName] = taxonomy
 
   return (
-    <RoundedBlock color={color} stylingAdjustments={{borderRadius: '35px'}}>{name}</RoundedBlock>
-    // <div style={styling}>{name}</div>
+    <div onClick={setActiveTaxonomy}>
+      <RoundedBlock color={color} stylingAdjustments={{ ...stylingAdjustments, borderRadius: '35px', cursor: 'pointer' }} >
+        {taxonomyName}
+      </RoundedBlock>
+    </div>
   )
 }
 

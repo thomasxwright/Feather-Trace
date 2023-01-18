@@ -278,13 +278,13 @@ function getCladisticStructure(birdArr) {
     const cladisticStructure = {}
     for (let bird of birdArr) {
         if (!cladisticStructure[bird.order])
-            cladisticStructure[bird.order] = { [bird.family]: { [bird.genus]: [] } }
+            cladisticStructure[bird.order] = { [bird.family]: { [bird.genus]: {} } }
         else if (!cladisticStructure[bird.order][bird.family])
-            cladisticStructure[bird.order][bird.family] = { [bird.genus]: [] }
+            cladisticStructure[bird.order][bird.family] = { [bird.genus]: {} }
         else if (!cladisticStructure[bird.order][bird.family][bird.genus])
-            cladisticStructure[bird.order][bird.family][bird.genus] = []
+            cladisticStructure[bird.order][bird.family][bird.genus] = {}
 
-        cladisticStructure[bird.order][bird.family][bird.genus].push(bird)
+        cladisticStructure[bird.order][bird.family][bird.genus][bird.species] = bird
     }
     return cladisticStructure
 }

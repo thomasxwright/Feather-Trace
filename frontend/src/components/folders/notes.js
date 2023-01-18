@@ -24,3 +24,25 @@ BirdBrowser
 
 
 */
+
+
+
+/* data structure
+holding onto this alternate data structure idea, though I dont' think it would be efficient to access.
+
+data: {
+    layer: 'order',
+    id: 'Passeriformes',
+    subItems: [
+        {
+            layer: 'family',
+            id: 'Passeridae',
+            subItems: [
+
+            ]
+        }
+    ]
+}
+
+
+*/

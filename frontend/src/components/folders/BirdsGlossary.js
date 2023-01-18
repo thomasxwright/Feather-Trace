@@ -20,16 +20,32 @@ const BirdsGlossary = ({ cladisticData, setCladisticData }) => {
     }
 
     const [currentLevel, setCurrentLevel] = useState({})
-    const setOrder = order => {
-        setCurrentLevel({ order: order })
-    }
-    const setFamily = family => {
-        setCurrentLevel({ order: currentLevel.order, family: family })
-    }
-    const setGenus = genus => {
-        setCurrentLevel({ order: currentLevel.order, family: currentLevel.family, genus: genus })
-    }
+
+    const levels = ['class', 'order', 'family', 'genus', 'species']
     const depth = (currentLevel.genus && 'genus') || (currentLevel.family && 'family') || (currentLevel.order && 'order') || 'class'
+    const nextLayer = levels[levels.indexOf(depth) + 1]
+    const colors = {
+        order: 'rgb(180, 167, 197)',
+        family: 'rgb(194, 196, 216)',
+        genus: 'rgb(217, 230, 234)',
+        species: 'white'
+    }
+
+    const setActiveTaxonomy = {
+        stepOutOneLevel: () => {
+            const { [depth]: remove, ...outOneLayer} = currentLevel
+            setCurrentLevel(outOneLayer)
+        },
+        order: order => {
+            setCurrentLevel({ order: order })
+        },
+        family: family => {
+            setCurrentLevel({ order: currentLevel.order, family: family })
+        },
+        genus: genus => {
+            setCurrentLevel({ order: currentLevel.order, family: currentLevel.family, genus: genus })
+        }
+    }
 
     const activeData =
         cladisticData?.[currentLevel.order]?.[currentLevel.family]?.[currentLevel.genus]
@@ -51,49 +67,23 @@ const BirdsGlossary = ({ cladisticData, setCladisticData }) => {
     }
 
     return (
+            <section>
+                <TaxonomyNavigation taxonomies={Object.entries(currentLevel)} zIndex={0} setActiveTaxonomy={setActiveTaxonomy} />
+                <RoundedBlock
+                    color={colors[depth]}
+                    stylingAdjustments={{ zIndex: 1 }}
+                >
 
-        <BlockWithNavTags taxonomies={['Passeriformes', 'Passeridae']} color='rgb(180, 167, 197)'>
-            <ul style={styling.outer}>
-                {Object.entries(activeData).map(([name, data]) => (
-                    <li key={name} style={{margin: '0 10px 20px'}}>
-                        <TaxonomyGroup data={data} taxonomyName={name} />
-                    </li>
-                ))}
-            </ul>
+                    <ul style={styling.outer}>
+                        {Object.entries(activeData).map(([name, data]) => (
+                            <li key={name} style={{ margin: '0 10px 20px' }}>
+                                <TaxonomyGroup data={data} taxonomies={{ [nextLayer]: name }} setActiveTaxonomy={setActiveTaxonomy} />
+                            </li>
+                        ))}
+                    </ul>
 
-        </BlockWithNavTags>
-
-
-        // <>
-        //     {/* <TaxonomyNavigation /> */}
-        //     <RoundedBlock color='yellow'>
-
-        //     <ul style={styling.outer}>
-        //         {Object.entries(activeData).map(([name, data]) => (
-        //             <li key={name}>
-        //                 {depth === 'genus' ?
-        //                     <BirdGroup data={data} genusName={name} />
-        //                     :
-        //                     <TaxonomyGroup data={data} taxonomyName={name} />
-        //                 }
-        //             </li>
-        //         ))}
-        //     </ul>
-
-        //     </RoundedBlock>
-
-        // </>
-
-
-        // <ul style={styling.outer}>
-        //     {Object.entries(cladisticData).map(order => {
-        //         return (
-        //             <li key={order[0]}>
-        //                 <Order orderData={order[1]} orderName={order[0]} setGenusData={setGenusData} />
-        //             </li>
-        //         )
-        //     })}
-        // </ul>
+                </RoundedBlock>
+            </section>
     )
 }
 

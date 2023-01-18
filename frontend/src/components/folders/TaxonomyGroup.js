@@ -3,7 +3,7 @@ import expandContract from '../../utils/expandContract'
 import TaxonomyNavigation from './TaxonomyNavigation'
 import BlockWithNavTags from './BlockWithNavTags'
 
-const TaxonomyGroup = ({ data, taxonomyName }) => {
+const TaxonomyGroup = ({ data, taxonomies, setActiveTaxonomy }) => {
 
     const styling = {
         display: 'flex',
@@ -24,19 +24,24 @@ const TaxonomyGroup = ({ data, taxonomyName }) => {
     }
     // get one image for each subgroup.
     const images = []
-    for (const item in data) {
-        images.push(getSubContent(data[item]).images[0])
+    
+    // Placeholder for special bird component: Actually, a taxonomygroup wouldn't even be rendered here. Instead, a BirdCard would be here.
+    if (data._id) { images.push(data.images[0]) }
+    else {
+        for (const item in data) {
+            images.push(getSubContent(data[item]).images[0])
+        }
     }
     const condensedWidth = '9000px'
 
 
     return (
 
-        <BlockWithNavTags color='rgb(194, 196, 216)' taxonomies={[taxonomyName]}>
+        <BlockWithNavTags taxonomies={taxonomies} setActiveTaxonomy={setActiveTaxonomy}>
             <ul style={styling}>
                 {images.map((url, i) => (
                     <li key={i}>
-                        <img src={url} style={{ height: '90px', outline: '4px solid white', margin: '4px 0 0 4px', maxWidth: '320px' }}/>
+                        <img src={url} style={{ height: '90px', outline: '4px solid white', margin: '4px 0 0 4px', maxWidth: '320px' }} />
                     </li>
                 ))}
             </ul>
