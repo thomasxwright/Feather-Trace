@@ -21,9 +21,9 @@ function BirdBrowser() {
     }
     console.log('loaded teh birds section', new Date().toLocaleTimeString())
 
-    
+
     useEffect(() => {
-    console.log('getting da birds', new Date().toLocaleTimeString())
+        console.log('getting da birds', new Date().toLocaleTimeString())
 
         const getBirds = async () => {
             const birdsFromServer = await fetchBirds()
@@ -33,22 +33,20 @@ function BirdBrowser() {
     }, [state])
 
     const fetchBirds = async () => {
-        const res = await fetch(`/birds${state.search}`, {credentials: 'include'})
+        const res = await fetch(`/birds${state.search}`, { credentials: 'include' })
         const data = await res.json()
         return data
     }
 
     return (
         <div style={styling.outer}>
-            <AccountSection/>
+            <AccountSection />
             <div>
                 <section style={{ display: 'flex', flexWrap: 'wrap' }}>
                     <SearchTags tagColor='#F0E7F5' />
                 </section>
 
-                <section>
-                    <BirdsGlossary cladisticData={cladisticData} setCladisticData={setCladisticData} />
-                </section>
+                <BirdsGlossary cladisticData={cladisticData} setCladisticData={setCladisticData} />
             </div>
             <BackToTop />
         </div>

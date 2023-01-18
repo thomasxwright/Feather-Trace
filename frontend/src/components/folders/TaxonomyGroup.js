@@ -1,12 +1,23 @@
 import React from 'react'
+import expandContract from '../../utils/expandContract'
+import TaxonomyNavigation from './TaxonomyNavigation'
+import BlockWithNavTags from './BlockWithNavTags'
 
 const TaxonomyGroup = ({ data, taxonomyName }) => {
+
+    const styling = {
+        display: 'flex',
+        flexWrap: 'wrap',
+        listStyle: 'none',
+        justifyContent: 'center',
+        // maxWidth: condensedWidth,
+    }
+
     const getSubContent = obj => {
         if (obj.images) return obj
         return getSubContent(getSubItem(obj))
     }
     const getSubItem = obj => {
-        console.log('here we go')
         let subItem
         for (subItem in obj) break
         return obj[subItem]
@@ -16,20 +27,43 @@ const TaxonomyGroup = ({ data, taxonomyName }) => {
     for (const item in data) {
         images.push(getSubContent(data[item]).images[0])
     }
+    const condensedWidth = '9000px'
 
 
     return (
 
-        <section>
-            {taxonomyName}
-            <ul>
+        <BlockWithNavTags color='rgb(194, 196, 216)' taxonomies={[taxonomyName]}>
+            <ul style={styling}>
                 {images.map((url, i) => (
                     <li key={i}>
-                        <img src={url} width='80px'/>
+                        <img src={url} style={{ height: '90px', outline: '4px solid white', margin: '4px 0 0 4px', maxWidth: '320px' }}/>
                     </li>
                 ))}
             </ul>
-        </section>
+        </BlockWithNavTags>
+
+        // <section>
+        //     {/* {taxonomyName} */}
+        //     {/* <BlockingOverlay expandGroup={expandGroup} isExpanded={isExpanded} setIsExpanded={setIsExpanded} colors={headerColor} zIndex={zIndex} /> */}
+        //     <TaxonomyNavigation taxonomies={[taxonomyName]} />
+
+        //     <ul style={styling}>
+        //         {images.map((url, i) => (
+        //             // <li key={i}>
+        //             //     <img src={url} width='80px'/>
+        //             // </li>
+
+
+        //             <li key={i}>
+        //                 <div style={{ lineHeight: '0' }}>
+        //                     <img src={url} style={{ height: '90px', outline: '4px solid white', margin: '4px 0 0 4px', maxWidth: '320px' }} loading='lazy'
+        //                     />
+        //                 </div>
+        //                 {/* <img src={Object.entries(family[0])[0][0].images[0]} /> */}
+        //             </li>
+        //         ))}
+        //     </ul>
+        // </section>
     )
 }
 

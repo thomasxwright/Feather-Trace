@@ -20,7 +20,7 @@ BirdBrowser
         TaxonomyNavigation
             Taxonomy
         ul
-            li: taxonomy or bird
+            li: TaxonomyGroup or BirdGroup
 
 
 */

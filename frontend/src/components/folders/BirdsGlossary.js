@@ -1,6 +1,8 @@
 import { useState } from "react"
 import Order from "../Taxonomies/Order"
 import BirdGroup from "./BirdGroup"
+import BlockWithNavTags from "./BlockWithNavTags"
+import RoundedBlock from "./RoundedBlock"
 import TaxonomyGroup from "./TaxonomyGroup"
 import TaxonomyNavigation from "./TaxonomyNavigation"
 // import Order from "./Order"
@@ -10,9 +12,9 @@ const BirdsGlossary = ({ cladisticData, setCladisticData }) => {
     const styling = {
         outer: {
             display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            listStyleType: 'none',
+            justifyContent: 'center',
+            listStyle: 'none',
+            flexWrap: 'wrap',
             padding: '0'
         }
     }
@@ -50,22 +52,37 @@ const BirdsGlossary = ({ cladisticData, setCladisticData }) => {
 
     return (
 
-        <>
-            {/* <TaxonomyNavigation /> */}
-
-            <ul>
+        <BlockWithNavTags taxonomies={['Passeriformes', 'Passeridae']} color='rgb(180, 167, 197)'>
+            <ul style={styling.outer}>
                 {Object.entries(activeData).map(([name, data]) => (
-                    <li key={name}>
-                        {depth === 'genus' ?
-                            <BirdGroup data={data} genusName={name} />
-                            :
-                            <TaxonomyGroup data={data} taxonomyName={name} />
-                        }
+                    <li key={name} style={{margin: '0 10px 20px'}}>
+                        <TaxonomyGroup data={data} taxonomyName={name} />
                     </li>
                 ))}
             </ul>
 
-        </>
+        </BlockWithNavTags>
+
+
+        // <>
+        //     {/* <TaxonomyNavigation /> */}
+        //     <RoundedBlock color='yellow'>
+
+        //     <ul style={styling.outer}>
+        //         {Object.entries(activeData).map(([name, data]) => (
+        //             <li key={name}>
+        //                 {depth === 'genus' ?
+        //                     <BirdGroup data={data} genusName={name} />
+        //                     :
+        //                     <TaxonomyGroup data={data} taxonomyName={name} />
+        //                 }
+        //             </li>
+        //         ))}
+        //     </ul>
+
+        //     </RoundedBlock>
+
+        // </>
 
 
         // <ul style={styling.outer}>
