@@ -1,6 +1,6 @@
 import React from 'react'
-import expandContract from '../../utils/expandContract'
-import TaxonomyNavigation from './TaxonomyNavigation'
+// import expandContract from '../../utils/expandContract'
+// import TaxonomyNavigation from './TaxonomyNavigation'
 import BlockWithNavTags from './BlockWithNavTags'
 
 const TaxonomyGroup = ({ data, taxonomies, setActiveTaxonomy }) => {
@@ -46,29 +46,6 @@ const TaxonomyGroup = ({ data, taxonomies, setActiveTaxonomy }) => {
                 ))}
             </ul>
         </BlockWithNavTags>
-
-        // <section>
-        //     {/* {taxonomyName} */}
-        //     {/* <BlockingOverlay expandGroup={expandGroup} isExpanded={isExpanded} setIsExpanded={setIsExpanded} colors={headerColor} zIndex={zIndex} /> */}
-        //     <TaxonomyNavigation taxonomies={[taxonomyName]} />
-
-        //     <ul style={styling}>
-        //         {images.map((url, i) => (
-        //             // <li key={i}>
-        //             //     <img src={url} width='80px'/>
-        //             // </li>
-
-
-        //             <li key={i}>
-        //                 <div style={{ lineHeight: '0' }}>
-        //                     <img src={url} style={{ height: '90px', outline: '4px solid white', margin: '4px 0 0 4px', maxWidth: '320px' }} loading='lazy'
-        //                     />
-        //                 </div>
-        //                 {/* <img src={Object.entries(family[0])[0][0].images[0]} /> */}
-        //             </li>
-        //         ))}
-        //     </ul>
-        // </section>
     )
 }
 

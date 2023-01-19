@@ -43,7 +43,7 @@ const BirdSchema = new mongoose.Schema({
     taxonomicComments: String
   },
   gRank: String,
-  wikiUrl: String,
+  wikiId: String,
   wikiHtml: String,
 
   generalDescription: [String],

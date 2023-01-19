@@ -46,7 +46,11 @@ module.exports = {
                 bird.processInfoSegments()
                 return bird.output
             })
-            res.json(birdObjs)
+            const birdsObj = {}
+            birdObjs.forEach(bird => {
+                birdsObj[bird.species] = bird
+            })
+            res.json(birdsObj)
         } catch(err) {
             console.log(err)
         }
