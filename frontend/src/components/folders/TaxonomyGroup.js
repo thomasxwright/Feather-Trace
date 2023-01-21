@@ -10,6 +10,7 @@ const TaxonomyGroup = ({ data, taxonomies, setActiveTaxonomy }) => {
         flexWrap: 'wrap',
         listStyle: 'none',
         justifyContent: 'center',
+        pointerEvents: 'none'
         // maxWidth: condensedWidth,
     }
 

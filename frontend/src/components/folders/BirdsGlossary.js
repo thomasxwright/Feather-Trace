@@ -1,6 +1,7 @@
-import { useState } from "react"
+import { createRef, useEffect, useState } from "react"
 import Order from "../Taxonomies/Order"
 import Bird from "./Bird"
+import FloatingTaxonomyNavigation from "./FloatingTaxonomyNavigation"
 // import BirdGroup from "./BirdGroup"
 // import BlockWithNavTags from "./BlockWithNavTags"
 import RoundedBlock from "./RoundedBlock"
@@ -22,6 +23,17 @@ const BirdsGlossary = ({ cladisticData, setCladisticData }) => {
 
     const [currentLevel, setCurrentLevel] = useState({})
     const [isLoading, setIsLoading] = useState(false)
+    const [scrollTo, setScrollTo] = useState('')
+
+    useEffect(() => {
+        const destination = refs[scrollTo] || top
+        const position = destination.current.getBoundingClientRect().top
+        const offset = refs[scrollTo] ? -50 : 0
+        window.scrollBy({
+            top: position + offset,
+            behavior: 'smooth'
+        })
+    }, [currentLevel])
 
     const levels = ['class', 'order', 'family', 'genus', 'species']
     const depth = (currentLevel.genus && 'genus') || (currentLevel.family && 'family') || (currentLevel.order && 'order') || 'class'
@@ -32,7 +44,7 @@ const BirdsGlossary = ({ cladisticData, setCladisticData }) => {
         genus: 'rgb(217, 230, 234)',
         species: 'white'
     }
-    
+
     const activeData =
         cladisticData?.[currentLevel.order]?.[currentLevel.family]?.[currentLevel.genus]
         || cladisticData?.[currentLevel.order]?.[currentLevel.family]
@@ -41,34 +53,46 @@ const BirdsGlossary = ({ cladisticData, setCladisticData }) => {
 
     const validateGenusData = genus => {
         const birdsOfGenus = Object.values(cladisticData[currentLevel.order][currentLevel.family][genus])
-        if (!birdsOfGenus[0].wikiUrl){
-                setIsLoading(true)
+        if (!birdsOfGenus[0].wikiUrl) {
+            setIsLoading(true)
             const speciesIds = birdsOfGenus.map(bird => bird._id)
-                const findSpeciesData = async () => {
-                    const res = await fetch(`/birds/completeData?ids=${speciesIds.join(',')}`, { credentials: 'include' })
-                    const data = await res.json()
-                    setGenusData(currentLevel.order, currentLevel.family, genus, data)
-                    setIsLoading(false)
-                    return data
-                }
-                const birds = findSpeciesData()
+            const findSpeciesData = async () => {
+                const res = await fetch(`/birds/completeData?ids=${speciesIds.join(',')}`, { credentials: 'include' })
+                const data = await res.json()
+                setGenusData(currentLevel.order, currentLevel.family, genus, data)
+                setIsLoading(false)
+                return data
             }
+            const birds = findSpeciesData()
+        }
     }
 
     const setActiveTaxonomy = {
         stepOutOneLevel: () => {
             const { [depth]: remove, ...outOneLayer } = currentLevel
+            // if (currentLevel[depth]) outOneLayer.from = currentLevel.depth
+            // console.log(remove)
             setCurrentLevel(outOneLayer)
+            setScrollTo(remove)
         },
         order: order => {
-            setCurrentLevel({ order })
+            const destination = { order }
+            // if (currentLevel.family) destination.from = currentLevel.family
+            setCurrentLevel(destination)
+            setScrollTo(currentLevel.family || '')
         },
         family: family => {
-            setCurrentLevel({ order: currentLevel.order, family })
+            const destination = { order: currentLevel.order, family }
+            // if (currentLevel.genus) destination.from = currentLevel.genus
+            setCurrentLevel(destination)
+            setScrollTo(currentLevel.genus || '')
         },
         genus: genus => {
             validateGenusData(genus)
-            setCurrentLevel({ order: currentLevel.order, family: currentLevel.family, genus })
+            const destination = { order: currentLevel.order, family: currentLevel.family, genus }
+            // if (currentLevel.species) destination.from = currentLevel.species
+            setCurrentLevel(destination)
+            if (currentLevel.species) setScrollTo(currentLevel.species)
         }
     }
 
@@ -86,8 +110,23 @@ const BirdsGlossary = ({ cladisticData, setCladisticData }) => {
         })
     }
 
+    const items = Object.entries(activeData)
+    const top = createRef(),
+        refs = items.reduce((acc, value) => {
+            acc[value[0]] = createRef()
+            return acc
+        }, {})
+    const scrollInto = id => {
+        console.log(`go to ${id}`, refs)
+        refs[id].current.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+        })
+    }
+
     return (
-        <section>
+        <section ref={top}>
+            {/* <FloatingTaxonomyNavigation taxonomies={Object.entries(currentLevel)} setActiveTaxonomy={setActiveTaxonomy}/> */}
             <TaxonomyNavigation taxonomies={Object.entries(currentLevel)} zIndex={0} setActiveTaxonomy={setActiveTaxonomy} />
             <RoundedBlock
                 color={colors[depth]}
@@ -96,12 +135,12 @@ const BirdsGlossary = ({ cladisticData, setCladisticData }) => {
 
                 <ul style={styling.outer}>
                     {Object.entries(activeData).map(([name, data]) => (
-                        <li key={name} style={{ margin: '0 10px 20px' }}>
+                        <li key={name} style={{ margin: '0 10px 20px' }} ref={refs[name]}>
                             {
                                 !currentLevel.genus ?
                                     <TaxonomyGroup data={data} taxonomies={{ [nextLayer]: name }} setActiveTaxonomy={setActiveTaxonomy} />
                                     :
-                                    <Bird data={data} isLoading={isLoading}/>
+                                    <Bird data={data} isLoading={isLoading} />
                             }
                         </li>
                     ))}
