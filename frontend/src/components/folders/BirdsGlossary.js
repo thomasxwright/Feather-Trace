@@ -2,6 +2,7 @@ import { createRef, useEffect, useState } from "react"
 import Order from "../Taxonomies/Order"
 import Bird from "./Bird"
 import FloatingTaxonomyNavigation from "./FloatingTaxonomyNavigation"
+import FullBird from "./FullBird"
 // import BirdGroup from "./BirdGroup"
 // import BlockWithNavTags from "./BlockWithNavTags"
 import RoundedBlock from "./RoundedBlock"
@@ -28,7 +29,7 @@ const BirdsGlossary = ({ cladisticData, setCladisticData }) => {
     useEffect(() => {
         const destination = refs[scrollTo] || top
         const position = destination.current.getBoundingClientRect().top
-        const offset = refs[scrollTo] ? -50 : 0
+        const offset = refs[scrollTo] ? -20 : 0
         window.scrollBy({
             top: position + offset,
             behavior: 'smooth'
@@ -36,17 +37,18 @@ const BirdsGlossary = ({ cladisticData, setCladisticData }) => {
     }, [currentLevel])
 
     const levels = ['class', 'order', 'family', 'genus', 'species']
-    const depth = (currentLevel.genus && 'genus') || (currentLevel.family && 'family') || (currentLevel.order && 'order') || 'class'
+    const depth = (currentLevel.species && 'species') || (currentLevel.genus && 'genus') || (currentLevel.family && 'family') || (currentLevel.order && 'order') || 'class'
     const nextLayer = levels[levels.indexOf(depth) + 1]
     const colors = {
         order: 'rgb(180, 167, 197)',
         family: 'rgb(194, 196, 216)',
         genus: 'rgb(217, 230, 234)',
-        species: 'white'
+        species: 'mintcream'
     }
 
     const activeData =
-        cladisticData?.[currentLevel.order]?.[currentLevel.family]?.[currentLevel.genus]
+        cladisticData?.[currentLevel.order]?.[currentLevel.family]?.[currentLevel.genus]?.[currentLevel.species]
+        || cladisticData?.[currentLevel.order]?.[currentLevel.family]?.[currentLevel.genus]
         || cladisticData?.[currentLevel.order]?.[currentLevel.family]
         || cladisticData?.[currentLevel.order]
         || cladisticData
@@ -93,6 +95,11 @@ const BirdsGlossary = ({ cladisticData, setCladisticData }) => {
             // if (currentLevel.species) destination.from = currentLevel.species
             setCurrentLevel(destination)
             if (currentLevel.species) setScrollTo(currentLevel.species)
+        },
+        species: species => {
+            const destination = { order: currentLevel.order, family: currentLevel.family, genus: currentLevel.genus, species }
+            setCurrentLevel(destination)
+            setScrollTo(top)
         }
     }
 
@@ -129,25 +136,30 @@ const BirdsGlossary = ({ cladisticData, setCladisticData }) => {
             {/* <FloatingTaxonomyNavigation taxonomies={Object.entries(currentLevel)} setActiveTaxonomy={setActiveTaxonomy}/> */}
             <TaxonomyNavigation taxonomies={Object.entries(currentLevel)} zIndex={0} setActiveTaxonomy={setActiveTaxonomy} />
             <RoundedBlock
-                color={colors[depth]}
-                stylingAdjustments={{ zIndex: 1 }}
+                stylingAdjustments={{
+                    zIndex: 1,
+                    width: depth === 'species' ? '100%' : 'fit-content',
+                    backgroundColor: colors[depth]
+                }}
             >
-
-                <ul style={styling.outer}>
-                    {Object.entries(activeData).map(([name, data]) => (
-                        <li key={name} style={{ margin: '0 10px 20px' }} ref={refs[name]}>
-                            {
-                                !currentLevel.genus ?
-                                    <TaxonomyGroup data={data} taxonomies={{ [nextLayer]: name }} setActiveTaxonomy={setActiveTaxonomy} />
-                                    :
-                                    <Bird data={data} isLoading={isLoading} />
-                            }
-                        </li>
-                    ))}
-                </ul>
-
+                {depth === 'species' ? (
+                    <FullBird data={activeData} />
+                ) :
+                    <ul style={styling.outer}>
+                        {Object.entries(activeData).map(([name, data]) => (
+                            <li key={name} style={{ margin: '0 10px 20px' }} ref={refs[name]}>
+                                {
+                                    depth === 'genus' ?
+                                        <Bird data={data} isLoading={isLoading} setActiveTaxonomy={setActiveTaxonomy} />
+                                        :
+                                        <TaxonomyGroup data={data} taxonomies={{ [nextLayer]: name }} setActiveTaxonomy={setActiveTaxonomy} />
+                                }
+                            </li>
+                        ))}
+                    </ul>
+                }
             </RoundedBlock>
-        </section>
+        </section >
     )
 }
 

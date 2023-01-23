@@ -2,7 +2,7 @@ import React from 'react'
 import BirdPhoto from './BirdPhoto'
 import PlaceholderBird from './PlaceholderBird'
 
-const Bird = ({ data, isLoading }) => {
+const Bird = ({ data, isLoading, taxonomies, setActiveTaxonomy }) => {
 
     const abbreviateFirstSentence = text => {
         const paragraph = text.split('.')
@@ -42,17 +42,19 @@ const Bird = ({ data, isLoading }) => {
             {isLoading ?
                 <PlaceholderBird />
                 :
-                (<>
-                    <section style={styling.name} >{data.commonName}</section>
-                    {data.images.length > 0 && <div style={{ float: 'left', width: '65%', marginRight: '8px' }}>
-                        <BirdPhoto src={data.images[0]} />
-                    </div>}
-                    <ul style={{ fontSize: '12px', listStyle: 'none' }}>
-                        {data.generalDescription.map((paragraph, i) => (<li key={i}><p>{i === 0 ? abbreviateFirstSentence(paragraph) : paragraph}</p></li>))
-                        }
-                        {data.infoSegments.map((segment, i) => <li key={i + data.generalDescription.length} style={{ fontWeight: '700', margin: '8px' }}><span>{segment.title}</span></li>)}
-                    </ul>
-                </>)
+                (
+                    <section onClick={() => setActiveTaxonomy.species(data.species)}>
+                        <section style={styling.name} >{data.commonName}</section>
+                        {data.images.length > 0 && <div style={{ float: 'left', width: '65%', marginRight: '8px' }}>
+                            <BirdPhoto src={data.images[0]} />
+                        </div>}
+                        <ul style={{ fontSize: '12px', listStyle: 'none' }}>
+                            {data.generalDescription.map((paragraph, i) => (<li key={i}><p>{i === 0 ? abbreviateFirstSentence(paragraph) : paragraph}</p></li>))
+                            }
+                            {data.infoSegments.map((segment, i) => <li key={i + data.generalDescription.length} style={{ fontWeight: '700', margin: '8px' }}><span>{segment.title}</span></li>)}
+                        </ul>
+                    </section>
+                )
             }
         </section >
     )
