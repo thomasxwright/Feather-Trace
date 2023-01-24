@@ -25,7 +25,7 @@ const TaxonomyGroup = ({ data, taxonomies, setActiveTaxonomy }) => {
     }
     // get one image for each subgroup.
     const images = []
-    
+
     // Placeholder for special bird component: Actually, a taxonomygroup wouldn't even be rendered here. Instead, a BirdCard would be here.
     if (data._id) { images.push(data.images[0]) }
     else {
@@ -40,11 +40,12 @@ const TaxonomyGroup = ({ data, taxonomies, setActiveTaxonomy }) => {
 
         <BlockWithNavTags taxonomies={taxonomies} setActiveTaxonomy={setActiveTaxonomy}>
             <ul style={styling}>
-                {images.map((url, i) => (
-                    <li key={i}>
-                        <img src={url} style={{ height: '90px', outline: '4px solid white', margin: '4px 0 0 4px', maxWidth: '320px' }} />
+                {images.map((image, i) => (
+                    image && <li key={i}>
+                        <img src={image.src} alt={image.alt} style={{ height: '90px', outline: '4px solid white', margin: '4px 0 0 4px', maxWidth: '320px' }} />
                     </li>
-                ))}
+                )
+                )}
             </ul>
         </BlockWithNavTags>
     )

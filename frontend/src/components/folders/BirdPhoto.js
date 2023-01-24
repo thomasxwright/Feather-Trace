@@ -1,4 +1,4 @@
-const BirdPhoto = ({ src }) => {
+const BirdPhoto = ({ img }) => {
 
     const styling = {
         normal: {
@@ -13,7 +13,7 @@ const BirdPhoto = ({ src }) => {
     }
 
     return (
-        <img src={src} style={{ ...styling.normal, ...styling.masked }} />
+        <img src={img.src} alt={img.alt} style={{ ...styling.normal, ...styling.masked }} />
     )
 }
 

@@ -18,7 +18,8 @@ module.exports = {
             const birdObjs = birdData.map(bird => {
                 bird.species = bird.scientificName.split(' ').slice(1).join(' ')
                 delete bird.scientificName
-                bird.images = [(bird.image || '').replace('800px', '250px')]
+                if (bird.image) bird.image = ({ src: bird.image.replace('800px', '250px'), alt: '' })
+                bird.images = bird.image ? [bird.image] : []
                 delete bird.image
                 return bird
             })

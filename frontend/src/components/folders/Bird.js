@@ -34,6 +34,8 @@ const Bird = ({ data, isLoading, taxonomies, setActiveTaxonomy }) => {
         }
     }
 
+    console.log(data.commonName, data.images)
+
     return (
         <section style={{
             maxWidth: '350px', maxHeight: '320px', overflow: 'hidden', backgroundColor: 'white', padding: '12px', borderRadius: '12px',
@@ -46,7 +48,7 @@ const Bird = ({ data, isLoading, taxonomies, setActiveTaxonomy }) => {
                     <section onClick={() => setActiveTaxonomy.species(data.species)}>
                         <section style={styling.name} >{data.commonName}</section>
                         {data.images.length > 0 && <div style={{ float: 'left', width: '65%', marginRight: '8px' }}>
-                            <BirdPhoto src={data.images[0]} />
+                            <BirdPhoto img={data.images[0]} />
                         </div>}
                         <ul style={{ fontSize: '12px', listStyle: 'none' }}>
                             {data.generalDescription.map((paragraph, i) => (<li key={i}><p>{i === 0 ? abbreviateFirstSentence(paragraph) : paragraph}</p></li>))
