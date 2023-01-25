@@ -6,7 +6,7 @@ const BirdCall = ({ calls }) => {
             controls
             preload='none'
             src={calls[0].src}
-            style={{borderRadius: '0 0 8px 8px'}}>
+            style={{borderRadius: '0 0 8px 8px', width: '100%'}}>
         </audio>
     )
 }

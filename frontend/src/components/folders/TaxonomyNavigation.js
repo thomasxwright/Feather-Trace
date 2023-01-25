@@ -12,8 +12,8 @@ const TaxonomyNavigation = ({ taxonomies, zIndex, setActiveTaxonomy }) => {
     listStyle: 'none',
     zIndex: zIndex,
     position: 'relative',
-    // overflow: 'scroll',
-    // scrollbarWidth: 'none'
+    overflow: 'scroll',
+    scrollbarWidth: 'none'
     // -ms-overflow-style: none;  /* IE and Edge */
   }
 
