@@ -1,4 +1,5 @@
 import { createRef, useEffect, useState } from "react"
+import { useScreenModeContext } from "../../auth/useScreenMode"
 import Order from "../Taxonomies/Order"
 import Bird from "./Bird"
 import FloatingTaxonomyNavigation from "./FloatingTaxonomyNavigation"
@@ -12,6 +13,8 @@ import TaxonomyNavigation from "./TaxonomyNavigation"
 
 const BirdsGlossary = ({ cladisticData, setCladisticData }) => {
 
+    const screenMode = useScreenModeContext()
+
     const styling = {
         outer: {
             display: 'flex',
@@ -19,6 +22,17 @@ const BirdsGlossary = ({ cladisticData, setCladisticData }) => {
             listStyle: 'none',
             flexWrap: 'wrap',
             padding: '0'
+        },
+        outerResponsive: {
+            narrow: {
+                margin: '0 4px 0',
+                padding: '8px'
+            }
+        },
+        innerLiResponsive: {
+            narrow: {
+                margin: '0 4px 20px'
+            }
         }
     }
 
@@ -138,8 +152,9 @@ const BirdsGlossary = ({ cladisticData, setCladisticData }) => {
             <RoundedBlock
                 stylingAdjustments={{
                     zIndex: 1,
-                    width: depth === 'species' ? '100%' : 'fit-content',
-                    backgroundColor: colors[depth]
+                    // width: depth === 'species' ? '100%' : 'fit-content',
+                    backgroundColor: colors[depth],
+                    ...styling.outerResponsive[screenMode]
                 }}
             >
                 {depth === 'species' ? (
@@ -147,7 +162,7 @@ const BirdsGlossary = ({ cladisticData, setCladisticData }) => {
                 ) :
                     <ul style={styling.outer}>
                         {Object.entries(activeData).map(([name, data]) => (
-                            <li key={name} style={{ margin: '0 10px 20px' }} ref={refs[name]}>
+                            <li key={name} style={{ margin: '0 10px 20px', ...styling.innerLiResponsive[screenMode]}} ref={refs[name]}>
                                 {
                                     depth === 'genus' ?
                                         <Bird data={data} isLoading={isLoading} setActiveTaxonomy={setActiveTaxonomy} />

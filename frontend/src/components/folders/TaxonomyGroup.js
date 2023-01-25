@@ -42,7 +42,7 @@ const TaxonomyGroup = ({ data, taxonomies, setActiveTaxonomy }) => {
             <ul style={styling}>
                 {images.map((image, i) => (
                     image && <li key={i}>
-                        <img src={image.src} alt={image.alt} style={{ height: '90px', outline: '4px solid white', margin: '4px 0 0 4px', maxWidth: '320px' }} />
+                        <img src={image.src} alt={image.alt} style={{ height: '90px', outline: '4px solid white', margin: '4px 0 0 4px', maxWidth: '105px', minWidth: '75px', objectFit: 'cover', objectPosition: '50% 25%' }} />
                     </li>
                 )
                 )}

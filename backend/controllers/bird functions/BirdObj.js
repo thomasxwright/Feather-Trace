@@ -45,7 +45,9 @@ class BirdObj {
         return this._data.images.map(image => image.src.replace('800px', '200px'))
     }
     get images() {
-        const images = this._data.images.map(image => ({ src: image.src, alt: image.alt }))
+        const images = this._data.images
+            .filter(image => image.alt !== 'icon')
+            .map(image => ({ src: image.src, alt: image.alt }))
         return (images.length ? [images[0]] : [])
             .concat(images.slice(1)
                 .sort((a, b) => (b.alt.length > 0) - (a.alt.length > 0))

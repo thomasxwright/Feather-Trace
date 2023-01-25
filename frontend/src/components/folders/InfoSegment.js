@@ -24,7 +24,7 @@ const InfoSegment = ({ title, info }) => {
     const firstWritableSegment = info.find(paragraph => {
         const firstColon = paragraph.indexOf(':')
         const firstPeriod = paragraph.indexOf('.')
-        const isWriting = (firstPeriod < firstColon && firstPeriod > -1) || firstColon === -1
+        const isWriting = (firstPeriod > -1 && firstPeriod <= firstColon)
         return paragraph.length > 50 || isWriting
     })
 

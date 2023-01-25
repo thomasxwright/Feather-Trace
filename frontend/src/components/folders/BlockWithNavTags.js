@@ -1,8 +1,19 @@
 import React from 'react'
+import { useScreenModeContext } from '../../auth/useScreenMode'
 import RoundedBlock from './RoundedBlock'
 import TaxonomyNavigation from './TaxonomyNavigation'
 
 const BlockWithNavTags = ({ taxonomies = {}, children, setActiveTaxonomy, stylingAdjustments = {} }, expandable = true) => {
+
+    const screenMode = useScreenModeContext()
+
+    const styling = {
+        containerResponsive: {
+            narrow: {
+                padding: '16px 12px 16px 8px'
+            }
+        }
+    }
 
     const colors = {
         order: 'rgb(180, 167, 197)',
@@ -28,10 +39,10 @@ const BlockWithNavTags = ({ taxonomies = {}, children, setActiveTaxonomy, stylin
         <section>
             <TaxonomyNavigation taxonomies={taxonomyList} zIndex={2} setActiveTaxonomy={setActiveTaxonomy} />
             {/* FIX: Problem with this block is the clickable part doesn't follow the shape of the roundedblock inside. */}
-            <div onClick={() => setActiveTaxonomy[innermostLevel](innermostName)} style={{cursor: 'pointer'}}>
+            <div onClick={() => setActiveTaxonomy[innermostLevel](innermostName)} style={{ cursor: 'pointer' }}>
                 <RoundedBlock
                     color={color}
-                    stylingAdjustments={{ ...stylingAdjustments, zIndex: 3 }}
+                    stylingAdjustments={{ ...stylingAdjustments, zIndex: 3, ...styling.containerResponsive[screenMode] }}
                 >
                     {children}
                 </RoundedBlock>

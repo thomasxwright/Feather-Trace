@@ -12,7 +12,10 @@ const FullBird = ({ data }) => {
         },
         column: {
             display: 'flex',
-            flexDirection: 'column'
+            flexDirection: 'column',
+            position: 'sticky',
+            alignSelf: 'flex-end',
+            bottom: '1rem'
         },
         image: {
             borderRadius: '8px 8px 0 0',

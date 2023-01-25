@@ -11,14 +11,17 @@ const TaxonomyNavigation = ({ taxonomies, zIndex, setActiveTaxonomy }) => {
     display: 'flex',
     listStyle: 'none',
     zIndex: zIndex,
-    position: 'relative'
+    position: 'relative',
+    // overflow: 'scroll',
+    // scrollbarWidth: 'none'
+    // -ms-overflow-style: none;  /* IE and Edge */
   }
 
   const colors = {
     order: 'rgb(180, 167, 197)',
     family: 'rgb(194, 196, 216)',
     genus: 'rgb(217, 230, 234)',
-    species: 'white'
+    species: 'mintcream'
   }
 
   return (
