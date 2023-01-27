@@ -34,8 +34,6 @@ const Bird = ({ data, isLoading, taxonomies, setActiveTaxonomy }) => {
         }
     }
 
-    console.log(data.commonName, data.images)
-
     return (
         <section style={{
             maxWidth: '350px', maxHeight: '320px', overflow: 'hidden', backgroundColor: 'white', padding: '12px', borderRadius: '12px',

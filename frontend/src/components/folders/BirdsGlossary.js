@@ -9,7 +9,8 @@ import FullBird from "./FullBird"
 import RoundedBlock from "./RoundedBlock"
 import TaxonomyGroup from "./TaxonomyGroup"
 import TaxonomyNavigation from "./TaxonomyNavigation"
-// import Order from "./Order"
+import useElementOnScreen from "../../utils/UseElementOnScreen"
+import TempFloatingTaxonomyNavigation from "./TempFloatingTaxonomyNavigation"
 
 const BirdsGlossary = ({ cladisticData, setCladisticData }) => {
 
@@ -36,6 +37,12 @@ const BirdsGlossary = ({ cladisticData, setCladisticData }) => {
         }
     }
 
+    const [containerRef, isVisible] = useElementOnScreen({
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.5
+    })
+
     const [currentLevel, setCurrentLevel] = useState({})
     const [isLoading, setIsLoading] = useState(false)
     const [scrollTo, setScrollTo] = useState('')
@@ -43,7 +50,7 @@ const BirdsGlossary = ({ cladisticData, setCladisticData }) => {
     useEffect(() => {
         const destination = refs[scrollTo] || top
         const position = destination.current.getBoundingClientRect().top
-        const offset = refs[scrollTo] ? -20 : 0
+        const offset = refs[scrollTo] ? -20 : -10
         window.scrollBy({
             top: position + offset,
             behavior: 'smooth'
@@ -87,7 +94,7 @@ const BirdsGlossary = ({ cladisticData, setCladisticData }) => {
         stepOutOneLevel: () => {
             const { [depth]: remove, ...outOneLayer } = currentLevel
             // if (currentLevel[depth]) outOneLayer.from = currentLevel.depth
-            // console.log(remove)
+            console.log('stepping otu one level')
             setCurrentLevel(outOneLayer)
             setScrollTo(remove)
         },
@@ -145,15 +152,30 @@ const BirdsGlossary = ({ cladisticData, setCladisticData }) => {
         })
     }
 
+    // const navbarIsFixed = depth === 'species' && screenMode !== 'narrow'  Was useful when the nav bar was anchored at the bottom of the page in tablet and desktop mode.
+    const stickyStylingAdjustments = {
+        zIndex: 3,
+        position: 'sticky',
+        top: '0em',
+        backgroundColor: 'white',
+        marginLeft: '0px',
+        paddingLeft: '4px',
+        paddingBottom: '4px'
+    }
+
+    const navTagsStickyTo = isVisible ? '' :
+        (screenMode === 'narrow' ? 'bottom' : 'top')
+
     return (
         <section ref={top}>
-            {/* <FloatingTaxonomyNavigation taxonomies={Object.entries(currentLevel)} setActiveTaxonomy={setActiveTaxonomy}/> */}
-            <TaxonomyNavigation taxonomies={Object.entries(currentLevel)} zIndex={0} setActiveTaxonomy={setActiveTaxonomy} />
+            <div ref={screenMode !== 'narrow' ? containerRef : null}></div>
+            <TaxonomyNavigation taxonomies={Object.entries(currentLevel)} zIndex={0} setActiveTaxonomy={setActiveTaxonomy} stylingAdjustments={{ marginBottom: '-8px', paddingTop: '2px', ...navTagsStickyTo === 'top' && stickyStylingAdjustments }} reference={screenMode === 'narrow' ? containerRef : null} />
             <RoundedBlock
                 stylingAdjustments={{
                     zIndex: 1,
                     // width: depth === 'species' ? '100%' : 'fit-content',
                     backgroundColor: colors[depth],
+                    padding: '18px 18px 0',
                     ...styling.outerResponsive[screenMode]
                 }}
             >
@@ -162,7 +184,7 @@ const BirdsGlossary = ({ cladisticData, setCladisticData }) => {
                 ) :
                     <ul style={styling.outer}>
                         {Object.entries(activeData).map(([name, data]) => (
-                            <li key={name} style={{ margin: '0 10px 20px', ...styling.innerLiResponsive[screenMode]}} ref={refs[name]}>
+                            <li key={name} style={{ margin: '0 10px 20px', ...styling.innerLiResponsive[screenMode] }} ref={refs[name]}>
                                 {
                                     depth === 'genus' ?
                                         <Bird data={data} isLoading={isLoading} setActiveTaxonomy={setActiveTaxonomy} />
@@ -174,6 +196,7 @@ const BirdsGlossary = ({ cladisticData, setCladisticData }) => {
                     </ul>
                 }
             </RoundedBlock>
+            {navTagsStickyTo === 'bottom' && <TempFloatingTaxonomyNavigation taxonomies={Object.entries(currentLevel)} setActiveTaxonomy={setActiveTaxonomy} />}
         </section >
     )
 }

@@ -1,11 +1,23 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { useScreenModeContext } from '../../auth/useScreenMode'
+import useElementOnScreen from '../../utils/UseElementOnScreen'
 import BirdCall from './BirdCall'
 import InfoSegment from './InfoSegment'
 
 const FullBird = ({ data }) => {
     const screenMode = useScreenModeContext()
+    const [leftContainerRef, leftIsVisible] = useElementOnScreen({
+        root: null,
+        rootMargin: '0px',
+        threshold: 1
+    })
+
+    const [rightContainerRef, rightIsVisible] = useElementOnScreen({
+        root: null,
+        rootMargin: '0px',
+        threshold: 1
+    })
 
     const styling = {
         inner: {
@@ -15,9 +27,21 @@ const FullBird = ({ data }) => {
         column: {
             display: 'flex',
             flexDirection: 'column',
+            // paddingBottom: navbarIsFixed ? '70px' : '0px',  // This line was used to add space for the fixed navbar for infosegments being displayed in narrow screenMode.
             position: 'sticky',
-            alignSelf: 'flex-end',
-            bottom: '1rem'
+            ...screenMode !== 'narrow' && {
+                minWidth: '215px'
+            },
+            columnIsEntirelyVisible: {
+                true: {
+                    alignSelf: 'flex-start',
+                    top: '85px'
+                },
+                false: {
+                    alignSelf: 'flex-end',
+                    bottom: '0rem'
+                }
+            }
         },
         image: {
             borderRadius: '8px 8px 0 0',
@@ -43,7 +67,8 @@ const FullBird = ({ data }) => {
         generalInfo: {
             narrow: {
                 lineHeight: '1.5',
-                fontSize: '.9em'
+                fontSize: '.9em',
+                padding: '4px'
             }
         }
     }
@@ -86,7 +111,7 @@ const FullBird = ({ data }) => {
                         </>
                     )
                     )}
-                    {/* The rest of the images. IDK how to display them side by side with overflow hidden for some reason and I am sick of trying. */}
+                    {/* The rest of the images. IDK how to display them side by side with overflow hidden for some reason and I am sick of trying */}
                     <ul style={{ ...styling.generalInfo[screenMode], listStyle: 'none', overflow: 'scroll' }}>
                         {data.images.slice(data.infoSegments.length + 1).map((image, i) => (
                             <li key={i} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -111,11 +136,11 @@ const FullBird = ({ data }) => {
 
         // Full size-------------------
         (
-            <div>
+            <section>
                 <section style={styling.name} >{data.commonName}</section>
 
                 <section style={styling.inner}>
-                    <section style={{ ...styling.column, width: '40%' }}>
+                    <section style={{ width: '40%', height: 'fit-content', ...styling.column, ...styling.column.columnIsEntirelyVisible[leftIsVisible] }} ref={leftContainerRef}>
                         {data.images.length > 0 && <img src={data.images[0].src} alt={data.images[0].alt} style={styling.image} />}
                         {/* {console.log('call:', bird.call)} */}
                         {/* <BirdCall call={bird.call} /> */}
@@ -124,7 +149,7 @@ const FullBird = ({ data }) => {
                         <NavLink style={styling.link} to={`/sightings/${data._id}`}>
                             Log Sightings
                         </NavLink>
-                        <ul style={{ listStyle: 'none', display: 'flex', flexWrap: 'wrap' }}>{data.images.slice(1, 9).map((image, i) => (
+                        <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column' }}>{data.images.slice(1, 9).map((image, i) => (
                             <li key={i} style={{ marginBottom: '8px' }}>
                                 <div style={{ display: 'flex', flexDirection: 'column' }}>
                                     {image.alt ? (
@@ -136,7 +161,7 @@ const FullBird = ({ data }) => {
                                         </>
                                     )
                                         :
-                                        <img src={image.src} alt={image.alt} style={{ width: '90%' }} />
+                                        <img src={image.src} alt={image.alt} style={{ width: '90%', borderRadius: '8px' }} />
                                     }
 
                                 </div>
@@ -146,14 +171,14 @@ const FullBird = ({ data }) => {
                     </section>
                     {/* <section><img src={bird.images[0]} style={styling.image} /></section> */}
 
-                    <section style={{ ...styling.column, paddingLeft: '4%', maxWidth: '65%' }}>
+                    <section style={{ paddingLeft: '4%', maxWidth: '65%', height: 'fit-content', ...styling.column, ...styling.column.columnIsEntirelyVisible[rightIsVisible] }} ref={rightContainerRef}>
                         {data.generalDescription.map((paragraph, i) => <p key={i} style={i === 0 ? { marginTop: '0', lineHeight: '1.75' } : { lineHeight: '1.75' }}>{paragraph}</p>)}
                         {data.infoSegments.map((segment, i) => <InfoSegment key={i} title={segment.title} info={segment.info} />)}
                     </section>
                     {/* <a href={`/sightings/${bird._id}`}>Sightings</a> */}
                 </section>
 
-            </div>
+            </section>
         )
 }
 

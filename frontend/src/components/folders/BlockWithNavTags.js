@@ -37,7 +37,7 @@ const BlockWithNavTags = ({ taxonomies = {}, children, setActiveTaxonomy, stylin
     */
     return (
         <section>
-            <TaxonomyNavigation taxonomies={taxonomyList} zIndex={2} setActiveTaxonomy={setActiveTaxonomy} />
+            <TaxonomyNavigation taxonomies={taxonomyList} zIndex={2} setActiveTaxonomy={setActiveTaxonomy} stylingAdjustments={{marginBottom: '-8px'}} />
             {/* FIX: Problem with this block is the clickable part doesn't follow the shape of the roundedblock inside. */}
             <div onClick={() => setActiveTaxonomy[innermostLevel](innermostName)} style={{ cursor: 'pointer' }}>
                 <RoundedBlock

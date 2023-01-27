@@ -48,7 +48,6 @@ function BirdBrowser() {
 
                 <BirdsGlossary cladisticData={cladisticData} setCladisticData={setCladisticData} />
             </div>
-            <BackToTop />
         </div>
     )
 }

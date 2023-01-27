@@ -13,10 +13,17 @@ const styling = {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    width: '70%',
+    // width: '70%',
     margin: '0px auto',
     narrow: {
       width: '100%'
+    },
+    medium: {
+      // width: '98%',
+      padding: '8px'
+    },
+    desktop: {
+      width: '70%'
     }
   }
 }
