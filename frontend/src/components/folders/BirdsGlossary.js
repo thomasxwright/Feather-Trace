@@ -1,6 +1,5 @@
 import { createRef, useEffect, useState } from "react"
 import { useScreenModeContext } from "../../auth/useScreenMode"
-import Order from "../Taxonomies/Order"
 import Bird from "./Bird"
 import FloatingTaxonomyNavigation from "./FloatingTaxonomyNavigation"
 import FullBird from "./FullBird"

@@ -7,15 +7,17 @@ import InfoSegment from './InfoSegment'
 
 const FullBird = ({ data }) => {
     const screenMode = useScreenModeContext()
+
+    const offsetFromHoveringNavBar = 85
     const [leftContainerRef, leftIsVisible] = useElementOnScreen({
         root: null,
-        rootMargin: '0px',
+        rootMargin: `-${offsetFromHoveringNavBar}px 0px 0px`,
         threshold: 1
     })
 
     const [rightContainerRef, rightIsVisible] = useElementOnScreen({
         root: null,
-        rootMargin: '0px',
+        rootMargin: `-${offsetFromHoveringNavBar}px 0px 0px`,
         threshold: 1
     })
 
@@ -35,7 +37,7 @@ const FullBird = ({ data }) => {
             columnIsEntirelyVisible: {
                 true: {
                     alignSelf: 'flex-start',
-                    top: '85px'
+                    top: `${offsetFromHoveringNavBar}px`
                 },
                 false: {
                     alignSelf: 'flex-end',
