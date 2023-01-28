@@ -50,7 +50,8 @@ const BirdsGlossary = ({ cladisticData, setCladisticData }) => {
     useEffect(() => {
         const destination = refs[scrollTo] || top
         const position = destination.current.getBoundingClientRect().top
-        const offset = refs[scrollTo] ? -20 : -10
+        const stickyOffset = currentLevel.order && screenMode !== 'narrow' ? -48 : 0  // if the taxonomy nav bar is floating at the top of the screen, add extra scrolling clearance
+        const offset = refs[scrollTo] ? (-32 + stickyOffset) : -10  //scrolling to a specific area vs just the top in general
         window.scrollBy({
             top: position + offset,
             behavior: 'smooth'
