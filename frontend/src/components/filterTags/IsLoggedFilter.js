@@ -7,7 +7,8 @@ const IsLoggedFilter = ({ isLogged, setIsLogged }) => {
     return (
         <>
             Birds I
-            <select name="isLogged" style={styling} defaultValue={true} onChange={e => setIsLogged(e.target.value)}>
+            <select name="isLogged" style={styling} defaultValue={isLogged} onChange={e => setIsLogged(e.target.value)}>
+                <option value={null} >have/haven't</option>
                 <option value={true} >have</option>
                 <option value={false} >haven't</option>
             </select >

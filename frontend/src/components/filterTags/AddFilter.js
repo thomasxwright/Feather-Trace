@@ -28,7 +28,7 @@ const AddFilter = () => {
     return (
         <div style={styling.outerBox} onClick={()=>console.log('go')}>
             <img style={styling.image} src={require('../../images/add_FILL0_wght400_GRAD0_opsz48.png')} />
-            <span style={styling.words}>Add a filter</span>
+            <span style={styling.words}>Apply the changes</span>
         </div>
     )
 }

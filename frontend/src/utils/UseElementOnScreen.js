@@ -6,7 +6,7 @@ export default function useElementOnScreen ( options) {
 
     const callbackFunction = entries => {
         const [entry] = entries
-        console.log(entry.isIntersecting, entry)
+        // console.log(entry.isIntersecting, entry)
         setIsVisible(entry.isIntersecting)
     }
 

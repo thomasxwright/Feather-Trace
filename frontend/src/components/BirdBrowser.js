@@ -42,9 +42,7 @@ function BirdBrowser() {
         <div style={styling.outer}>
             <AccountSection />
             <div>
-                <section style={{ display: 'flex', flexWrap: 'wrap' }}>
-                    <SearchTags tagColor='#F0E7F5' />
-                </section>
+                <SearchTags tagColor='#F0E7F5' />
 
                 <BirdsGlossary cladisticData={cladisticData} setCladisticData={setCladisticData} />
             </div>
