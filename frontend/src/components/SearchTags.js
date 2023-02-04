@@ -1,10 +1,9 @@
 import { useState } from "react"
 import { Link, useLocation } from "react-router-dom"
 import AddFilter from "./filterTags/AddFilter"
-import CladeFilter from "./filterTags/CladeFilter"
+// import CladeFilter from "./filterTags/CladeFilter"
 import FilterTag from "./filterTags/FilterTag"
 import IsLoggedFilter from "./filterTags/IsLoggedFilter"
-import OpenCloseFilters from "./filterTags/OpenCloseFilters"
 import PlaceFilter from "./filterTags/PlaceFilter"
 import SearchTextFilter from "./filterTags/SearchTextFilter"
 // import SearchTag from "./SearchTag"
@@ -12,20 +11,15 @@ import SearchTextFilter from "./filterTags/SearchTextFilter"
 const SearchTags = ({ setCladisticData, tagColor }) => {
     const search = new URLSearchParams(useLocation().search)
     const searches = {
-        place: search.get('state'),
+        place: search.get('state') || '',
+        isLogged: search.get('isLogged') || '',
+        searchText: search.get('searchText') || ''
         // cladeType: search.get('cladeType'),
         // cladeInput: search.get('cladeInput'),
-        isLogged: search.get('isLogged'),
-        searchText: search.get('searchText') || ''
     }
-    const [showFilters, setShowFilters] = useState(false)
-
     const [place, setPlace] = useState(searches.place)
-    const [isLogged, setIsLogged] = useState(search.get('isLogged'))
-    const [searchText, setSearchText] = useState(search.get('searchText') || '')
-
-    console.log(searches.place, searches.isLogged, searches.searchText)
-    console.log(place, isLogged, searchText)
+    const [isLogged, setIsLogged] = useState(searches.isLogged)
+    const [searchText, setSearchText] = useState(searches.searchText)
 
     const unsubmittedSearchParams = place !== searches.place || isLogged !== searches.isLogged || searchText !== searches.searchText
 
@@ -47,7 +41,9 @@ const SearchTags = ({ setCladisticData, tagColor }) => {
     const styling = {
         outer: {
             display: 'flex',
-            flexWrap: 'wrap'
+            flexWrap: 'wrap',
+            marginTop: '12px',
+            justifyContent: 'center'
         }
     }
 
@@ -55,21 +51,22 @@ const SearchTags = ({ setCladisticData, tagColor }) => {
     return (
         <section style={styling.outer}>
 
-            {/* <FilterTag tagColor={tagColor} innerTag={<CladeFilter clade={clade} setClade={setClade} imgSrc='../../images/close_FILL0_wght400_GRAD0_opsz48.png' />} /> */}
-            {(showFilters || searchText) && <FilterTag tagColor={tagColor} setValue={setSearchText} innerTag={<SearchTextFilter searchText={searchText} setSearchText={setSearchText} imgSrc='../../images/close_FILL0_wght400_GRAD0_opsz48.png' />} />}
-            {(showFilters || place) && <FilterTag tagColor={tagColor} setValue={setPlace} innerTag={<PlaceFilter place={place} setPlace={setPlace} imgSrc='../../images/close_FILL0_wght400_GRAD0_opsz48.png' />} />}
-            {(showFilters || isLogged) && <FilterTag tagColor={tagColor} setValue={setIsLogged} innerTag={<IsLoggedFilter isLogged={isLogged} setIsLogged={setIsLogged} imgSrc='../../images/close_FILL0_wght400_GRAD0_opsz48.png' />} />}
+            <FilterTag filterValue={place} resetFilterValue={() => setPlace('')}>
+                <PlaceFilter place={place} setPlace={setPlace}/>
+            </FilterTag>
+            <FilterTag filterValue={isLogged} resetFilterValue={() => setIsLogged('')}>
+                <IsLoggedFilter isLogged={isLogged} setIsLogged={setIsLogged}/>
+            </FilterTag>
+            <FilterTag filterValue={searchText} resetFilterValue={() => setSearchText('')}>
+                <SearchTextFilter searchText={searchText} setSearchText={setSearchText}/>
+            </FilterTag>
 
             {/* {amTrackingShown && <amTrackingFilter amTracking={amTracking} setFilter={setAmTracking}/>} */}
-            {/* <button>Send</button> */}
 
-
-            {unsubmittedSearchParams && <Link to={`?${getQueryParamsFromTags()}`}>
+            {unsubmittedSearchParams && <Link to={`?${getQueryParamsFromTags()}`} className='react-link'>
                 <AddFilter />
             </Link>
             }
-            {/* <AddFilter /> */}
-            <OpenCloseFilters showFilters={showFilters} setShowFilters={setShowFilters}/>
         </section>
     )
 }

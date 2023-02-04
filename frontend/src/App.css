@@ -41,3 +41,8 @@
 .taxonomy-navigation::-webkit-scrollbar {
   display: none;
 }
+
+.react-link {
+  text-decoration: none;
+  color: black;
+}

@@ -11,6 +11,8 @@ import { useScreenModeContext } from '../auth/useScreenMode';
 
 function BirdBrowser() {
     const [cladisticData, setCladisticData] = useState([])
+    const [currentLevel, setCurrentLevel] = useState({})
+    const [fetchingBirds, setFetchingBirds] = useState(false)
     const state = useLocation()
     const screenMode = useScreenModeContext()
 
@@ -19,17 +21,20 @@ function BirdBrowser() {
             width: '100%'
         }
     }
-    console.log('loaded teh birds section', new Date().toLocaleTimeString())
-
 
     useEffect(() => {
         console.log('getting da birds', new Date().toLocaleTimeString())
 
         const getBirds = async () => {
+            setFetchingBirds(true)
             const birdsFromServer = await fetchBirds()
+            if (currentLevel.order)
+                setCurrentLevel({})
+            setFetchingBirds(false)
             setCladisticData(birdsFromServer.cladisticBirdData)
         }
         getBirds()
+
     }, [state])
 
     const fetchBirds = async () => {
@@ -41,10 +46,12 @@ function BirdBrowser() {
     return (
         <div style={styling.outer}>
             <AccountSection />
-            <div>
-                <SearchTags tagColor='#F0E7F5' />
-
-                <BirdsGlossary cladisticData={cladisticData} setCladisticData={setCladisticData} />
+            <SearchTags tagColor='#F0E7F5' />
+            <div style={{ position: 'relative' }}>
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                    {fetchingBirds && <img src={require('../images/quacksmall.gif')} alt='Please be patient!' style={{ maxHeight: '120px', position: 'absolute', top: screenMode === 'narrow' ? '20px' : '80px', zIndex: 3, padding: '80px', background: 'radial-gradient(rgb(180, 167, 197) 25%, rgba(255, 255, 255, 0) 60%)' }} />}
+                </div>
+                <BirdsGlossary cladisticData={cladisticData} setCladisticData={setCladisticData} currentLevel={currentLevel} setCurrentLevel={setCurrentLevel} />
             </div>
         </div>
     )

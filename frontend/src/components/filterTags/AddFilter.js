@@ -1,36 +1,20 @@
+import { useScreenModeContext } from "../../auth/useScreenMode"
+
 const AddFilter = () => {
 
+    const screenMode = useScreenModeContext()
     const styling = {
-        outerBox: {
-            display: 'flex',
-            alignItems: 'center',
-            height: '45px',
-            backgroundColor: '#E7ECF5',
-            margin: '7px 15px',
-            padding: '5px 5px 5px 0'
-        },
-        image: {
-            height: '35px',
-            backgroundColor: 'rgba(255,255,255, 0.8)',
-            padding: '10px',
-            marginRight: '5px',
-            opacity: '0.6',
-            cursor: 'pointer'
-        },
-        words: {
-            padding: '0 10px',
-            textAlign: 'center',
-            // fontFamily: 'Impact'
-        }
+        display: 'flex',
+        alignItems: 'center',
+        height: screenMode === 'narrow' ? '32px' : '45px',
+        backgroundColor: 'rgb(41, 167, 167)', // rgb(41, 167, 167)  or rgb(114, 214, 214)
+        borderRadius: '8px',
+        margin: '7px 12px',
+        padding: '5px 12px',
     }
 
 
-    return (
-        <div style={styling.outerBox} onClick={()=>console.log('go')}>
-            <img style={styling.image} src={require('../../images/add_FILL0_wght400_GRAD0_opsz48.png')} />
-            <span style={styling.words}>Apply the changes</span>
-        </div>
-    )
+    return <span style={styling}>Apply the changes</span>
 }
 
 export default AddFilter

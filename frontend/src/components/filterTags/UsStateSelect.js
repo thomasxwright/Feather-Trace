@@ -53,15 +53,22 @@ const UsStateSelect = ({ place, setPlace }) => {
     }
 
     const styling = {
-        select: {
-            
+        height: '100%',
+        margin: '0 8px',
+        textAlign: 'center',
+        border: 'none',
+        backgroundColor: 'white',
+        fontFamily: "Roboto Slab, 'Roboto', 'Helvetica Neue', sans-serif",
+        option: {
+            fontWeight: "100",
+            fontFamily: "Roboto Slab, 'Roboto', 'Helvetica Neue', sans-serif"
         }
     }
 
     return (
 
-        <select name="states" defaultValue={place} onChange={e => setPlace(e.target.value)}>
-            <option value="" >Choose a state</option>
+        <select name="states" value={place} onChange={e => setPlace(e.target.value)} style={styling}>
+            <option value="" >Pick a state</option>
             {Object.entries(states).map((state, i) => {
                 return (
                     <option value={state[0]} key={i}>{state[1]}</option>

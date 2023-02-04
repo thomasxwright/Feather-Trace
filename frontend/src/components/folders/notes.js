@@ -46,3 +46,16 @@ data: {
 
 
 */
+
+/*
+
+-Load a page, it only shows the filters that are active.
+-Change a filter, it adds the "apply changes" button
+-X out a filter, it adds the "apply changes" button
+
+-add a filter button --> click -->
+    -show all filters
+    -don't add new filter --> click -->
+        -hide the filters that aren't applied
+
+*/

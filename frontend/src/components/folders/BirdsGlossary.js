@@ -11,7 +11,7 @@ import TaxonomyNavigation from "./TaxonomyNavigation"
 import useElementOnScreen from "../../utils/UseElementOnScreen"
 import TempFloatingTaxonomyNavigation from "./TempFloatingTaxonomyNavigation"
 
-const BirdsGlossary = ({ cladisticData, setCladisticData }) => {
+const BirdsGlossary = ({ cladisticData, setCladisticData, currentLevel, setCurrentLevel }) => {
 
     const screenMode = useScreenModeContext()
 
@@ -42,7 +42,6 @@ const BirdsGlossary = ({ cladisticData, setCladisticData }) => {
         threshold: 0.5
     })
 
-    const [currentLevel, setCurrentLevel] = useState({})
     const [isLoading, setIsLoading] = useState(false)
     const [scrollTo, setScrollTo] = useState('')
 
