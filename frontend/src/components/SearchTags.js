@@ -54,11 +54,11 @@ const SearchTags = ({ setCladisticData, tagColor }) => {
             <FilterTag filterValue={place} resetFilterValue={() => setPlace('')}>
                 <PlaceFilter place={place} setPlace={setPlace}/>
             </FilterTag>
-            <FilterTag filterValue={isLogged} resetFilterValue={() => setIsLogged('')}>
-                <IsLoggedFilter isLogged={isLogged} setIsLogged={setIsLogged}/>
-            </FilterTag>
             <FilterTag filterValue={searchText} resetFilterValue={() => setSearchText('')}>
                 <SearchTextFilter searchText={searchText} setSearchText={setSearchText}/>
+            </FilterTag>
+            <FilterTag filterValue={isLogged} resetFilterValue={() => setIsLogged('')}>
+                <IsLoggedFilter isLogged={isLogged} setIsLogged={setIsLogged}/>
             </FilterTag>
 
             {/* {amTrackingShown && <amTrackingFilter amTracking={amTracking} setFilter={setAmTracking}/>} */}

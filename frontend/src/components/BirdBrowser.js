@@ -49,7 +49,7 @@ function BirdBrowser() {
             <SearchTags tagColor='#F0E7F5' />
             <div style={{ position: 'relative' }}>
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
-                    {fetchingBirds && <img src={require('../images/quacksmall.gif')} alt='Please be patient!' style={{ maxHeight: '120px', position: 'absolute', top: screenMode === 'narrow' ? '20px' : '80px', zIndex: 3, padding: '80px', background: 'radial-gradient(rgb(180, 167, 197) 25%, rgba(255, 255, 255, 0) 60%)' }} />}
+                    {fetchingBirds && <img src={require('../images/quacksmall.gif')} alt='Please be patient!' style={{ maxHeight: '75px', position: 'absolute', top: screenMode === 'narrow' ? '20px' : '80px', zIndex: 3, padding: '77px 60px', background: 'radial-gradient(rgba(18, 16, 19, 0.6) 10%, rgba(18, 16, 19, 0.8) 43%, rgba(255, 255, 255, 0) 44%)' }} />}
                 </div>
                 <BirdsGlossary cladisticData={cladisticData} setCladisticData={setCladisticData} currentLevel={currentLevel} setCurrentLevel={setCurrentLevel} />
             </div>

@@ -57,5 +57,13 @@ const BirdSchema = new mongoose.Schema({
   parentSpecies: SpeciesShorthandSchema
 })
 
+BirdSchema.index({
+  commonName: 'text',
+  'speciesGlobal.otherCommonNames': 'text',
+  'speciesGlobal.order': 'text',
+  'speciesGlobal.family': 'text',
+  'scientificName': 'text'
+})
+
 module.exports = mongoose.model('Bird', BirdSchema)
 //https://explorer.natureserve.org/api-docs/ for more about where I got these from

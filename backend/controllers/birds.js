@@ -41,7 +41,7 @@ module.exports = {
         // req includes an array of bird IDs to request.  Use $in mongodb query to find the bird data for all birds in that array in one single response.
         try {
             const idsList = req.query.ids.split(',')
-            let birdData = await Bird.find( { _id: { $in: idsList }})  // you could add a second argument here: an object like { nsxUrl: 0 } to not send useless parameters.
+            let birdData = await Bird.find({ _id: { $in: idsList } })  // you could add a second argument here: an object like { nsxUrl: 0 } to not send useless parameters.
             const birdObjs = birdData.map(json => {
                 const bird = new BirdObj(json)
                 bird.processInfoSegments()
@@ -52,7 +52,7 @@ module.exports = {
                 birdsObj[bird.species] = bird
             })
             res.json(birdsObj)
-        } catch(err) {
+        } catch (err) {
             console.log(err)
         }
     },
@@ -194,6 +194,7 @@ async function attachSubspeciesToABird(parentSpecies, subspecies) {
 
 class ParamElement {
     constructor(query, user) {
+        this._searchText = query.searchText
         this._query = query
         this._paramElem = {}
         this._birdsWithSightingsPipeline = []
@@ -218,6 +219,10 @@ class ParamElement {
         if (query.cladeType && query.cladeInput) {
             const regex = new RegExp(`^${query.cladeInput}$`, 'i')
             this._paramElem[`speciesGlobal.${query.cladeType}`] = { '$regex': regex }
+        }
+
+        if (query.searchText) {
+            this._searchText = { $match: { $text: { $search: query.searchText } } }
         }
 
         //TO DO: you need to actually sanitize the isLogged parameter. it contains a string 'true' or 'false'. right now i only check if it's one of those
@@ -245,7 +250,6 @@ class ParamElement {
                                     }
                                 }
                             },
-                            // { $project: { stock_item: 0, _id: 0 } }
                         ],
                         as: "sightings"
                     }
@@ -255,7 +259,9 @@ class ParamElement {
         }
 
         this._fullPipeline = [
+            ...query.searchText ? [this.searchText] : [],  // apparently this one is meant to come first. otherwise i'd've bundled it in with this._paramElem. that said, from my tests it works even when this isn't first in the pipeline.
             ...query.isLogged ? this.birdsWithSightingsPipeline : [],  //isLogged?
+            // ...query.isLogged && this.birdsWithSightingsPipeline,  //isLogged?
             // { $project: { wikiHtml: 0 } },
             { $match: this.mongoDbSearchObj },     //clade, state
             { $addFields: { firstImg: { $first: "$images" } } },
@@ -270,6 +276,9 @@ class ParamElement {
     }
     get query() {
         return this._query
+    }
+    get searchText() {
+        return this._searchText
     }
     get birdsWithSightingsPipeline() {
         return this._birdsWithSightingsPipeline
