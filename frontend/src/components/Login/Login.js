@@ -3,7 +3,7 @@ import axios from 'axios'
 import useAuth from '../../auth/useAuth'
 import { useNavigate } from "react-router-dom";
 
-const Login = () => {
+const Login = ({ setShowLogin }) => {
     let navigate = useNavigate()
 
     const { handleLogin } = useAuth()
@@ -45,6 +45,7 @@ const Login = () => {
             })
             console.log(response.data.user)
             handleLogin(response.data.user)
+            setShowLogin(false)
         } catch (err) {
             console.log(err)
             setMsg({
@@ -54,12 +55,22 @@ const Login = () => {
         }
     }
 
+    const hideLogin = (event) => {
+        event.preventDefault()
+        setShowLogin(false)
+    }
+
+    const styling = {
+        width: '100%',
+        alignSelf: 'flex-start'
+    }
+
     return (
-        <>
+        <section style={styling}>
             <form onSubmit={handleSubmit}>
                 <label>
                     <p>Email</p>
-                    <input type="text" onChange={handleFormChange} name='email' placeholder='Email'/>
+                    <input type="text" onChange={handleFormChange} name='email' placeholder='Email' />
                 </label>
                 <label>
                     <p>Password</p>
@@ -67,6 +78,7 @@ const Login = () => {
                 </label>
                 <div>
                     <button type="submit">Log in</button>
+                    <button onClick={hideLogin}>Cancel</button>
                 </div>
             </form>
             <div
@@ -78,7 +90,7 @@ const Login = () => {
             >
                 {msg ? msg.text : ''}
             </div>
-        </>
+        </section>
     )
 }
 

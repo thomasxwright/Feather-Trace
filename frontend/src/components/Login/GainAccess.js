@@ -3,12 +3,8 @@ import Login from "./Login"
 import SignUp from "./SignUp"
 import useAuth from '../../auth/useAuth'
 
-const GainAccess = () => {
-    const { authed, handleLogout } = useAuth()
-
-
-    const [showLogin, setShowLogin] = useState(false)
-    const [showSignUp, setShowSignUp] = useState(false)
+const GainAccess = ({ accountControls }) => {
+    const { showLogin, setShowLogin, showSignUp, setShowSignUp } = accountControls
 
     const handleShowSignUp = () => {
         setShowLogin(false)
@@ -20,16 +16,11 @@ const GainAccess = () => {
         setShowSignUp(false)
     }
 
-    return (<>
-
-        <button onClick={handleShowLogin}>Login</button>
-        <button onClick={handleShowSignUp}>Sign up</button>
-
-        <div>
-            {showLogin && <Login />}
-            {showSignUp && <SignUp />}
-        </div>
-    </>
+    return (
+        <section>
+            <button onClick={handleShowLogin}>Login</button>
+            <button onClick={handleShowSignUp}>Sign up</button>
+        </section>
     )
 }
 

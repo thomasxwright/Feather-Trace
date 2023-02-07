@@ -1,25 +1,32 @@
 import GainAccess from "./GainAccess"
 import useAuth from '../../auth/useAuth'
 import SignOut from "./SignOut"
-import {useScreenModeContext} from '../../auth/useScreenMode'
 
-const AccountSection = () => {
+const AccountSection = ({ accountControls }) => {
 
   const { authed, user } = useAuth()
-  const hamObj = useScreenModeContext()
-  // console.log(hamObj, new Date().getMilliseconds())
 
-  // const ham = useScreenMode()
-  // console.log(ham)
+  const styling = {
+    name: {
+      fontWeight: '500',
+      fontSize: '1.1em',
+      margin: '4px'
+    },
+    outer: {
+      display: 'flex',
+      flexDirection: 'column',
+      width: 'fit-content'
+    }
+  }
 
   return (authed ?
-    (<>
-      <div>{user.userName}</div>
+    (<section style={styling.outer}>
+      <span style={styling.name}>{user.userName}</span>
       < SignOut />
-    </>
+    </section>
     )
     :
-    <GainAccess />)
+    <GainAccess accountControls={accountControls} />)
 
 }
 

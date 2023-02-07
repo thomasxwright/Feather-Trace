@@ -25,7 +25,7 @@ const BirdsGlossary = ({ cladisticData, setCladisticData, currentLevel, setCurre
         },
         outerResponsive: {
             narrow: {
-                margin: '0 4px 0',
+                // margin: '0 4px 0',
                 padding: '8px'
             }
         },

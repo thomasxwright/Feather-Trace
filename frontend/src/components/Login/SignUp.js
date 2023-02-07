@@ -2,9 +2,9 @@ import React from 'react';
 import useAuth from '../../auth/useAuth'
 import axios from 'axios';
 
-function SignUp() {
+function SignUp({ setShowSignUp }) {
 
-    const {handleLogin } = useAuth()
+    const { handleLogin } = useAuth()
     const [msg, setMsg] = React.useState({
         text: '',
         success: false,
@@ -46,6 +46,7 @@ function SignUp() {
                 success: true,
             });
             handleLogin(response.user)
+            setShowSignUp(false)
         } catch (err) {
             setMsg({
                 text: err.response.data.message.msgBody,
@@ -55,9 +56,19 @@ function SignUp() {
         }
     };
 
+    const hideSignUp = (event) => {
+        event.preventDefault()
+        setShowSignUp(false)
+    }
+
+    const styling = {
+        width: '100%',
+        alignSelf: 'flex-start'
+    }
+
     return (
-        <div>
-            <h1>SignUp</h1>
+        <div style={styling}>
+            <h1>Sign Up</h1>
             <form onSubmit={handleSubmit}>
                 <input
                     type='text'
@@ -84,6 +95,7 @@ function SignUp() {
                     onChange={handleFormChange}
                 />
                 <button>Create User</button>
+                <button onClick={hideSignUp}>Cancel</button>
             </form>
             <div
                 className={

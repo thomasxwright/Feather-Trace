@@ -45,7 +45,7 @@ function BirdBrowser() {
 
     return (
         <div style={styling.outer}>
-            <AccountSection />
+            {/* <AccountSection /> */}
             <SearchTags tagColor='#F0E7F5' />
             <div style={{ position: 'relative' }}>
                 <div style={{ display: 'flex', justifyContent: 'center' }}>

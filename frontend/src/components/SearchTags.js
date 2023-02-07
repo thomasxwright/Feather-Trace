@@ -43,7 +43,8 @@ const SearchTags = ({ setCladisticData, tagColor }) => {
             display: 'flex',
             flexWrap: 'wrap',
             marginTop: '12px',
-            justifyContent: 'center'
+            justifyContent: 'center',
+            width: '100%'
         }
     }
 

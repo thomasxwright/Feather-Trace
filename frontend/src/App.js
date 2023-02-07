@@ -7,23 +7,24 @@ import BirdBrowser from './components/BirdBrowser'
 import { Routes, Route, BrowserRouter as Router } from 'react-router-dom'
 import Sightings from './components/sightings/Sightings'
 import { useScreenModeContext } from './auth/useScreenMode';
+import AccountSection from './components/Login/AccountSection';
+import Header from './components/Header';
 
 const styling = {
   outer: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    // width: '70%',
     margin: '0px auto',
     narrow: {
-      width: '100%'
+      padding: '4px'
     },
     medium: {
-      // width: '98%',
       padding: '8px'
     },
     desktop: {
-      width: '70%'
+      width: '70%',
+      paddingTop: '8px'
     }
   }
 }
@@ -33,7 +34,9 @@ function App() {
 
 
   return (
-    <div style={{...styling.outer, ...styling.outer[screenMode]}}>
+    <div style={{ ...styling.outer, ...styling.outer[screenMode] }}>
+      {/* <AccountSection /> */}
+      <Header />
       <Routes>
         <Route path='/*' element={<BirdBrowser />} />
         <Route path='/browse/*' element={<BirdBrowser />} />
