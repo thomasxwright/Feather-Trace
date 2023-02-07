@@ -1,6 +1,7 @@
 import GainAccess from "./GainAccess"
 import useAuth from '../../auth/useAuth'
 import SignOut from "./SignOut"
+import userIcon from '../../images/account circle.svg'
 
 const AccountSection = ({ accountControls }) => {
 
@@ -16,12 +17,19 @@ const AccountSection = ({ accountControls }) => {
       display: 'flex',
       flexDirection: 'column',
       width: 'fit-content'
+    },
+    user: {
+      display: 'flex',
+      alignItems: 'center'
     }
   }
 
   return (authed ?
     (<section style={styling.outer}>
-      <span style={styling.name}>{user.userName}</span>
+      <div style={styling.user}>
+        <img src={userIcon} style={{width: '25px'}} alt={user.userName} />
+        <span style={styling.name}>{user.userName}</span>
+      </div>
       < SignOut />
     </section>
     )

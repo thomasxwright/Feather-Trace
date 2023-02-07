@@ -21,7 +21,7 @@ const Header = () => {
             marginTop: '8px'
         },
         logoImage: {
-            maxWidth: '65px',
+            maxWidth: screenMode !== 'narrow' ? '65px' : '50px',
             marginRight: '5px'
         },
         logoText: {
