@@ -8,12 +8,6 @@ processes = []
 [build]
   builder = "heroku/buildpacks:20"
 
-[deploy]
-  release_command = "npm run build"
-
-[processes]
-  app = "node server.js"
-
 [env]
   PORT = "4000"
 
