@@ -1,4 +1,7 @@
 {
+  "engines": {
+    "node": "18.2.0"
+  },
   "name": "todo-mvc-auth-local",
   "version": "1.0.0",
   "description": "",
@@ -6,7 +9,7 @@
   "scripts": {
     "dev": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build:ui": "rm -rf build && cd ../frontend && npm install && echo 'yooooo' && npm run build && echo 'done building' && ls && cp -r build ../backend"
+    "build:ui": "rm -rf build && cd ../frontend && npm install && npm run build && echo 'done building' && ls && cp -r build ../backend"
   },
   "author": "",
   "license": "MIT",
