@@ -19,7 +19,7 @@ jobs:
           node-version: '18'
       - name: npm install
         run: cd backend && npm install
-      # - name: build
-        # run: ls && cd backend && npm run build:ui
+      - name: build
+        run: ls && cd backend && npm run build:ui
       - uses: superfly/flyctl-actions/setup-flyctl@master
       - run: ls && cd backend && ls && flyctl deploy --remote-only
