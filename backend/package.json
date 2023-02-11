@@ -1,6 +1,6 @@
 {
   "engines": {
-    "node": "18.14.0"
+    "node": "18.2.0"
   },
   "name": "todo-mvc-auth-local",
   "version": "1.0.0",
