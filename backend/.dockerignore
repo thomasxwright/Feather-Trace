@@ -1,0 +1,6 @@
+# flyctl launch added from .gitignore
+**/node_modules
+**/.env
+**/bonus
+**/duplicates.js
+fly.toml
