@@ -37,6 +37,7 @@ function App() {
     <div style={{ ...styling.outer, ...styling.outer[screenMode] }}>
       {/* <AccountSection /> */}
       <Header />
+      <span>yooo birdz</span>
       <Routes>
         <Route path='/*' element={<BirdBrowser />} />
         <Route path='/browse/*' element={<BirdBrowser />} />

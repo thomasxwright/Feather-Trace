@@ -20,6 +20,6 @@ jobs:
       - name: npm install
         run: cd backend && npm install
       # - name: build
-        # run: ls && cd backend && npm run build:ui
+        # run: ls && cd backend && npm run build:ui:on-server
       - uses: superfly/flyctl-actions/setup-flyctl@master
       - run: ls && cd backend && ls && flyctl deploy --remote-only
