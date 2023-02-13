@@ -17,7 +17,7 @@ const GainAccess = ({ accountControls }) => {
     }
 
     return (
-        <section>
+        <section style={{ backgroundColor: 'coral' }}>
             <button onClick={handleShowLogin}>Login</button>
             <button onClick={handleShowSignUp}>Sign up</button>
         </section>
