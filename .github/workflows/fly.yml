@@ -1,0 +1,25 @@
+name: Build and deploy
+
+on:
+  push:
+    branches:
+      - main
+      # note that your "main" branch mght be called main instead of master
+
+env:
+  FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+jobs:
+  deploy:
+    name: Deploy app
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - name: npm install
+        run: cd backend && npm install
+      # - name: build
+        # run: ls && cd backend && npm run build:ui:on-server
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+      - run: ls && cd backend && ls && flyctl deploy --remote-only
