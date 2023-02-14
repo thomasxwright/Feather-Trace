@@ -11,7 +11,7 @@ import TaxonomyNavigation from "./TaxonomyNavigation"
 import useElementOnScreen from "../../utils/UseElementOnScreen"
 import TempFloatingTaxonomyNavigation from "./TempFloatingTaxonomyNavigation"
 
-const BirdsGlossary = ({ cladisticData, setCladisticData, currentLevel, setCurrentLevel }) => {
+const BirdsGlossary = ({ cladisticData, setCladisticData, currentLevel, setCurrentLevel, fetchingBirds, setFetchingBirds }) => {
 
     const screenMode = useScreenModeContext()
 
@@ -42,19 +42,7 @@ const BirdsGlossary = ({ cladisticData, setCladisticData, currentLevel, setCurre
         threshold: 0.5
     })
 
-    const [isLoading, setIsLoading] = useState(false)
     const [scrollTo, setScrollTo] = useState('')
-
-    useEffect(() => {
-        const destination = refs[scrollTo] || top
-        const position = destination.current.getBoundingClientRect().top
-        const stickyOffset = currentLevel.order && screenMode !== 'narrow' ? -48 : 0  // if the taxonomy nav bar is floating at the top of the screen, add extra scrolling clearance
-        const offset = refs[scrollTo] ? (-32 + stickyOffset) : -10  //scrolling to a specific area vs just the top in general
-        window.scrollBy({
-            top: position + offset,
-            behavior: 'smooth'
-        })
-    }, [currentLevel])
 
     const levels = ['class', 'order', 'family', 'genus', 'species']
     const depth = (currentLevel.species && 'species') || (currentLevel.genus && 'genus') || (currentLevel.family && 'family') || (currentLevel.order && 'order') || 'class'
@@ -66,6 +54,19 @@ const BirdsGlossary = ({ cladisticData, setCladisticData, currentLevel, setCurre
         species: 'mintcream'
     }
 
+    useEffect(() => {
+        if (depth === 'genus')
+            validateGenusData(currentLevel.genus)
+        const destination = refs[scrollTo] || top
+        const position = destination.current.getBoundingClientRect().top
+        const stickyOffset = currentLevel.order && screenMode !== 'narrow' ? -48 : 0  // if the taxonomy nav bar is floating at the top of the screen, add extra scrolling clearance
+        const offset = refs[scrollTo] ? (-32 + stickyOffset) : -10  //scrolling to a specific area vs just the top in general
+        window.scrollBy({
+            top: position + offset,
+            behavior: 'smooth'
+        })
+    }, [currentLevel])
+
     const activeData =
         cladisticData?.[currentLevel.order]?.[currentLevel.family]?.[currentLevel.genus]?.[currentLevel.species]
         || cladisticData?.[currentLevel.order]?.[currentLevel.family]?.[currentLevel.genus]
@@ -76,13 +77,13 @@ const BirdsGlossary = ({ cladisticData, setCladisticData, currentLevel, setCurre
     const validateGenusData = genus => {
         const birdsOfGenus = Object.values(cladisticData[currentLevel.order][currentLevel.family][genus])
         if (!birdsOfGenus[0].wikiUrl) {
-            setIsLoading(true)
+            setFetchingBirds(true)
             const speciesIds = birdsOfGenus.map(bird => bird._id)
             const findSpeciesData = async () => {
                 const res = await fetch(`/birds/completeData?ids=${speciesIds.join(',')}`, { credentials: 'include' })
                 const data = await res.json()
                 setGenusData(currentLevel.order, currentLevel.family, genus, data)
-                setIsLoading(false)
+                setFetchingBirds(false)
                 return data
             }
             const birds = findSpeciesData()
@@ -93,7 +94,7 @@ const BirdsGlossary = ({ cladisticData, setCladisticData, currentLevel, setCurre
         stepOutOneLevel: () => {
             const { [depth]: remove, ...outOneLayer } = currentLevel
             // if (currentLevel[depth]) outOneLayer.from = currentLevel.depth
-            console.log('stepping otu one level')
+            console.log('stepping out one level')
             setCurrentLevel(outOneLayer)
             setScrollTo(remove)
         },
@@ -186,7 +187,7 @@ const BirdsGlossary = ({ cladisticData, setCladisticData, currentLevel, setCurre
                             <li key={name} style={{ margin: '0 10px 20px', ...styling.innerLiResponsive[screenMode] }} ref={refs[name]}>
                                 {
                                     depth === 'genus' ?
-                                        <Bird data={data} isLoading={isLoading} setActiveTaxonomy={setActiveTaxonomy} />
+                                        <Bird data={data} fetchingBirds={fetchingBirds} setActiveTaxonomy={setActiveTaxonomy} />
                                         :
                                         <TaxonomyGroup data={data} taxonomies={{ [nextLayer]: name }} setActiveTaxonomy={setActiveTaxonomy} />
                                 }

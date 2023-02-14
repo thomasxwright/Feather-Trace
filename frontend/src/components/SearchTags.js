@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Link, useLocation } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import AddFilter from "./filterTags/AddFilter"
 // import CladeFilter from "./filterTags/CladeFilter"
 import FilterTag from "./filterTags/FilterTag"
@@ -9,6 +9,7 @@ import SearchTextFilter from "./filterTags/SearchTextFilter"
 // import SearchTag from "./SearchTag"
 
 const SearchTags = ({ setCladisticData, tagColor }) => {
+    const navigate = useNavigate()
     const search = new URLSearchParams(useLocation().search)
     const searches = {
         place: search.get('state') || '',
@@ -48,6 +49,11 @@ const SearchTags = ({ setCladisticData, tagColor }) => {
         }
     }
 
+    const go = event => {
+        event.preventDefault()
+        navigate(`?${getQueryParamsFromTags()}`)
+    }
+
 
     return (
         <section style={styling.outer}>
@@ -56,7 +62,7 @@ const SearchTags = ({ setCladisticData, tagColor }) => {
                 <PlaceFilter place={place} setPlace={setPlace}/>
             </FilterTag>
             <FilterTag filterValue={searchText} resetFilterValue={() => setSearchText('')}>
-                <SearchTextFilter searchText={searchText} setSearchText={setSearchText}/>
+                <SearchTextFilter searchText={searchText} setSearchText={setSearchText} handleSubmit={go}/>
             </FilterTag>
             <FilterTag filterValue={isLogged} resetFilterValue={() => setIsLogged('')}>
                 <IsLoggedFilter isLogged={isLogged} setIsLogged={setIsLogged}/>

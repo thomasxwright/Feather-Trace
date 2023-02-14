@@ -8,7 +8,7 @@ const BirdPhoto = ({ img }) => {
             position: 'relative'
         },
         masked: {
-            maskImage: 'linear-gradient(to top, rgba(0,0,0,0.35) 0%,rgba(0,0,0,1) 20%)'
+            WebkitMaskImage: 'linear-gradient(to top, rgba(0,0,0,0.35) 0%,rgba(0,0,0,1) 20%)'
         }
     }
 
