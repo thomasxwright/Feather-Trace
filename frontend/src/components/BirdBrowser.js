@@ -13,15 +13,16 @@ function BirdBrowser() {
     const [cladisticData, setCladisticData] = useState({})
     const [currentLevel, setCurrentLevel] = useState({})
     const [fetchingBirds, setFetchingBirds] = useState(true)
+    const [isFetchingFullData, setIsFetchingFullData] = useState(true)
     const state = useLocation()
     const screenMode = useScreenModeContext()
-    
+
     const styling = {
         outer: {
             width: '100%'
         }
     }
-    
+
     const stepIntoFirstDivergingTaxonomy = data => {
         setCurrentLevel({})
         const orders = Object.entries(data)
@@ -50,6 +51,8 @@ function BirdBrowser() {
 
     useEffect(() => {
         console.log(new Date().toLocaleTimeString(), 'getting da birds')
+        setIsFetchingFullData(true)
+        setIsFetchingFullData(true)
 
         const getBirds = async () => {
             setFetchingBirds(true)
@@ -58,8 +61,7 @@ function BirdBrowser() {
             console.log(new Date().toLocaleTimeString(), 'found birds:', resultCladisticBirdData)
             setCladisticData(resultCladisticBirdData)
             const needsAnotherLoad = stepIntoFirstDivergingTaxonomy(resultCladisticBirdData)
-            if (!needsAnotherLoad)
-                setFetchingBirds(false)
+            setFetchingBirds(false)
         }
         getBirds()
 
@@ -76,9 +78,9 @@ function BirdBrowser() {
             <SearchTags tagColor='#F0E7F5' />
             <div style={{ position: 'relative' }}>
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
-                    {fetchingBirds && !currentLevel.genus && <img src={require('../images/quacksmall.gif')} alt='Please be patient!' style={{ maxHeight: '75px', position: 'absolute', top: screenMode === 'narrow' ? '20px' : '80px', zIndex: 3, padding: '77px 60px', background: 'radial-gradient(rgba(18, 16, 19, 0.6) 10%, rgba(18, 16, 19, 0.8) 43%, rgba(255, 255, 255, 0) 44%)' }} />}
+                    {fetchingBirds && <img src={require('../images/quacksmall.gif')} alt='Please be patient!' style={{ maxHeight: '75px', position: 'absolute', top: screenMode === 'narrow' ? '20px' : '80px', zIndex: 3, padding: '77px 60px', background: 'radial-gradient(rgba(18, 16, 19, 0.6) 10%, rgba(18, 16, 19, 0.8) 43%, rgba(255, 255, 255, 0) 44%)' }} />}
                 </div>
-                <BirdsGlossary cladisticData={cladisticData} setCladisticData={setCladisticData} currentLevel={currentLevel} setCurrentLevel={setCurrentLevel} fetchingBirds={fetchingBirds} setFetchingBirds={setFetchingBirds} />
+                <BirdsGlossary cladisticData={cladisticData} setCladisticData={setCladisticData} currentLevel={currentLevel} setCurrentLevel={setCurrentLevel} fetchingBirds={fetchingBirds} setFetchingBirds={setFetchingBirds} isFetchingFullData={isFetchingFullData} setIsFetchingFullData={setIsFetchingFullData} />
             </div>
         </div>
     )

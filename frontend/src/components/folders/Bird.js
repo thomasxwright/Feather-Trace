@@ -2,7 +2,7 @@ import React from 'react'
 import BirdPhoto from './BirdPhoto'
 import PlaceholderBird from './PlaceholderBird'
 
-const Bird = ({ data, fetchingBirds, taxonomies, setActiveTaxonomy }) => {
+const Bird = ({ data, isFetchingFullData, setActiveTaxonomy }) => {
 
     const abbreviateFirstSentence = text => {
         const paragraph = text.split('.')
@@ -39,7 +39,7 @@ const Bird = ({ data, fetchingBirds, taxonomies, setActiveTaxonomy }) => {
             maxWidth: '350px', maxHeight: '320px', overflow: 'hidden', backgroundColor: 'white', padding: '12px', borderRadius: '12px',
             WebkitMaskImage: 'linear-gradient(to top, rgba(0,0,0,0.35) 0%,rgba(0,0,0,1) 20%)'
         }}>
-            {fetchingBirds ?
+            {isFetchingFullData ?
                 <PlaceholderBird />
                 :
                 (

@@ -11,7 +11,7 @@ import TaxonomyNavigation from "./TaxonomyNavigation"
 import useElementOnScreen from "../../utils/UseElementOnScreen"
 import TempFloatingTaxonomyNavigation from "./TempFloatingTaxonomyNavigation"
 
-const BirdsGlossary = ({ cladisticData, setCladisticData, currentLevel, setCurrentLevel, fetchingBirds, setFetchingBirds }) => {
+const BirdsGlossary = ({ cladisticData, setCladisticData, currentLevel, setCurrentLevel, isFetchingFullData, setIsFetchingFullData }) => {
 
     const screenMode = useScreenModeContext()
 
@@ -57,14 +57,16 @@ const BirdsGlossary = ({ cladisticData, setCladisticData, currentLevel, setCurre
     useEffect(() => {
         if (depth === 'genus')
             validateGenusData(currentLevel.genus)
-        const destination = refs[scrollTo] || top
-        const position = destination.current.getBoundingClientRect().top
-        const stickyOffset = currentLevel.order && screenMode !== 'narrow' ? -48 : 0  // if the taxonomy nav bar is floating at the top of the screen, add extra scrolling clearance
-        const offset = refs[scrollTo] ? (-32 + stickyOffset) : -10  //scrolling to a specific area vs just the top in general
-        window.scrollBy({
-            top: position + offset,
-            behavior: 'smooth'
-        })
+        if (scrollTo) {
+            const destination = refs[scrollTo] || top // TODO: the scrollTo can contain a value from a previous page. try reversing out of a taxonomy, then running a new search, and this value will be outdated. Maybe instead of short circuiting this value, we should actually set it properly somewhere.
+            const position = destination.current.getBoundingClientRect().top
+            const stickyOffset = currentLevel.order && screenMode !== 'narrow' ? -48 : 0  // if the taxonomy nav bar is floating at the top of the screen, add extra scrolling clearance
+            const offset = scrollTo === 'top' ? -10 : (-32 + stickyOffset)  //scrolling to just the top in general vs a specific birdgroup
+            window.scrollBy({
+                top: position + offset,
+                behavior: 'smooth'
+            })
+        }
     }, [currentLevel])
 
     const activeData =
@@ -77,13 +79,13 @@ const BirdsGlossary = ({ cladisticData, setCladisticData, currentLevel, setCurre
     const validateGenusData = genus => {
         const birdsOfGenus = Object.values(cladisticData[currentLevel.order][currentLevel.family][genus])
         if (!birdsOfGenus[0].wikiUrl) {
-            setFetchingBirds(true)
+            setIsFetchingFullData(true)
             const speciesIds = birdsOfGenus.map(bird => bird._id)
             const findSpeciesData = async () => {
                 const res = await fetch(`/birds/completeData?ids=${speciesIds.join(',')}`, { credentials: 'include' })
                 const data = await res.json()
                 setGenusData(currentLevel.order, currentLevel.family, genus, data)
-                setFetchingBirds(false)
+                setIsFetchingFullData(false)
                 return data
             }
             const birds = findSpeciesData()
@@ -93,34 +95,29 @@ const BirdsGlossary = ({ cladisticData, setCladisticData, currentLevel, setCurre
     const setActiveTaxonomy = {
         stepOutOneLevel: () => {
             const { [depth]: remove, ...outOneLayer } = currentLevel
-            // if (currentLevel[depth]) outOneLayer.from = currentLevel.depth
-            console.log('stepping out one level')
             setCurrentLevel(outOneLayer)
             setScrollTo(remove)
         },
         order: order => {
             const destination = { order }
-            // if (currentLevel.family) destination.from = currentLevel.family
             setCurrentLevel(destination)
-            setScrollTo(currentLevel.family || '')
+            setScrollTo(currentLevel.family || 'top')
         },
         family: family => {
             const destination = { order: currentLevel.order, family }
-            // if (currentLevel.genus) destination.from = currentLevel.genus
             setCurrentLevel(destination)
-            setScrollTo(currentLevel.genus || '')
+            setScrollTo(currentLevel.genus || 'top')
         },
         genus: genus => {
             validateGenusData(genus)
             const destination = { order: currentLevel.order, family: currentLevel.family, genus }
-            // if (currentLevel.species) destination.from = currentLevel.species
             setCurrentLevel(destination)
-            if (currentLevel.species) setScrollTo(currentLevel.species)
+            setScrollTo(currentLevel.species || 'top')
         },
         species: species => {
             const destination = { order: currentLevel.order, family: currentLevel.family, genus: currentLevel.genus, species }
             setCurrentLevel(destination)
-            setScrollTo(top)
+            setScrollTo('top')
         }
     }
 
@@ -144,13 +141,7 @@ const BirdsGlossary = ({ cladisticData, setCladisticData, currentLevel, setCurre
             acc[value[0]] = createRef()
             return acc
         }, {})
-    const scrollInto = id => {
-        console.log(`go to ${id}`, refs)
-        refs[id].current.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-        })
-    }
+    refs.top = top
 
     // const navbarIsFixed = depth === 'species' && screenMode !== 'narrow'  Was useful when the nav bar was anchored at the bottom of the page in tablet and desktop mode.
     const stickyStylingAdjustments = {
@@ -187,7 +178,7 @@ const BirdsGlossary = ({ cladisticData, setCladisticData, currentLevel, setCurre
                             <li key={name} style={{ margin: '0 10px 20px', ...styling.innerLiResponsive[screenMode] }} ref={refs[name]}>
                                 {
                                     depth === 'genus' ?
-                                        <Bird data={data} fetchingBirds={fetchingBirds} setActiveTaxonomy={setActiveTaxonomy} />
+                                        <Bird data={data} isFetchingFullData={isFetchingFullData} setActiveTaxonomy={setActiveTaxonomy} />
                                         :
                                         <TaxonomyGroup data={data} taxonomies={{ [nextLayer]: name }} setActiveTaxonomy={setActiveTaxonomy} />
                                 }
