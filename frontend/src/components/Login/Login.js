@@ -1,19 +1,20 @@
-import React from "react"
+import { useContext, useState } from "react"
 import axios from 'axios'
 import useAuth from '../../auth/useAuth'
 import { useNavigate } from "react-router-dom";
+import { ThemeContext } from "../../utils/ThemeContextManagement";
 
 const Login = ({ setShowLogin }) => {
     let navigate = useNavigate()
 
     const { handleLogin } = useAuth()
 
-    const [msg, setMsg] = React.useState({
+    const [msg, setMsg] = useState({
         text: '',
         success: false,
     })
 
-    const [loginData, setLoginData] = React.useState({
+    const [loginData, setLoginData] = useState({
         email: '',
         password: '',
     })
@@ -60,25 +61,38 @@ const Login = ({ setShowLogin }) => {
         setShowLogin(false)
     }
 
+    const { theme } = useContext(ThemeContext)
     const styling = {
         width: '100%',
-        alignSelf: 'flex-start'
+        alignSelf: 'flex-start',
+        color: theme.text,
+        input: {
+            backgroundColor: theme.filters.inner,
+            color: theme.text,
+            border: `1px solid ${theme.filters.border}`,
+            borderRadius: '4px',
+            fontFamily: "Roboto Slab, 'Roboto', 'Helvetica Neue', sans-serif"
+        },
+        button: {
+            backgroundColor: theme.filters.inactive,
+            color: theme.text
+        }
     }
 
     return (
         <section style={styling}>
             <form onSubmit={handleSubmit}>
                 <label>
-                    <p>Email</p>
-                    <input type="text" onChange={handleFormChange} name='email' placeholder='Email' />
+                    <p style={{ marginBottom: '4px' }}>Email</p>
+                    <input type="text" onChange={handleFormChange} name='email' placeholder='Email' style={styling.input} />
                 </label>
                 <label>
-                    <p>Password</p>
-                    <input type="password" onChange={handleFormChange} name='password' placeholder='Password' />
+                    <p style={{ marginBottom: '4px' }}>Password</p>
+                    <input type="password" onChange={handleFormChange} name='password' placeholder='Password' style={styling.input} />
                 </label>
                 <div>
-                    <button type="submit">Log in</button>
-                    <button onClick={hideLogin}>Cancel</button>
+                    <button type="submit" style={styling.button}>Log in</button>
+                    <button onClick={hideLogin} style={styling.button}>Cancel</button>
                 </div>
             </form>
             <div

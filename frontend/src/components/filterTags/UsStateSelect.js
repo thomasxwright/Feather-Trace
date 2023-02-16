@@ -1,3 +1,6 @@
+import { useContext } from "react"
+import { ThemeContext } from "../../utils/ThemeContextManagement"
+
 const UsStateSelect = ({ place, setPlace }) => {
     const states = {
         AL: 'Alabama',
@@ -52,12 +55,15 @@ const UsStateSelect = ({ place, setPlace }) => {
         WY: 'Wyoming',
     }
 
+    const { theme } = useContext(ThemeContext)
+
     const styling = {
         height: '100%',
         margin: '0 8px',
         textAlign: 'center',
         border: 'none',
-        backgroundColor: 'white',
+        backgroundColor: theme.filters.inner,
+        color: theme.text,
         fontFamily: "Roboto Slab, 'Roboto', 'Helvetica Neue', sans-serif",
         option: {
             fontWeight: "100",

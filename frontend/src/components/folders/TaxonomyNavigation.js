@@ -1,4 +1,5 @@
-import React from 'react'
+import { useContext } from 'react'
+import { ThemeContext } from '../../utils/ThemeContextManagement'
 import TaxonomyTag from './TaxonomyTag'
 
 /* TODO: The last tag in the list has a badly coded setActiveTaxonomy condition.
@@ -10,6 +11,8 @@ Fixing this will involve remaking setActiveTaxonomy.
 const TaxonomyNavigation = ({ taxonomies, zIndex, setActiveTaxonomy, stylingAdjustments = {}, reference = null }) => {
 
   const innermostTaxonomy = taxonomies[taxonomies.length - 1]
+
+  const { theme } = useContext(ThemeContext)
   const styling = {
     marginLeft: '4px',
     marginTop: '0px',
@@ -32,13 +35,6 @@ const TaxonomyNavigation = ({ taxonomies, zIndex, setActiveTaxonomy, stylingAdju
     // -ms-overflow-style: none;  /* IE and Edge */
   }
 
-  const colors = {
-    order: 'rgb(180, 167, 197)',
-    family: 'rgb(194, 196, 216)',
-    genus: 'rgb(217, 230, 234)',
-    species: 'mintcream'
-  }
-
   return (
     //The marginTop property pushes down the inner content of the roundedBox. Fix this at some point.
     <ul style={styling} ref={reference} className='taxonomy-navigation'>
@@ -46,7 +42,7 @@ const TaxonomyNavigation = ({ taxonomies, zIndex, setActiveTaxonomy, stylingAdju
         <li key={i}>
           <TaxonomyTag
             taxonomy={taxonomy}
-            color={colors[taxonomy[0]]}
+            color={theme.taxonomies[taxonomy[0]]}
             stylingAdjustments={{ marginRight: '-28px', marginTop: '4px', paddingRight: '35px' }}
             setActiveTaxonomy={() => setActiveTaxonomy[taxonomy[0]](taxonomy[1])}
           />
@@ -57,7 +53,7 @@ const TaxonomyNavigation = ({ taxonomies, zIndex, setActiveTaxonomy, stylingAdju
         <li key={taxonomies.length - 1}>
           <TaxonomyTag
             taxonomy={taxonomies[taxonomies.length - 1]}
-            color={colors[taxonomies[taxonomies.length - 1][0]]}
+            color={theme.taxonomies[taxonomies[taxonomies.length - 1][0]]}
             setActiveTaxonomy={zIndex === 0 || zIndex === 3 ? () => setActiveTaxonomy.stepOutOneLevel() : () => setActiveTaxonomy[innermostTaxonomy[0]](innermostTaxonomy[1])}
             boostedTag={true}
             stylingAdjustments={{ paddingBottom: '22px' }}

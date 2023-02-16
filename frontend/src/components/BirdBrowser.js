@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import BirdsGlossary from "./folders/BirdsGlossary"
 import SearchTags from "./SearchTags"
 import { BirdObj } from '../js/BirdObj.js'
@@ -8,6 +8,7 @@ import { useLocation } from 'react-router-dom';
 import useAuth from '../auth/useAuth'
 import AccountSection from './Login/AccountSection';
 import { useScreenModeContext } from '../auth/useScreenMode';
+import { ThemeContext } from '../utils/ThemeContextManagement';
 
 function BirdBrowser() {
     const [cladisticData, setCladisticData] = useState({})
@@ -17,9 +18,12 @@ function BirdBrowser() {
     const state = useLocation()
     const screenMode = useScreenModeContext()
 
+    const { theme } = useContext(ThemeContext)
     const styling = {
         outer: {
-            width: '100%'
+            width: '100%',
+            backgroundColor: theme.background,
+            color: theme.text
         }
     }
 
@@ -51,7 +55,6 @@ function BirdBrowser() {
 
     useEffect(() => {
         console.log(new Date().toLocaleTimeString(), 'getting da birds')
-        setIsFetchingFullData(true)
         setIsFetchingFullData(true)
 
         const getBirds = async () => {

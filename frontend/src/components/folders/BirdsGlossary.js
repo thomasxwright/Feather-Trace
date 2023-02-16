@@ -1,19 +1,18 @@
-import { createRef, useEffect, useState } from "react"
+import { createRef, useContext, useEffect, useState } from "react"
 import { useScreenModeContext } from "../../auth/useScreenMode"
 import Bird from "./Bird"
-import FloatingTaxonomyNavigation from "./FloatingTaxonomyNavigation"
 import FullBird from "./FullBird"
-// import BirdGroup from "./BirdGroup"
-// import BlockWithNavTags from "./BlockWithNavTags"
 import RoundedBlock from "./RoundedBlock"
 import TaxonomyGroup from "./TaxonomyGroup"
 import TaxonomyNavigation from "./TaxonomyNavigation"
 import useElementOnScreen from "../../utils/UseElementOnScreen"
 import TempFloatingTaxonomyNavigation from "./TempFloatingTaxonomyNavigation"
+import { ThemeContext } from "../../utils/ThemeContextManagement"
 
 const BirdsGlossary = ({ cladisticData, setCladisticData, currentLevel, setCurrentLevel, isFetchingFullData, setIsFetchingFullData }) => {
 
     const screenMode = useScreenModeContext()
+    const { theme } = useContext(ThemeContext)
 
     const styling = {
         outer: {
@@ -47,12 +46,6 @@ const BirdsGlossary = ({ cladisticData, setCladisticData, currentLevel, setCurre
     const levels = ['class', 'order', 'family', 'genus', 'species']
     const depth = (currentLevel.species && 'species') || (currentLevel.genus && 'genus') || (currentLevel.family && 'family') || (currentLevel.order && 'order') || 'class'
     const nextLayer = levels[levels.indexOf(depth) + 1]
-    const colors = {
-        order: 'rgb(180, 167, 197)',
-        family: 'rgb(194, 196, 216)',
-        genus: 'rgb(217, 230, 234)',
-        species: 'mintcream'
-    }
 
     useEffect(() => {
         if (depth === 'genus')
@@ -148,7 +141,7 @@ const BirdsGlossary = ({ cladisticData, setCladisticData, currentLevel, setCurre
         zIndex: 3,
         position: 'sticky',
         top: '0em',
-        backgroundColor: 'white',
+        backgroundColor: theme.background,
         marginLeft: '0px',
         paddingLeft: '4px',
         paddingBottom: '4px'
@@ -165,7 +158,7 @@ const BirdsGlossary = ({ cladisticData, setCladisticData, currentLevel, setCurre
                 stylingAdjustments={{
                     zIndex: 1,
                     // width: depth === 'species' ? '100%' : 'fit-content',
-                    backgroundColor: colors[depth],
+                    backgroundColor: theme.taxonomies[depth],
                     padding: '18px 18px 0',
                     ...styling.outerResponsive[screenMode]
                 }}

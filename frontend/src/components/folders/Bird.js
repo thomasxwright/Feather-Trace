@@ -1,4 +1,5 @@
-import React from 'react'
+import { useContext } from 'react'
+import { ThemeContext } from '../../utils/ThemeContextManagement'
 import BirdPhoto from './BirdPhoto'
 import PlaceholderBird from './PlaceholderBird'
 
@@ -11,6 +12,7 @@ const Bird = ({ data, isFetchingFullData, setActiveTaxonomy }) => {
         return paragraph.join('.')
     }
 
+    const { theme } = useContext(ThemeContext)
     const styling = {
         inner: {
             display: 'flex',
@@ -21,7 +23,7 @@ const Bird = ({ data, isFetchingFullData, setActiveTaxonomy }) => {
             flexDirection: 'column'
         },
         hoverColor: 'rgb(217, 230, 234, 0.3)',
-        backgroundColor: 'white',
+        backgroundColor: theme.taxonomies.species,
         name: {
             margin: '20px 0',
             fontWeight: '550',
@@ -36,8 +38,8 @@ const Bird = ({ data, isFetchingFullData, setActiveTaxonomy }) => {
 
     return (
         <section style={{
-            maxWidth: '350px', maxHeight: '320px', overflow: 'hidden', backgroundColor: 'white', padding: '12px', borderRadius: '12px',
-            WebkitMaskImage: 'linear-gradient(to top, rgba(0,0,0,0.35) 0%,rgba(0,0,0,1) 20%)'
+            maxWidth: '350px', maxHeight: '320px', overflow: 'hidden', backgroundColor: theme.taxonomies.species, padding: '12px', borderRadius: '12px',
+            WebkitMaskImage: `linear-gradient(to top, rgba(0,0,0,0.35) 0%,rgba(0,0,0,1) 20%)`
         }}>
             {isFetchingFullData ?
                 <PlaceholderBird />

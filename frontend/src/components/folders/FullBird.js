@@ -1,12 +1,14 @@
-import React from 'react'
+import { useContext } from 'react'
 import { NavLink } from 'react-router-dom'
 import { useScreenModeContext } from '../../auth/useScreenMode'
+import { ThemeContext } from '../../utils/ThemeContextManagement'
 import useElementOnScreen from '../../utils/UseElementOnScreen'
 import BirdCall from './BirdCall'
 import InfoSegment from './InfoSegment'
 
 const FullBird = ({ data }) => {
     const screenMode = useScreenModeContext()
+    const { theme } = useContext(ThemeContext)
 
     const offsetFromHoveringNavBar = 85
     const [leftContainerRef, leftIsVisible] = useElementOnScreen({
@@ -51,8 +53,6 @@ const FullBird = ({ data }) => {
             zIndex: '1',
             position: 'relative'
         },
-        hoverColor: 'rgb(217, 230, 234, 0.3)',
-        backgroundColor: 'white',
         name: {
             margin: '20px 0',
             fontWeight: '550',
@@ -63,8 +63,9 @@ const FullBird = ({ data }) => {
         },
         link: {
             padding: '12px',
-            backgroundColor: 'rgb(217, 230, 234, 0.3)',
-            textDecoration: 'none'
+            backgroundColor: theme.logSightingsBackground,
+            textDecoration: 'none',
+            color: theme.link
         },
         generalInfo: {
             narrow: {

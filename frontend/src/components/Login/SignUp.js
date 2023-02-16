@@ -1,16 +1,19 @@
-import React from 'react';
+import { useContext, useState } from 'react';
 import useAuth from '../../auth/useAuth'
 import axios from 'axios';
+import { ThemeContext } from '../../utils/ThemeContextManagement';
 
 function SignUp({ setShowSignUp }) {
 
+    const { theme } = useContext(ThemeContext)
+
     const { handleLogin } = useAuth()
-    const [msg, setMsg] = React.useState({
+    const [msg, setMsg] = useState({
         text: '',
         success: false,
     });
 
-    const [signUpData, setSignUpData] = React.useState({
+    const [signUpData, setSignUpData] = useState({
         userName: '',
         email: '',
         password: '',
@@ -63,7 +66,20 @@ function SignUp({ setShowSignUp }) {
 
     const styling = {
         width: '100%',
-        alignSelf: 'flex-start'
+        alignSelf: 'flex-start',
+        color: theme.text,
+        input: {
+            backgroundColor: theme.filters.inner,
+            color: theme.text,
+            border: `1px solid ${theme.filters.border}`,
+            borderRadius: '4px',
+            margin: '2px',
+            fontFamily: "Roboto Slab, 'Roboto', 'Helvetica Neue', sans-serif"
+        },
+        button: {
+            backgroundColor: theme.filters.inactive,
+            color: theme.text
+        }
     }
 
     return (
@@ -75,27 +91,31 @@ function SignUp({ setShowSignUp }) {
                     name='userName'
                     placeholder='Username'
                     onChange={handleFormChange}
+                    style={styling.input}
                 />
                 <input
                     type='text'
                     name='email'
                     placeholder='Email'
                     onChange={handleFormChange}
+                    style={styling.input}
                 />
                 <input
                     type='password'
                     name='password'
                     placeholder='Password'
                     onChange={handleFormChange}
+                    style={styling.input}
                 />
                 <input
                     type='password'
                     name='confirmPassword'
                     placeholder='Confirm Password'
                     onChange={handleFormChange}
+                    style={styling.input}
                 />
-                <button>Create User</button>
-                <button onClick={hideSignUp}>Cancel</button>
+                <button style={styling.button}>Create User</button>
+                <button onClick={hideSignUp} style={styling.button}>Cancel</button>
             </form>
             <div
                 className={

@@ -1,16 +1,20 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import AccountSection from './Login/AccountSection'
 import Login from './Login/Login'
 import SignUp from './Login/SignUp'
 import useAuth from '../auth/useAuth'
 import { useScreenModeContext } from '../auth/useScreenMode'
+import ThemePicker from './ThemePicker'
+import { ThemeContext } from '../utils/ThemeContextManagement'
 
 const Header = () => {
 
     const { authed } = useAuth()
     const screenMode = useScreenModeContext()
+    const { theme } = useContext(ThemeContext)
 
     const styling = {
+        color: theme.text,
         display: 'flex',
         justifyContent: 'space-between',
         width: '100%',
@@ -40,7 +44,10 @@ const Header = () => {
     return (
         <>
             <header style={styling}>
-                <AccountSection accountControls={accountControls} />
+                <div style={{ display: 'flex' }}>
+                    <AccountSection accountControls={accountControls} />
+                    <ThemePicker/>
+                </div>
                 <section style={styling.siteLogo}>
                     <img src={require('../images/placeholder logo.png')} style={styling.logoImage} />
                     {

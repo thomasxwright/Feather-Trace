@@ -1,14 +1,17 @@
+import { useContext } from 'react'
 import { useScreenModeContext } from '../../auth/useScreenMode'
+import { ThemeContext } from '../../utils/ThemeContextManagement'
 
 const FilterTag = ({ filterValue, children, resetFilterValue }) => {
 
     const screenMode = useScreenModeContext()
+    const { theme } = useContext(ThemeContext)
     const styling = {
         outerBox: {
             display: 'flex',
             alignItems: 'stretch',
             height: '45px',
-            backgroundColor: filterValue ? 'rgb(140, 222, 199)' : '#F0E7F5',
+            backgroundColor: filterValue ? theme.filters.active : theme.filters.inactive,//'rgb(140, 222, 199)' : '#F0E7F5',
             margin: '7px 15px',
             padding: filterValue ? '5px 16px 5px 0' : '5px 20px',
             borderRadius: filterValue ? '0 8px 8px 0' : '8px',

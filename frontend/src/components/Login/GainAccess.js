@@ -1,9 +1,16 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import Login from "./Login"
 import SignUp from "./SignUp"
 import useAuth from '../../auth/useAuth'
+import { ThemeContext } from "../../utils/ThemeContextManagement"
 
 const GainAccess = ({ accountControls }) => {
+
+    const { theme } = useContext(ThemeContext)
+    const styling = {
+        backgroundColor: theme.filters.inactive,
+        color: theme.text
+    }
     const { showLogin, setShowLogin, showSignUp, setShowSignUp } = accountControls
 
     const handleShowSignUp = () => {
@@ -18,8 +25,8 @@ const GainAccess = ({ accountControls }) => {
 
     return (
         <section>
-            <button onClick={handleShowLogin}>Login</button>
-            <button onClick={handleShowSignUp}>Sign up</button>
+            <button onClick={handleShowLogin} style={styling}>Login</button>
+            <button onClick={handleShowSignUp} style={styling}>Sign up</button>
         </section>
     )
 }

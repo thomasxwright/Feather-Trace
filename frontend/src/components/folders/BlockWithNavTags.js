@@ -1,11 +1,13 @@
-import React from 'react'
+import { useContext } from 'react'
 import { useScreenModeContext } from '../../auth/useScreenMode'
+import { ThemeContext } from '../../utils/ThemeContextManagement'
 import RoundedBlock from './RoundedBlock'
 import TaxonomyNavigation from './TaxonomyNavigation'
 
 const BlockWithNavTags = ({ taxonomies = {}, children, setActiveTaxonomy, stylingAdjustments = {} }, expandable = true) => {
 
     const screenMode = useScreenModeContext()
+    const { theme } = useContext(ThemeContext)
 
     const styling = {
         containerResponsive: {
@@ -15,19 +17,12 @@ const BlockWithNavTags = ({ taxonomies = {}, children, setActiveTaxonomy, stylin
         }
     }
 
-    const colors = {
-        order: 'rgb(180, 167, 197)',
-        family: 'rgb(194, 196, 216)',
-        genus: 'rgb(217, 230, 234)',
-        species: 'white'
-    }
-
     const zIndex = taxonomies.order ? 0 : 2
 
     const taxonomyList = Object.entries(taxonomies) // !!! -- proper order isn't guaranteed.
     const innermostTaxonomy = taxonomyList[taxonomyList.length - 1]
     const [innermostLevel, innermostName] = innermostTaxonomy
-    const color = colors[innermostLevel]
+    const color = theme.taxonomies[innermostLevel]
 
     /*
     Navigation segment

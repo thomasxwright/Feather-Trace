@@ -4,8 +4,8 @@ import AddFilter from "./filterTags/AddFilter"
 // import CladeFilter from "./filterTags/CladeFilter"
 import FilterTag from "./filterTags/FilterTag"
 import IsLoggedFilter from "./filterTags/IsLoggedFilter"
-import PlaceFilter from "./filterTags/PlaceFilter"
 import SearchTextFilter from "./filterTags/SearchTextFilter"
+import UsStateSelect from "./filterTags/UsStateSelect"
 // import SearchTag from "./SearchTag"
 
 const SearchTags = ({ setCladisticData, tagColor }) => {
@@ -59,7 +59,7 @@ const SearchTags = ({ setCladisticData, tagColor }) => {
         <section style={styling.outer}>
 
             <FilterTag filterValue={place} resetFilterValue={() => setPlace('')}>
-                <PlaceFilter place={place} setPlace={setPlace}/>
+                <UsStateSelect place={place} setPlace={setPlace}/>
             </FilterTag>
             <FilterTag filterValue={searchText} resetFilterValue={() => setSearchText('')}>
                 <SearchTextFilter searchText={searchText} setSearchText={setSearchText} handleSubmit={go}/>
