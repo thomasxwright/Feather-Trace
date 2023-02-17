@@ -12,8 +12,17 @@ const TaxonomyGroup = ({ data, taxonomies, setActiveTaxonomy }) => {
         flexWrap: 'wrap',
         listStyle: 'none',
         justifyContent: 'center',
-        pointerEvents: 'none'
+        pointerEvents: 'none',
         // maxWidth: condensedWidth,
+        image: {
+            height: '90px',
+            outline: `4px solid ${theme.previewImageBorders}`,
+            // backgroundColor: theme.previewImageBorders,
+            margin: '4px 0 0 4px', maxWidth: '105px',
+            minWidth: '75px', objectFit: 'cover',
+            objectPosition: '50% 25%',
+            ...theme.dark && {filter: 'brightness(.85) contrast(1.1)'}
+        }
     }
 
     const getSubContent = obj => {
@@ -44,7 +53,7 @@ const TaxonomyGroup = ({ data, taxonomies, setActiveTaxonomy }) => {
             <ul style={styling}>
                 {images.map((image, i) => (
                     image && <li key={i}>
-                        <img src={image.src} alt={image.alt} style={{ height: '90px', outline: `4px solid ${theme.previewImageBorders}`, margin: '4px 0 0 4px', maxWidth: '105px', minWidth: '75px', objectFit: 'cover', objectPosition: '50% 25%' }} />
+                        <img src={image.src} alt={image.alt} style={styling.image} />
                     </li>
                 )
                 )}

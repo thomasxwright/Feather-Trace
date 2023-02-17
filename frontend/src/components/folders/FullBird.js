@@ -96,13 +96,13 @@ const FullBird = ({ data }) => {
                                 {data.images[i + 1].alt ? (
                                     <>
                                         <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
-                                            <img src={data.images[i + 1].src} alt={data.images[i + 1].alt} style={{ width: '80%' }} />
+                                            <img src={data.images[i + 1].src} alt={data.images[i + 1].alt} style={{ width: '80%', ...theme.darkAdjust }} />
                                             <p style={{ fontSize: '.8em', marginTop: '2px', textAlign: 'center' }}>{data.images[i + 1].alt}</p>
                                         </div>
                                     </>
                                 )
                                     :
-                                    <img src={data.images[i + 1].src} alt={data.images[i + 1].alt} style={{ width: '90%', marginBottom: '16px' }} />
+                                    <img src={data.images[i + 1].src} alt={data.images[i + 1].alt} style={{ width: '90%', marginBottom: '16px', ...theme.darkAdjust }} />
                                 }
                             </>
                             }
@@ -120,12 +120,12 @@ const FullBird = ({ data }) => {
                             <li key={i} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                                 {image.alt ? (
                                     <>
-                                        <img src={image.src} alt={image.alt} style={{ width: '80%' }} />
+                                        <img src={image.src} alt={image.alt} style={{ width: '80%', ...theme.darkAdjust }} />
                                         <p style={{ fontSize: '.8em', marginTop: '2px', textAlign: 'center' }}>{image.alt}</p>
                                     </>
                                 )
                                     :
-                                    <img src={image.src} alt={image.alt} style={{ width: '80%', marginBottom: '16px' }} />
+                                    <img src={image.src} alt={image.alt} style={{ width: '80%', marginBottom: '16px', ...theme.darkAdjust }} />
                                 }
                             </li>
                         )
@@ -144,7 +144,7 @@ const FullBird = ({ data }) => {
 
                 <section style={styling.inner}>
                     <section style={{ width: '40%', height: 'fit-content', ...styling.column, ...styling.column.columnIsEntirelyVisible[leftIsVisible] }} ref={leftContainerRef}>
-                        {data.images.length > 0 && <img src={data.images[0].src} alt={data.images[0].alt} style={styling.image} />}
+                        {data.images.length > 0 && <img src={data.images[0].src} alt={data.images[0].alt} style={{ ...styling.image, ...theme.darkAdjust }} />}
                         {/* {console.log('call:', bird.call)} */}
                         {/* <BirdCall call={bird.call} /> */}
                         {/* {console.log(bird.calls)} */}
@@ -158,13 +158,13 @@ const FullBird = ({ data }) => {
                                     {image.alt ? (
                                         <>
                                             <div style={{ width: '75%' }}>
-                                                <img src={image.src} alt={image.alt} style={{ width: '100%' }} />
+                                                <img src={image.src} alt={image.alt} style={{ width: '100%', ...theme.darkAdjust }} />
                                             </div>
                                             <p style={{ fontSize: '.8em', marginTop: '2px' }}>{image.alt}</p>
                                         </>
                                     )
                                         :
-                                        <img src={image.src} alt={image.alt} style={{ width: '90%', borderRadius: '8px' }} />
+                                        <img src={image.src} alt={image.alt} style={{ width: '90%', borderRadius: '8px', ...theme.darkAdjust }} />
                                     }
 
                                 </div>

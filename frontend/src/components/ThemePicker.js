@@ -20,7 +20,7 @@ const ThemePicker = () => {
     }
 
     return (
-        <ul style={{ listStyle: 'none', margin: '4px', display: 'flex', flexWrap: 'wrap' }}>
+        <ul style={{ listStyle: 'none', margin: '4px', display: 'flex', flexWrap: 'wrap', maxWidth: '120px' }}>
             {Object.entries(themes).map(([name, content]) => (
                 <li
                     style={{ ...styling, backgroundColor: content.taxonomies.order }}

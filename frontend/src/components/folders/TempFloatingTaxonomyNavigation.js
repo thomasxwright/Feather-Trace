@@ -1,9 +1,12 @@
-import React from 'react'
+import { useContext } from 'react'
+import { ThemeContext } from '../../utils/ThemeContextManagement'
 import TaxonomyNavigation from './TaxonomyNavigation'
 
 const TempFloatingTaxonomyNavigation = ({ taxonomies, setActiveTaxonomy }) => {
+
+    const {theme} = useContext(ThemeContext)
     const styling = {
-        backgroundColor: 'white',
+        backgroundColor: theme.background,
         position: 'sticky',
         zIndex: 2,
         bottom: '0em',

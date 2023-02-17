@@ -23,7 +23,7 @@ const FilterTag = ({ filterValue, children, resetFilterValue }) => {
         },
         image: {
             height: '35px',
-            backgroundColor: 'rgba(255,255,255, 0.8)',
+            backgroundColor: theme.filters.x,
             padding: '10px',
             marginTop: '-5px',
             marginRight: '16px',

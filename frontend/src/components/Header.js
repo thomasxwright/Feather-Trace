@@ -26,7 +26,8 @@ const Header = () => {
         },
         logoImage: {
             maxWidth: screenMode !== 'narrow' ? '65px' : '50px',
-            marginRight: '5px'
+            marginRight: '5px',
+            ...theme.dark && {filter: 'brightness(.85) contrast(1.1)'}
         },
         logoText: {
             margin: '4px 0',

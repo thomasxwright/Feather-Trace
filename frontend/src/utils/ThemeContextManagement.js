@@ -9,7 +9,7 @@ const calculateThemeName = () => {
     const mode = browserMode.dark ? 'dark' :
         (browserMode.light ? 'light' : '')
     const storedTheme = localStorage.getItem('theme')
-    return (themes[storedTheme] && storedTheme)  || (mode === 'dark' ? 'Apple' : 'Periwinkle')
+    return (themes[storedTheme] && storedTheme) || (mode === 'dark' ? 'DarkFixed2' : 'Periwinkle')
 }
 
 export const ThemeContext = createContext({
@@ -34,7 +34,9 @@ export const ThemeContextProvider = ({ children }) => {
 
     return (
         <ThemeContext.Provider value={state}>
-            {children}
+            <div style={{backgroundColor: theme.background, minHeight: '100vh'}}>
+                {children}
+            </div>
         </ThemeContext.Provider>
     )
 }

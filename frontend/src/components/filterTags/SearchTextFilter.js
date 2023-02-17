@@ -14,7 +14,7 @@ const SearchTextFilter = ({ searchText, setSearchText, handleSubmit }) => {
             fontFamily: "Roboto Slab, 'Roboto', 'Helvetica Neue', sans-serif",
             textAlign: 'center',
             backgroundColor: theme.filters.inner,
-            color: theme.text
+            color: theme.textMedium
         }
     }
 

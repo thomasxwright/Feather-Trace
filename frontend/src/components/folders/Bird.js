@@ -38,7 +38,7 @@ const Bird = ({ data, isFetchingFullData, setActiveTaxonomy }) => {
 
     return (
         <section style={{
-            maxWidth: '350px', maxHeight: '320px', overflow: 'hidden', backgroundColor: theme.taxonomies.species, padding: '12px', borderRadius: '12px',
+            maxWidth: '350px', maxHeight: '320px', overflow: 'hidden', backgroundColor: theme.taxonomies.species, padding: '12px', borderRadius: '12px', cursor: isFetchingFullData? 'default' : 'pointer',
             WebkitMaskImage: `linear-gradient(to top, rgba(0,0,0,0.35) 0%,rgba(0,0,0,1) 20%)`
         }}>
             {isFetchingFullData ?
