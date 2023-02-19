@@ -1,8 +1,8 @@
 import React from 'react'
 
-const RoundedBlock = ({ color, taxonomyBlock = false, children, stylingAdjustments = {}, boostedTag }) => {
+const RoundedBlock = ({ color, taxonomyBlock = false, children, stylingAdjustments = {}, handleClick = null }) => {
     const styling = {
-        padding: `18px ${taxonomyBlock ? 18+4 : 18}px 18px 18px`,
+        padding: `18px ${taxonomyBlock ? 18 + 4 : 18}px 18px 18px`,
         borderRadius: '25px',
         backgroundColor: color,
         width: 'fit-content',
@@ -11,7 +11,7 @@ const RoundedBlock = ({ color, taxonomyBlock = false, children, stylingAdjustmen
     }
 
     return (
-        <div style={styling}>
+        <div style={styling} onClick={handleClick}>
             {children}
         </div>
     )

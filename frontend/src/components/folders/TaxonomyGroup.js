@@ -1,4 +1,6 @@
 import { useContext } from 'react'
+import { useScreenModeContext } from '../../auth/useScreenMode'
+import Queue from '../../utils/Queue'
 import { ThemeContext } from '../../utils/ThemeContextManagement'
 // import expandContract from '../../utils/expandContract'
 // import TaxonomyNavigation from './TaxonomyNavigation'
@@ -6,6 +8,7 @@ import BlockWithNavTags from './BlockWithNavTags'
 
 const TaxonomyGroup = ({ data, taxonomies, setActiveTaxonomy }) => {
 
+    const screenMode = useScreenModeContext()
     const { theme } = useContext(ThemeContext)
     const styling = {
         display: 'flex',
@@ -21,39 +24,56 @@ const TaxonomyGroup = ({ data, taxonomies, setActiveTaxonomy }) => {
             margin: '4px 0 0 4px', maxWidth: '105px',
             minWidth: '75px', objectFit: 'cover',
             objectPosition: '50% 25%',
-            ...theme.dark && {filter: 'brightness(.85) contrast(1.1)'}
+            ...theme.dark && { filter: 'brightness(.85) contrast(1.1)' }
         }
     }
 
-    const getSubContent = obj => {
-        if (obj.images) return obj
-        return getSubContent(getSubItem(obj))
-    }
-    const getSubItem = obj => {
-        let subItem
-        for (subItem in obj) break
-        return obj[subItem]
-    }
-    // get one image for each subgroup.
-    const images = []
-
-    // Placeholder for special bird component: Actually, a taxonomygroup wouldn't even be rendered here. Instead, a BirdCard would be here.
-    if (data._id) { images.push(data.images[0]) }
-    else {
-        for (const item in data) {
-            images.push(getSubContent(data[item]).images[0])
+    let tally = 0
+    const enqueuePhotos = data => {
+        if (data._id) {
+            tally++
+            return data.images[0]
         }
+        const subItems = Object.values(data)
+            .map(subItem => enqueuePhotos(subItem))
+        return new Queue(subItems)
     }
-    const condensedWidth = '9000px'
 
+    const mineQueueTree = layer => {
+        const subItem = layer.dequeue()
+        if (!subItem) return undefined
+        if (subItem.src) {
+            return subItem
+        }
+        const minedItem = mineQueueTree(subItem)
+        if (subItem.length) {
+            layer.enqueue(subItem)
+        }
+        return minedItem
+    }
+
+    const queueTree = enqueuePhotos(data)
+    const adjustmentKey = {
+        narrow: 2.3,
+        medium: 1.7,
+        desktop: 1
+    }
+    const adjustment = adjustmentKey[screenMode]
+    const multiplier = tally <= (15 / adjustment) ? 1 : Math.log(tally) / Math.log(7 * adjustment)
+    const allowance = Math.floor((15 / adjustment) * multiplier)
+    const imageCart = []
+    while (imageCart.length < allowance && queueTree.length) {
+        const nextImage = mineQueueTree(queueTree)
+        imageCart.push(nextImage)
+    }
 
     return (
 
-        <BlockWithNavTags taxonomies={taxonomies} setActiveTaxonomy={setActiveTaxonomy}>
+        <BlockWithNavTags taxonomies={taxonomies} setActiveTaxonomy={setActiveTaxonomy} plusMore={allowance < tally ? tally - allowance : 0}>
             <ul style={styling}>
-                {images.map((image, i) => (
+                {imageCart.map((image, i) => (
                     image && <li key={i}>
-                        <img src={image.src} alt={image.alt} style={styling.image} />
+                        <img src={image.src} alt={image.alt} style={{ ...styling.image }} />
                     </li>
                 )
                 )}
