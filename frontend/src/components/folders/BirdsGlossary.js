@@ -91,6 +91,10 @@ const BirdsGlossary = ({ cladisticData, setCladisticData, currentLevel, setCurre
             setCurrentLevel(outOneLayer)
             setScrollTo(remove)
         },
+        stepFullyOut: () => {
+            setCurrentLevel({})
+            setScrollTo(currentLevel.order || 'top')
+        },
         order: order => {
             const destination = { order }
             setCurrentLevel(destination)
@@ -153,7 +157,7 @@ const BirdsGlossary = ({ cladisticData, setCladisticData, currentLevel, setCurre
     return (
         <section ref={top}>
             <div ref={screenMode !== 'narrow' ? containerRef : null}></div>
-            <TaxonomyNavigation taxonomies={Object.entries(currentLevel)} zIndex={0} setActiveTaxonomy={setActiveTaxonomy} stylingAdjustments={{ marginBottom: '-8px', paddingTop: '2px', ...navTagsStickyTo === 'top' && stickyStylingAdjustments }} reference={screenMode === 'narrow' ? containerRef : null} />
+            {currentLevel.hasOwnProperty('order') && <TaxonomyNavigation taxonomies={Object.entries(currentLevel)} zIndex={0} setActiveTaxonomy={setActiveTaxonomy} stylingAdjustments={{ marginBottom: '-8px', paddingTop: '2px', ...navTagsStickyTo === 'top' && stickyStylingAdjustments }} reference={screenMode === 'narrow' ? containerRef : null} />}
             <RoundedBlock
                 stylingAdjustments={{
                     zIndex: 1,
@@ -180,7 +184,7 @@ const BirdsGlossary = ({ cladisticData, setCladisticData, currentLevel, setCurre
                     </ul>
                 }
             </RoundedBlock>
-            {navTagsStickyTo === 'bottom' && <TempFloatingTaxonomyNavigation taxonomies={Object.entries(currentLevel)} setActiveTaxonomy={setActiveTaxonomy} />}
+            {navTagsStickyTo === 'bottom' && currentLevel.hasOwnProperty('order') && <TempFloatingTaxonomyNavigation taxonomies={Object.entries(currentLevel)} setActiveTaxonomy={setActiveTaxonomy} />}
         </section >
     )
 }

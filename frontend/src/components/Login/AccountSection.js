@@ -2,11 +2,15 @@ import GainAccess from "./GainAccess"
 import useAuth from '../../auth/useAuth'
 import SignOut from "./SignOut"
 import userIcon from '../../images/account circle.svg'
+import { ReactComponent as UserIcon } from '../../images/account circle.svg'
+import { useContext } from "react"
+import { ThemeContext } from "../../utils/ThemeContextManagement"
 
 const AccountSection = ({ accountControls }) => {
 
   const { authed, user } = useAuth()
 
+  const { theme } = useContext(ThemeContext)
   const styling = {
     name: {
       fontWeight: '500',
@@ -27,7 +31,7 @@ const AccountSection = ({ accountControls }) => {
   return (authed ?
     (<section style={styling.outer}>
       <div style={styling.user}>
-        <img src={userIcon} style={{width: '25px'}} alt={user.userName} />
+        <UserIcon color={theme.text} width='28px' title={user.userName}/>
         <span style={styling.name}>{user.userName}</span>
       </div>
       < SignOut />

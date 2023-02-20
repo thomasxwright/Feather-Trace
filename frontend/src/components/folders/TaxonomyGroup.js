@@ -28,10 +28,10 @@ const TaxonomyGroup = ({ data, taxonomies, setActiveTaxonomy }) => {
         }
     }
 
-    let tally = 0
+    let total = 0
     const enqueuePhotos = data => {
         if (data._id) {
-            tally++
+            total++
             return data.images[0]
         }
         const subItems = Object.values(data)
@@ -59,17 +59,21 @@ const TaxonomyGroup = ({ data, taxonomies, setActiveTaxonomy }) => {
         desktop: 1
     }
     const adjustment = adjustmentKey[screenMode]
-    const multiplier = tally <= (15 / adjustment) ? 1 : Math.log(tally) / Math.log(7 * adjustment)
+    const multiplier = total <= (15 / adjustment) ? 1 : Math.log(total) / Math.log(7 * adjustment)
     const allowance = Math.floor((15 / adjustment) * multiplier)
     const imageCart = []
     while (imageCart.length < allowance && queueTree.length) {
         const nextImage = mineQueueTree(queueTree)
         imageCart.push(nextImage)
     }
+    const counts = {
+        total,
+        plusMore: allowance < total ? total - allowance : 0
+    }
 
     return (
 
-        <BlockWithNavTags taxonomies={taxonomies} setActiveTaxonomy={setActiveTaxonomy} plusMore={allowance < tally ? tally - allowance : 0}>
+        <BlockWithNavTags taxonomies={taxonomies} setActiveTaxonomy={setActiveTaxonomy} counts={counts}>
             <ul style={styling}>
                 {imageCart.map((image, i) => (
                     image && <li key={i}>

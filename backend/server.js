@@ -24,7 +24,19 @@ app.use(cors({
   credentials: true,
   origin: 'http://localhost:3000',
 }))
-app.use(express.static('build'))
+app.use(express.static('build',
+  {
+    index: 'index.html',
+    setHeaders: (res, path) => {
+      res.set({
+        'Cache-Control':
+          //never cache index.html, but can cache everything else if static files are unchanged
+          (path.includes('index.html'))
+            ? 'no-store'
+            : 'public, max-age=0'
+      })
+    }
+  }))
 app.use(express.urlencoded({ extended: true, limit: '2mb' }))
 app.use(express.json({ limit: '2mb' }))
 app.use(logger('dev'))
