@@ -5,23 +5,24 @@ import RoundedBlock from './RoundedBlock'
 import TaxonomyNavigation from './TaxonomyNavigation'
 import TaxonomyTag from './TaxonomyTag'
 
-const BlockWithNavTags = ({ taxonomies = {}, children, setActiveTaxonomy, stylingAdjustments = {}, counts }) => {
+const BlockWithNavTags = ({ taxonomies = {}, children, setActiveTaxonomy, stylingAdjustments = {}, images }) => {
 
     const screenMode = useScreenModeContext()
     const { theme } = useContext(ThemeContext)
+    const { plusMore, birdTotal } = images
 
     const styling = {
         cursor: 'pointer',
         position: 'relative',
         containerResponsive: {
             narrow: {
-                padding: '16px 12px 16px 8px'
+                padding: '16px 12px'
             }
         },
         total: {
             position: 'absolute',
             width: screenMode !== 'narrow' ? '70px' : '50px',
-            height: screenMode !== 'narrow' ? '70px' : '65px',
+            height: screenMode !== 'narrow' ? '80px' : '75px',
             top: '0',
             right: '0',
             display: 'flex',
@@ -35,7 +36,8 @@ const BlockWithNavTags = ({ taxonomies = {}, children, setActiveTaxonomy, stylin
         totalNumeral: {
             fontSize: screenMode !== 'narrow' ? '2em' : '1.5em',
             color: theme.dark ? theme.text : 'white',
-            marginTop: '-6px'
+            marginTop: '-6px',
+            padding: '0px'
         }
     }
 
@@ -58,28 +60,16 @@ const BlockWithNavTags = ({ taxonomies = {}, children, setActiveTaxonomy, stylin
                 handleClick={handleClick}
             >
                 {children}
-
-                {/* {plusMore > 0 && <div style={{
-                    position: 'absolute',
-                    width: '90px',
-                    height: '90px',
-                    bottom: '0px',
-                    right: '0px',
-                    zIndex: 4,
-                    display: 'flex',
-                    alignItems: 'flex-end',
-                    background: `linear-gradient(to top left, rgb(${overlayColor} / .8) 35%, rgb(${overlayColor} / .35) 40%, rgb(${overlayColor} / 0) 50%)`,
-                }}>
-                    <span style={{ color: theme.text, position: 'absolute', right: '0px', bottom: '0px', margin: '12px', fontSize: '2em', opacity: '70%' }}>
-                        +{plusMore}
-                    </span>
-                </div>} */}
-                {(counts.plusMore > 0 || counts.total > 9) && <div style={styling.total}>
+                
+                {(plusMore > 0 || birdTotal > 9) && <div style={styling.total}>
                     <span style={styling.totalNumeral}>
-                        {counts.total}
+                        {birdTotal}
                     </span>
                     <span style={{ fontSize: '0.75em', color: theme.dark ? theme.text : 'white' }}>
                         birds
+                    </span>
+                    <span style={{ fontSize: '0.75em', color: theme.dark ? theme.text : 'white' }}>
+                        inside
                     </span>
                 </div>
                 }

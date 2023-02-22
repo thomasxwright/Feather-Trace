@@ -15,8 +15,8 @@ const TaxonomyTag = ({ taxonomy, stylingAdjustments = {}, setActiveTaxonomy }) =
   }
 
   return (
-    <div onClick={setActiveTaxonomy}>
-      <RoundedBlock stylingAdjustments={boostedAdjustments} >
+    <div>
+      <RoundedBlock stylingAdjustments={boostedAdjustments} handleClick={setActiveTaxonomy} >
         {taxonomyName}
       </RoundedBlock>
     </div>
