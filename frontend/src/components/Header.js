@@ -6,6 +6,8 @@ import useAuth from '../auth/useAuth'
 import { useScreenModeContext } from '../auth/useScreenMode'
 import ThemePicker from './ThemePicker'
 import { ThemeContext } from '../utils/ThemeContextManagement'
+import { ReactComponent as Logo } from '../images/feather logo scarlet.svg'
+import { ReactComponent as WhiteLogo } from '../images/feather logo white.svg'
 
 const Header = () => {
 
@@ -21,19 +23,27 @@ const Header = () => {
         siteLogo: {
             display: 'flex',
             // flexDirection: 'column',
-            alignItems: 'flex-start',
-            marginTop: '8px'
+            alignItems: 'center',
+            marginTop: '8px',
+            ...screenMode !== 'desktop' && {marginRight: '12px'}
         },
         logoImage: {
-            maxWidth: screenMode !== 'narrow' ? '65px' : '50px',
+            width: screenMode !== 'narrow' ? '40px' : '36px',
             marginRight: '5px',
-            ...theme.dark && {filter: 'brightness(.85) contrast(1.1)'}
+            // transform: 'scale(-1, 1) rotate(-100deg)'
+            // ...theme.dark && { filter: 'brightness(.85) contrast(1.1)' }
         },
         logoText: {
-            margin: '4px 0',
+            margin: '-4px 0 0',
             display: 'flex',
             flexDirection: 'column',
-            alignItems: 'center'
+            alignItems: 'flex-end',
+            paddingTop: '8px',
+            fontSize: '1.4em',
+            color: theme.dark ? 'white' : 'black', //'#682145',
+            // fontFamily: " 'Signika', 'Jumper', 'Zabal', 'Uni Neue', 'Adlinnaka', 'Gontserrat', 'Tango sans', 'Proxima Nova', 'Roboto', 'Nunito', 'Helvetica Neue', sans-serif",
+            fontFamily: " 'Jumper', 'Roboto', 'Helvetica Neue', sans-serif", //Signika
+            fontWeight: theme.dark ? '400' : '600'
         }
     }
 
@@ -47,19 +57,18 @@ const Header = () => {
             <header style={styling}>
                 <div style={{ display: 'flex' }}>
                     <AccountSection accountControls={accountControls} />
-                    <ThemePicker/>
+                    <ThemePicker />
                 </div>
                 <section style={styling.siteLogo}>
-                    <img src={require('../images/placeholder logo.png')} style={styling.logoImage} />
-                    {
-                        screenMode !== 'narrow' && <h1 style={styling.logoText}>
-                            <span style={styling.header}>
-                                Feather
-                            </span>
-                            <span style={styling.header}>
-                                Trace
-                            </span>
-                        </h1>
+                    {theme.dark ? <WhiteLogo style={styling.logoImage} title='Feather Trace' /> : <Logo style={styling.logoImage} title='Feather Trace' />}
+                    {screenMode !== 'narrow' && <h1 style={styling.logoText}>
+                        <span style={{ marginLeft: '-16px' }}>
+                            Feather
+                        </span>
+                        <span style={{ marginTop: '-4px' }}>
+                            Trace
+                        </span>
+                    </h1>
                     }
                 </section>
             </header>
