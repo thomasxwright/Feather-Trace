@@ -1,8 +1,8 @@
 import GainAccess from "./GainAccess"
 import useAuth from '../../auth/useAuth'
 import SignOut from "./SignOut"
-import userIcon from '../../images/account circle.svg'
-import { ReactComponent as UserIcon } from '../../images/account circle.svg'
+import UserIcon from '../../images/account circle.svg'
+// import { ReactComponent as UserIcon } from '../../images/account circle.svg'
 import { useContext } from "react"
 import { ThemeContext } from "../../utils/ThemeContextManagement"
 

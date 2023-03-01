@@ -38,7 +38,7 @@
 }
 
 /* TODO: Make this inline, it belongs in the TaxonomyNavigation.js file under the styling object. I don't know how to make pseudo-selectors work inline in React. */
-.taxonomy-navigation::-webkit-scrollbar {
+.scroll-overflow::-webkit-scrollbar {
   display: none;
 }
 

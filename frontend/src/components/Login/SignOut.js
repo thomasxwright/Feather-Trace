@@ -2,18 +2,32 @@ import { useContext } from 'react'
 import useAuth from '../../auth/useAuth'
 import { ThemeContext } from '../../utils/ThemeContextManagement'
 
-const SignOut = () => {
-    const { authed, handleLogout } = useAuth()
+const SignOut = ({ setMessage, user }) => {
+    const { handleLogout } = useAuth()
     const { theme } = useContext(ThemeContext)
     const styling = {
-        backgroundColor: theme.filters.inactive,
-        color: theme.text
+        backgroundColor: theme.filters.applyButton,
+        color: theme.text,
+        cursor: 'pointer'
+    }
+
+    const logOut = () => {
+        try {
+            handleLogout()
+            setMessage(null)
+        } catch (err) {
+            console.log(err)
+        }
     }
 
     return (
-        <button type='button' onClick={handleLogout} style={styling}>
-            Sign Out
-        </button>
+        <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+            <span>Username: {user.userName}</span>
+            <span>Email: {user.email}</span>
+            <button type='button' onClick={logOut} style={styling}>
+                Sign Out
+            </button>
+        </div>
     )
 }
 

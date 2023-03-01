@@ -25,7 +25,7 @@ const Header = () => {
             // flexDirection: 'column',
             alignItems: 'center',
             marginTop: '8px',
-            ...screenMode !== 'desktop' && {marginRight: '12px'}
+            ...screenMode !== 'desktop' && { marginRight: '12px' }
         },
         logoImage: {
             width: screenMode !== 'narrow' ? '40px' : '36px',
@@ -54,26 +54,28 @@ const Header = () => {
 
     return (
         <>
-            <header style={styling}>
-                <div style={{ display: 'flex' }}>
-                    <AccountSection accountControls={accountControls} />
-                    <ThemePicker />
-                </div>
-                <section style={styling.siteLogo}>
-                    {theme.dark ? <WhiteLogo style={styling.logoImage} title='Feather Trace' /> : <Logo style={styling.logoImage} title='Feather Trace' />}
-                    {screenMode !== 'narrow' && <h1 style={styling.logoText}>
-                        <span style={{ marginLeft: '-16px' }}>
-                            Feather
-                        </span>
-                        <span style={{ marginTop: '-4px' }}>
-                            Trace
-                        </span>
-                    </h1>
-                    }
-                </section>
-            </header>
-            {showSignUp && !authed && <SignUp setShowSignUp={setShowSignUp} />}
-            {showLogin && !authed && <Login setShowLogin={setShowLogin} />}
+            <div style={{ opacity: '30%', backgroundColor: 'gray' }}>
+                <header style={styling}>
+                    <div style={{ display: 'flex' }}>
+                        <AccountSection accountControls={accountControls} />
+                        <ThemePicker />
+                    </div>
+                    <section style={styling.siteLogo}>
+                        {theme.dark ? <WhiteLogo style={styling.logoImage} title='Feather Trace' /> : <Logo style={styling.logoImage} title='Feather Trace' />}
+                        {screenMode !== 'narrow' && <h1 style={styling.logoText}>
+                            <span style={{ marginLeft: '-16px' }}>
+                                Feather
+                            </span>
+                            <span style={{ marginTop: '-4px' }}>
+                                Trace
+                            </span>
+                        </h1>
+                        }
+                    </section>
+                </header>
+                {showSignUp && !authed && <SignUp setShowSignUp={setShowSignUp} />}
+                {showLogin && !authed && <Login setShowLogin={setShowLogin} />}
+            </div>
         </>
     )
 }

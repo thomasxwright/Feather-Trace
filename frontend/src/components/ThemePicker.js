@@ -1,32 +1,24 @@
-import { useContext } from 'react'
 import themes from '../utils/themes'
-import { ThemeContext } from '../utils/ThemeContextManagement'
+import ThemeSwatch from './folders/ThemeSwatch'
 
-const ThemePicker = () => {
+const ThemePicker = ({ setMessage }) => {
 
     const styling = {
-        margin: '0 4px',
-        width: '20px',
-        height: '20px',
-        borderRadius: '50%',
-        cursor: 'pointer'
+        listStyle: 'none',
+        margin: '4px',
+        display: 'flex',
+        flexWrap: 'wrap',
+        width: '200px',
+        justifyContent: 'center'
+        // alignItems: 'center'
     }
-
-    const { theme, setTheme } = useContext(ThemeContext)
-
-    const handleClick = themeName => e => {
-        localStorage.setItem('theme', themeName)
-        setTheme(themeName)
-    }
-
     return (
-        <ul style={{ listStyle: 'none', margin: '4px', display: 'flex', flexWrap: 'wrap', maxWidth: '120px' }}>
-            {Object.entries(themes).map(([name, content]) => (
-                <li
-                    style={{ ...styling, backgroundColor: content.taxonomies.order }}
-                    onClick={handleClick(name)}
-                    key={name}
-                ></li>
+        <ul style={styling}>
+            {Object.entries(themes).map((themeFull, i) => (
+                <li key={i}
+                >
+                    <ThemeSwatch themeFull={themeFull} />
+                </li>
             ))}
         </ul>
     )

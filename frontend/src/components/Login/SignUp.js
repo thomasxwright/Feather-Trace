@@ -3,7 +3,7 @@ import useAuth from '../../auth/useAuth'
 import axios from 'axios';
 import { ThemeContext } from '../../utils/ThemeContextManagement';
 
-function SignUp({ setShowSignUp }) {
+function SignUp({ setMessage, toggleForm }) {
 
     const { theme } = useContext(ThemeContext)
 
@@ -30,7 +30,7 @@ function SignUp({ setShowSignUp }) {
 
     const handleSubmit = async event => {
         event.preventDefault();
-        console.log(signUpData, 'Sign Up Attempt Sent');
+        // console.log(signUpData, 'Sign Up Attempt Sent');
         try {
             const response = await axios({
                 method: 'POST',
@@ -43,13 +43,13 @@ function SignUp({ setShowSignUp }) {
                 url: '/signup',
                 withCredentials: true,
             });
-            console.log('From Server:', response);
             setMsg({
                 text: response.data.message.msgBody,
                 success: true,
             });
-            handleLogin(response.user)
-            setShowSignUp(false)
+            handleLogin(response.data.user)
+            setMessage(null)
+            // setShowSignUp(false) 
         } catch (err) {
             setMsg({
                 text: err.response.data.message.msgBody,
@@ -57,11 +57,6 @@ function SignUp({ setShowSignUp }) {
             });
             console.log(err.response);
         }
-    };
-
-    const hideSignUp = (event) => {
-        event.preventDefault()
-        setShowSignUp(false)
     }
 
     const styling = {
@@ -77,14 +72,19 @@ function SignUp({ setShowSignUp }) {
             fontFamily: "Roboto Slab, 'Roboto', 'Helvetica Neue', sans-serif"
         },
         button: {
-            backgroundColor: theme.filters.inactive,
-            color: theme.text
+            backgroundColor: theme.filters.applyButton,
+            color: theme.text,
+            cursor: 'pointer'
         }
     }
 
     return (
         <div style={styling}>
-            <h1>Sign Up</h1>
+            <h2 style={{ margin: '0 0 8px' }}>Create an Account</h2>
+            <button style={{ ...styling.button, marginLeft: '0px' }}
+                onClick={toggleForm}>
+                Log in to an account
+            </button>
             <form onSubmit={handleSubmit}>
                 <input
                     type='text'
@@ -114,8 +114,8 @@ function SignUp({ setShowSignUp }) {
                     onChange={handleFormChange}
                     style={styling.input}
                 />
-                <button style={styling.button}>Create User</button>
-                <button onClick={hideSignUp} style={styling.button}>Cancel</button>
+                <button style={styling.button} type='submit' >Create User</button>
+                <button onClick={() => { setMessage(null) }} style={styling.button}>Cancel</button>
             </form>
             <div
                 className={

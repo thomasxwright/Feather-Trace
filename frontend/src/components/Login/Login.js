@@ -4,7 +4,7 @@ import useAuth from '../../auth/useAuth'
 import { useNavigate } from "react-router-dom";
 import { ThemeContext } from "../../utils/ThemeContextManagement";
 
-const Login = ({ setShowLogin }) => {
+const Login = ({ setMessage, toggleForm }) => {
     let navigate = useNavigate()
 
     const { handleLogin } = useAuth()
@@ -39,14 +39,15 @@ const Login = ({ setShowLogin }) => {
                 url: '/login',
                 withCredentials: true,
             })
-            console.log('From Server:', response.data.user);
+            console.log('From Server:', response.data.user.userName);
             setMsg({
                 text: response.data.message.msgBody,
                 success: true
             })
-            console.log(response.data.user)
+            // console.log(response.data.user)
             handleLogin(response.data.user)
-            setShowLogin(false)
+            setMessage(null)
+            // setShowLogin(false)
         } catch (err) {
             console.log(err)
             setMsg({
@@ -54,11 +55,6 @@ const Login = ({ setShowLogin }) => {
                 success: false,
             })
         }
-    }
-
-    const hideLogin = (event) => {
-        event.preventDefault()
-        setShowLogin(false)
     }
 
     const { theme } = useContext(ThemeContext)
@@ -74,13 +70,19 @@ const Login = ({ setShowLogin }) => {
             fontFamily: "Roboto Slab, 'Roboto', 'Helvetica Neue', sans-serif"
         },
         button: {
-            backgroundColor: theme.filters.inactive,
-            color: theme.text
+            backgroundColor: theme.filters.applyButton,
+            color: theme.text,
+            cursor: 'pointer'
         }
     }
 
     return (
         <section style={styling}>
+            <h2 style={{margin: '0 0 8px'}}>Sign in</h2>
+            <button style={{ ...styling.button, marginLeft: '0px' }}
+                onClick={toggleForm}>
+                Create new account
+            </button>
             <form onSubmit={handleSubmit}>
                 <label>
                     <p style={{ marginBottom: '4px' }}>Email</p>
@@ -92,7 +94,7 @@ const Login = ({ setShowLogin }) => {
                 </label>
                 <div>
                     <button type="submit" style={styling.button}>Log in</button>
-                    <button onClick={hideLogin} style={styling.button}>Cancel</button>
+                    <button onClick={() => setMessage(null)} style={styling.button}>Cancel</button>
                 </div>
             </form>
             <div

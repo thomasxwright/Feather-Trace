@@ -38,7 +38,7 @@ const TaxonomyNavigation = ({ taxonomies, zIndex, setActiveTaxonomy, stylingAdju
 
   return (
     // TODO: the marginTop property pushes down the inner content of the roundedBox. Fix this at some point.
-    <ul style={styling} ref={reference} className='taxonomy-navigation'>
+    <ul style={styling} ref={reference} className='scroll-overflow'>
 
       {/* The home tag */}
       <li key={-1} >

@@ -22,9 +22,9 @@ const FilterTag = ({ filterValue, children, resetFilterValue }) => {
             }
         },
         image: {
-            height: '35px',
+            height: '36px',
             backgroundColor: theme.filters.x,
-            padding: '10px',
+            padding: '9px',
             marginTop: '-5px',
             marginRight: '16px',
             opacity: '0.6',

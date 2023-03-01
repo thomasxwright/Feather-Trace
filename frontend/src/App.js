@@ -5,8 +5,11 @@ import BirdBrowser from './components/BirdBrowser'
 import { Routes, Route, BrowserRouter as Router } from 'react-router-dom'
 import Sightings from './components/sightings/Sightings'
 import { useScreenModeContext } from './auth/useScreenMode';
-import Header from './components/Header';
 import { ThemeContextProvider } from './utils/ThemeContextManagement';
+import HeaderBar from './components/HeaderBar';
+import OverlayMessage from './components/OverlayMessage';
+import { useEffect, useState } from 'react';
+import About from './components/folders/About';
 
 const styling = {
   outer: {
@@ -30,10 +33,21 @@ const styling = {
 function App() {
   const screenMode = useScreenModeContext()
 
+  const [message, setMessage] = useState(<About setMessage={null} />)
+
+  useEffect(() => {
+    setMessage(<About setMessage={setMessage} />)
+  }, [])
+
   return (
     <ThemeContextProvider>
+      {
+        message !== null && <OverlayMessage setMessage={setMessage}>
+          {message}
+        </OverlayMessage>
+      }
       <div style={{ ...styling.outer, ...styling.outer[screenMode] }}>
-        <Header />
+        <HeaderBar setMessage={setMessage} />
         <Routes>
           <Route path='/*' element={<BirdBrowser />} />
           <Route path='/browse/*' element={<BirdBrowser />} />

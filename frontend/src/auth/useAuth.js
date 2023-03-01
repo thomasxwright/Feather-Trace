@@ -35,8 +35,8 @@ function useAuth() {
 		authed,
 		user,
 		handleLogin(user) {
-			setAuthed(true)
 			setUser(user)
+			setAuthed(true)
 		},
 		async handleLogout() {
 			try {
