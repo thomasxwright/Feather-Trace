@@ -2,6 +2,11 @@ import React from 'react'
 
 const OverlayMessage = ({ children, setMessage }) => {
 
+    const leaveDialog = () => {
+        localStorage.setItem('veteran', 'true')
+        setMessage(null)
+    }
+
     const styling = {
         inactive: {
             backgroundColor: 'rgb(0 0 0 / 0.6)',
@@ -23,7 +28,7 @@ const OverlayMessage = ({ children, setMessage }) => {
         }
     }
     return (
-        <div style={styling.inactive} onClick={() => { setMessage(null) }}>
+        <div style={styling.inactive} onClick={leaveDialog}>
             {/* <div style={styling.window} onClick={e => { e.stopPropagation(); console.log('child') }}> */}
             {children}
             {/* </div> */}

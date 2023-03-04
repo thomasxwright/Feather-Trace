@@ -10,6 +10,7 @@ import HeaderBar from './components/HeaderBar';
 import OverlayMessage from './components/OverlayMessage';
 import { useEffect, useState } from 'react';
 import About from './components/folders/About';
+import Carousel from './components/folders/Carousel';
 
 const styling = {
   outer: {
@@ -33,10 +34,13 @@ const styling = {
 function App() {
   const screenMode = useScreenModeContext()
 
-  const [message, setMessage] = useState(<About setMessage={null} />)
+  const [message, setMessage] = useState(null)
 
   useEffect(() => {
-    setMessage(<About setMessage={setMessage} />)
+    if (!localStorage.getItem('veteran')) {
+      console.log('didnt get veteran')
+      setMessage(<About setMessage={setMessage} />)
+    }
   }, [])
 
   return (
@@ -48,6 +52,11 @@ function App() {
       }
       <div style={{ ...styling.outer, ...styling.outer[screenMode] }}>
         <HeaderBar setMessage={setMessage} />
+        {/* <Carousel>
+          <img src="https://upload.wikimedia.org/wikipedia/commons/c/c0/Eurasian_teal_%28Anas_crecca%29_Photograph_by_Shantanu_Kuveskar.jpg" alt="placeholder" />
+          <img src="https://upload.wikimedia.org/wikipedia/commons/b/bf/Anas_platyrhynchos_male_female_quadrat.jpg" alt="placeholder" />
+          <img src="https://via.placeholder.com/1600x300" alt="placeholder" />
+        </Carousel> */}
         <Routes>
           <Route path='/*' element={<BirdBrowser />} />
           <Route path='/browse/*' element={<BirdBrowser />} />
