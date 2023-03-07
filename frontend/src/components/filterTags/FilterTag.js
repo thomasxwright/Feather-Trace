@@ -1,6 +1,7 @@
 import { useContext } from 'react'
 import { useScreenModeContext } from '../../auth/useScreenMode'
 import { ThemeContext } from '../../utils/ThemeContextManagement'
+import { ReactComponent as CloseIcon } from '../../images/close.svg'
 
 const FilterTag = ({ filterValue, children, resetFilterValue }) => {
 
@@ -41,7 +42,7 @@ const FilterTag = ({ filterValue, children, resetFilterValue }) => {
 
     return (
         <div style={{ ...styling.outerBox, ...styling.outerBox[screenMode] }}>
-            {filterValue && <img style={{ ...styling.image, ...styling.image[screenMode] }} src={require('../../images/close_FILL0_wght400_GRAD0_opsz48.png')} onClick={resetFilterValue} />}
+            {filterValue && <CloseIcon style={{ ...styling.image, ...styling.image[screenMode] }} onClick={resetFilterValue} />}
             {children}
         </div>
     )

@@ -9,7 +9,7 @@ const AboutAves = () => {
         <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
             <Taxonomies width={screenMode === 'narrow' ? '100%' : '80%'}/>
             <p>
-                All birds exist inside the avian class Aves!  By default FeatherTrace shows all 27 orders of American birds inside Aves.
+                All birds exist inside the avian class Aves!  By default FeatherTrace shows all 26 orders of American birds inside Aves.
             </p>
             
             {/* <div style={{ position: 'relative', width: '100%' }}>

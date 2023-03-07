@@ -1,12 +1,19 @@
-const deleteImg = require('../../images/close_FILL0_wght400_GRAD0_opsz48.png')
+import { useContext } from 'react'
+import { ThemeContext } from '../../utils/ThemeContextManagement'
+import { ReactComponent as UnfilledDelete } from '../../images/delete (unfilled).svg'
+import { ReactComponent as FilledDelete } from '../../images/delete (filled).svg'
+import { useScreenModeContext } from '../../auth/useScreenMode'
 
 const Sighting = ({ sighting, hideDeletedSighting }) => {
+
+  const { theme } = useContext(ThemeContext)
+  const screenMode = useScreenModeContext()
 
   const styling = {
     outer: {
       display: 'flex',
       position: 'relative',
-      backgroundColor: 'rgb(217, 230, 234)',
+      backgroundColor: theme.taxonomies.genus,
       margin: '20px 8px',
       padding: '8px',
       borderRadius: '8px'
@@ -16,24 +23,32 @@ const Sighting = ({ sighting, hideDeletedSighting }) => {
       left: '-20px',
       top: '-16px',
       cursor: 'pointer',
-      opacity: '0.6'
+      opacity: '0.6',
+      narrow: {
+        left: '-12px',
+        top: '-20px',
+        width: '30px'
+      }
     },
     imageContainer: {
-      flexBasis: '350px',
-      marginRight: '30px'
+      ...screenMode !== 'narrow' && {
+        flexBasis: '400px',
+        marginRight: '30px'
+      }
     },
     image: {
       width: '100%'
     },
     details: {
       display: 'flex',
+      fontSize: screenMode === 'narrow' ? '0.8rem' : '1rem',
       flexDirection: 'column',
       // padding: '15px',
-      width: '20%',
-      paddingLeft: '20px'
+      width: 'fit-content',
+      paddingLeft: screenMode === 'narrow' ? '4px' : '20px'
     },
     timeSection: {
-      margin: '0 32px'
+      margin: screenMode === 'narrow' ? '0 12px' : '0 24px'
     },
     date: {
       fontSize: '120%',
@@ -64,7 +79,7 @@ const Sighting = ({ sighting, hideDeletedSighting }) => {
 
   return (
     <section style={styling.outer}>
-      <img onClick={deleteSighting} style={styling.delete} src={deleteImg} />
+      <UnfilledDelete onClick={deleteSighting} style={{ ...styling.delete, ...styling.delete[screenMode] }} />
       <div style={styling.details}>
         <div style={styling.timeSection}>
           <p style={styling.date}>{new Date(sighting.createdAt).toLocaleDateString()}</p>
@@ -72,10 +87,24 @@ const Sighting = ({ sighting, hideDeletedSighting }) => {
         </div>
         {sighting.location && <span style={styling.location} onClick={showLocation}>Has a location</span>}
       </div>
-      <div style={styling.imageContainer}>
-        {sighting.image && <img src={sighting.image} style={styling.image} alt='photo' />}
-      </div>
-      {sighting.notes && <p>{sighting.notes}</p>}
+
+      {screenMode === 'narrow' ?
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          {sighting.image && <div style={styling.imageContainer}>
+            <img src={sighting.image} style={styling.image} alt='photo' />
+          </div>
+          }
+          {sighting.notes && <p>{sighting.notes}</p>}
+        </div>
+        :
+        <>
+          {sighting.image && <div style={styling.imageContainer}>
+            <img src={sighting.image} style={styling.image} alt='photo' />
+          </div>
+          }
+          {sighting.notes && <p>{sighting.notes}</p>}
+        </>
+      }
     </section>
   )
 }

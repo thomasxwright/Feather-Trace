@@ -10,10 +10,10 @@ const SightingsCount = ({ count }) => {
         }
     }
     return (
-        <>
+        <div>
             <span style={styling.big}>{count}</span>
             <span style={styling.bold}> sighting{count !== 1 && 's'}</span>
-        </>
+        </div>
     )
 }
 

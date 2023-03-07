@@ -1,5 +1,8 @@
-import add from "../../images/add new.svg"
+import { useScreenModeContext } from "../../auth/useScreenMode"
+import {ReactComponent as AddButton} from "../../images/add new.svg"
 const StartNewSighting = ({ showForm }) => {
+
+    const screenMode = useScreenModeContext()
 
     const styling = {
         outer: {
@@ -12,12 +15,12 @@ const StartNewSighting = ({ showForm }) => {
             fontWeight: 'bold'
         },
         icon: {
-            margin: '40px'
+            margin: screenMode === 'narrow' ? '25px' : '40px'
         }
     }
     return (
         <div style={styling.outer} onClick={() => showForm(true)}>
-            <img src={add} style={styling.icon} />
+            <AddButton style={styling.icon} />
             <span style={styling.large}>Add new sighting</span>
         </div>
     )

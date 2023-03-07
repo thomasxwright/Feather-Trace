@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.4364788e.css",
-    "main.js": "/static/js/main.da299fdf.js",
+    "main.js": "/static/js/main.5101edca.js",
     "static/media/recording.png": "/static/media/recording.5526135f6adc9e20b353.png",
     "static/media/quacksmall.gif": "/static/media/quacksmall.69062313be5e69a9f8b9.gif",
     "static/media/whale.jpg": "/static/media/whale.a1f9941689015415ba5c.jpg",
@@ -16,18 +16,21 @@
     "index.html": "/index.html",
     "static/media/feather logo white.svg": "/static/media/feather logo white.18942e1e63859b20d663124ca419da68.svg",
     "static/media/help.svg": "/static/media/help.bccdaa7dd66cb55f0917ccc59e958a92.svg",
-    "static/media/add new.svg": "/static/media/add new.1407c79ba465617fe6fd07bfaedc035f.svg",
+    "static/media/add new.svg": "/static/media/add new.39125559865d4c649b6c2e738b3f8e06.svg",
     "static/media/settings.svg": "/static/media/settings.e33556f767bbf389758dc4184154ce83.svg",
     "static/media/home navbutton dark.svg": "/static/media/home navbutton dark.f630873e8aed8a3902f7cef080afbf19.svg",
     "static/media/home navbutton light.svg": "/static/media/home navbutton light.740cd432ec16d6f4a50631923479c92d.svg",
+    "static/media/delete (unfilled).svg": "/static/media/delete (unfilled).c1001ccc3de002f05fd8c4cb636668d7.svg",
     "static/media/mail.svg": "/static/media/mail.e755f89e8f72a5b0c771a2e68d443364.svg",
+    "static/media/delete (filled).svg": "/static/media/delete (filled).81fe7673a1c7d1f8cfac4ef71981a167.svg",
+    "static/media/close.svg": "/static/media/close.c76ad28c33323dfe86ec1e4bcf9c5b6c.svg",
     "static/media/menu.svg": "/static/media/menu.90cf5a14db998212927245ea2902ac79.svg",
     "static/media/home.svg": "/static/media/home.1733b4e67ec43baad5d5d2e92e6758d5.svg",
     "main.4364788e.css.map": "/static/css/main.4364788e.css.map",
-    "main.da299fdf.js.map": "/static/js/main.da299fdf.js.map"
+    "main.5101edca.js.map": "/static/js/main.5101edca.js.map"
   },
   "entrypoints": [
     "static/css/main.4364788e.css",
-    "static/js/main.da299fdf.js"
+    "static/js/main.5101edca.js"
   ]
 }
