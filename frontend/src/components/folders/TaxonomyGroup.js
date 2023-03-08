@@ -2,11 +2,10 @@ import { useContext } from 'react'
 import { useScreenModeContext } from '../../auth/useScreenMode'
 import selectImages from '../../utils/selectImages'
 import { ThemeContext } from '../../utils/ThemeContextManagement'
-// import expandContract from '../../utils/expandContract'
-// import TaxonomyNavigation from './TaxonomyNavigation'
 import BlockWithNavTags from './BlockWithNavTags'
+import CollageImage from './CollageImage'
 
-const TaxonomyGroup = ({ data, taxonomies, setActiveTaxonomy }) => {
+const TaxonomyGroup = ({ data, taxonomies, setActiveTaxonomy, sightings }) => {
 
     const screenMode = useScreenModeContext()
     const { theme } = useContext(ThemeContext)
@@ -28,14 +27,8 @@ const TaxonomyGroup = ({ data, taxonomies, setActiveTaxonomy }) => {
             // backgroundColor: theme.previewImageBorders,
             flexGrow: '1',
             ...totalSquares > 1 && { maxWidth: screenMode !== 'narrow' ? '135px' : 'calc(50% - 8px)' },
-            minWidth: '85px'
-        },
-        image: {
-            objectFit: 'cover',
-            height: '100%',
-            width: '100%',
-            objectPosition: '50% 15%',
-            ...theme.dark && { filter: 'brightness(.85) contrast(1.1)' }
+            minWidth: '85px',
+            position: 'relative'
         },
         extraBlock: {
             background: `linear-gradient(217deg, rgba(105, 101, 116, 0.66), rgba(31, 38, 62, 0) 70.71%), linear-gradient(127deg, rgba(77, 94, 98, 0.25), rgba(55, 69, 72, 0) 70.71%), rgb(180, 167, 197) linear-gradient(336deg, rgba(78, 71, 95, 0.25), rgba(43, 45, 67, 0) 70.71%)`,
@@ -49,6 +42,15 @@ const TaxonomyGroup = ({ data, taxonomies, setActiveTaxonomy }) => {
         plusMore: {
             fontSize: '1.5em',
             marginTop: '-4px'
+        },
+        photoIcon: {
+            width: '30px',
+            height: '30px',
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            color: 'rgb(255 255 255 / 0.8)',
+            margin: '4px'
         }
     }
 
@@ -58,13 +60,11 @@ const TaxonomyGroup = ({ data, taxonomies, setActiveTaxonomy }) => {
 
         <BlockWithNavTags taxonomies={taxonomies} setActiveTaxonomy={setActiveTaxonomy} images={images}>
             <ul style={styling}>
-                {imageCart.map((image, i) => (
-                    image && <li key={i} style={styling.li}>
-                        <img src={image.src} alt={image.alt} style={styling.image} />
-                    </li>
+                {imageCart.map((bird, i) => (
+                    <CollageImage bird={bird} sighting={sightings[bird.id]?.[0]} keyNum={i} stylingAdjustments={styling.li} />
                 )
                 )}
-                {plusMore > 0 && <li key={imageCart.length} style={{...styling.li, flexGrow: '1'}}>
+                {plusMore > 0 && <li key={imageCart.length} style={styling.li}>
                     <div style={{
                         ...styling.extraBlock, color: theme.dark ? 'rgb(255 255 255 / 0.8)' : 'white'
                     }}>

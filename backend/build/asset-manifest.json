@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.4364788e.css",
-    "main.js": "/static/js/main.5101edca.js",
+    "main.js": "/static/js/main.a0d4319b.js",
     "static/media/recording.png": "/static/media/recording.5526135f6adc9e20b353.png",
     "static/media/quacksmall.gif": "/static/media/quacksmall.69062313be5e69a9f8b9.gif",
     "static/media/whale.jpg": "/static/media/whale.a1f9941689015415ba5c.jpg",
@@ -20,6 +20,7 @@
     "static/media/settings.svg": "/static/media/settings.e33556f767bbf389758dc4184154ce83.svg",
     "static/media/home navbutton dark.svg": "/static/media/home navbutton dark.f630873e8aed8a3902f7cef080afbf19.svg",
     "static/media/home navbutton light.svg": "/static/media/home navbutton light.740cd432ec16d6f4a50631923479c92d.svg",
+    "static/media/photo.svg": "/static/media/photo.e24869470e7b2e8eec0f5a9a6b6247b0.svg",
     "static/media/delete (unfilled).svg": "/static/media/delete (unfilled).c1001ccc3de002f05fd8c4cb636668d7.svg",
     "static/media/mail.svg": "/static/media/mail.e755f89e8f72a5b0c771a2e68d443364.svg",
     "static/media/delete (filled).svg": "/static/media/delete (filled).81fe7673a1c7d1f8cfac4ef71981a167.svg",
@@ -27,10 +28,10 @@
     "static/media/menu.svg": "/static/media/menu.90cf5a14db998212927245ea2902ac79.svg",
     "static/media/home.svg": "/static/media/home.1733b4e67ec43baad5d5d2e92e6758d5.svg",
     "main.4364788e.css.map": "/static/css/main.4364788e.css.map",
-    "main.5101edca.js.map": "/static/js/main.5101edca.js.map"
+    "main.a0d4319b.js.map": "/static/js/main.a0d4319b.js.map"
   },
   "entrypoints": [
     "static/css/main.4364788e.css",
-    "static/js/main.5101edca.js"
+    "static/js/main.a0d4319b.js"
   ]
 }

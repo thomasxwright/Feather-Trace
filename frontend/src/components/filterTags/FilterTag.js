@@ -8,31 +8,24 @@ const FilterTag = ({ filterValue, children, resetFilterValue }) => {
     const screenMode = useScreenModeContext()
     const { theme } = useContext(ThemeContext)
     const styling = {
+        outermostBox: {
+            borderRadius: filterValue ? '0 8px 8px 0' : '8px',
+            backgroundColor: filterValue ? theme.filters.active : theme.filters.inactive,
+            display: 'flex',
+            height: screenMode !== 'narrow' ? '55px' : '38px',
+            margin: screenMode !== 'narrow' ? '7px 15px' : '4px 8px'
+        },
         outerBox: {
             display: 'flex',
-            alignItems: 'stretch',
-            height: '45px',
-            backgroundColor: filterValue ? theme.filters.active : theme.filters.inactive,//'rgb(140, 222, 199)' : '#F0E7F5',
-            margin: '7px 15px',
-            padding: filterValue ? '5px 16px 5px 0' : '5px 20px',
-            borderRadius: filterValue ? '0 8px 8px 0' : '8px',
-            narrow: {
-                height: '28px',
-                margin: '4px 8px',
-                padding: filterValue ? '5px 12px 5px 0' : '5px 12px'
-            }
+            padding: filterValue ? '5px 16px 5px 16px' : '5px 12px',
         },
         image: {
-            height: '36px',
+            height: '70%',
+            alignSelf: 'center',
             backgroundColor: theme.filters.x,
-            padding: '9px',
-            marginTop: '-5px',
-            marginRight: '16px',
+            padding: screenMode !== 'narrow' ? '12px 4px' : '12px 0px',
             opacity: '0.6',
             cursor: 'pointer',
-            narrow: {
-                height: '20px'
-            }
         },
         words: {
             padding: '0 10px',
@@ -41,9 +34,12 @@ const FilterTag = ({ filterValue, children, resetFilterValue }) => {
     }
 
     return (
-        <div style={{ ...styling.outerBox, ...styling.outerBox[screenMode] }}>
-            {filterValue && <CloseIcon style={{ ...styling.image, ...styling.image[screenMode] }} onClick={resetFilterValue} />}
-            {children}
+        <div style={styling.outermostBox}>
+
+            {filterValue && <CloseIcon style={styling.image} onClick={resetFilterValue} />}
+            <div style={styling.outerBox}>
+                {children}
+            </div>
         </div>
     )
 }

@@ -6,7 +6,8 @@ export default function selectImages(data, screenMode) {
     const enqueuePhotos = data => {
         if (data._id) {
             birdTotal++
-            return data.images[0]
+            const image = data.images[0] || { missing: true }
+            return { image, id: data._id }
         }
         const subItems = Object.values(data)
             .map(subItem => enqueuePhotos(subItem))
@@ -16,7 +17,7 @@ export default function selectImages(data, screenMode) {
     const mineQueueTree = layer => {
         const subItem = layer.dequeue()
         if (!subItem) return undefined
-        if (subItem.src) {
+        if (subItem.image) {
             return subItem
         }
         const minedItem = mineQueueTree(subItem)
@@ -39,9 +40,10 @@ export default function selectImages(data, screenMode) {
     const imageCart = []
     while (imageCart.length < allowance && queueTree.length) {
         const nextImage = mineQueueTree(queueTree)
-        imageCart.push(nextImage)
+        if (!nextImage.image.missing)
+            imageCart.push(nextImage)
     }
     const plusMore = imageCart.length < birdTotal ? birdTotal - imageCart.length : 0
 
-    return {imageCart, birdTotal, plusMore, allowance}
+    return { imageCart, birdTotal, plusMore, allowance }
 }

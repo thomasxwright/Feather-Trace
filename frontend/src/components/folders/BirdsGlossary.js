@@ -9,7 +9,7 @@ import useElementOnScreen from "../../utils/UseElementOnScreen"
 import TempFloatingTaxonomyNavigation from "./TempFloatingTaxonomyNavigation"
 import { ThemeContext } from "../../utils/ThemeContextManagement"
 
-const BirdsGlossary = ({ cladisticData, setCladisticData, currentLevel, setCurrentLevel, isFetchingFullData, setIsFetchingFullData }) => {
+const BirdsGlossary = ({ cladisticData, setCladisticData, currentLevel, setCurrentLevel, isFetchingFullData, setIsFetchingFullData, sightings }) => {
 
     const screenMode = useScreenModeContext()
     const { theme } = useContext(ThemeContext)
@@ -168,16 +168,16 @@ const BirdsGlossary = ({ cladisticData, setCladisticData, currentLevel, setCurre
                 }}
             >
                 {depth === 'species' ? (
-                    <FullBird data={activeData} />
+                    <FullBird data={activeData} sightings={sightings} />
                 ) :
                     <ul style={styling.outer}>
                         {Object.entries(activeData).map(([name, data]) => (
                             <li key={name} style={{ margin: '0 10px 20px', ...styling.innerLiResponsive[screenMode] }} ref={refs[name]}>
                                 {
                                     depth === 'genus' ?
-                                        <Bird data={data} isFetchingFullData={isFetchingFullData} setActiveTaxonomy={setActiveTaxonomy} />
+                                        <Bird data={data} isFetchingFullData={isFetchingFullData} setActiveTaxonomy={setActiveTaxonomy} sightings={sightings} />
                                         :
-                                        <TaxonomyGroup data={data} taxonomies={{ [nextLayer]: name }} setActiveTaxonomy={setActiveTaxonomy} />
+                                        <TaxonomyGroup data={data} taxonomies={{ [nextLayer]: name }} setActiveTaxonomy={setActiveTaxonomy} sightings={sightings} />
                                 }
                             </li>
                         ))}

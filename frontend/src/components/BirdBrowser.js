@@ -1,12 +1,8 @@
 import { useState, useEffect, useContext } from 'react'
 import BirdsGlossary from "./folders/BirdsGlossary"
 import SearchTags from "./SearchTags"
-import { BirdObj } from '../js/BirdObj.js'
 import '../App.css';
-import BackToTop from './BackToTop';
 import { useLocation } from 'react-router-dom';
-import useAuth from '../auth/useAuth'
-import AccountSection from './Login/AccountSection';
 import { useScreenModeContext } from '../auth/useScreenMode';
 import { ThemeContext } from '../utils/ThemeContextManagement';
 
@@ -15,6 +11,7 @@ function BirdBrowser() {
     const [currentLevel, setCurrentLevel] = useState({})
     const [fetchingBirds, setFetchingBirds] = useState(true)
     const [isFetchingFullData, setIsFetchingFullData] = useState(true)
+    const [sightings, setSightings] = useState({})
     const state = useLocation()
     const screenMode = useScreenModeContext()
 
@@ -65,13 +62,27 @@ function BirdBrowser() {
             setCladisticData(resultCladisticBirdData)
             const needsAnotherLoad = stepIntoFirstDivergingTaxonomy(resultCladisticBirdData)
             setFetchingBirds(false)
+            const sightings = await getSightings()
+            setSightings(sightings)
         }
         getBirds()
+
+        const getSightings = async () => {
+            const sightingsFromServer = await fetchSightings()
+            console.log(new Date().toLocaleTimeString(), 'found sightings:', sightingsFromServer)
+            return sightingsFromServer
+        }
 
     }, [state])
 
     const fetchBirds = async () => {
         const res = await fetch(`/birds${state.search}`, { credentials: 'include' })
+        const data = await res.json()
+        return data
+    }
+
+    const fetchSightings = async () => {
+        const res = await fetch(`/sightings/`, { credentials: 'include' })
         const data = await res.json()
         return data
     }
@@ -91,7 +102,7 @@ function BirdBrowser() {
                         }}
                     />}
                 </div>
-                <BirdsGlossary cladisticData={cladisticData} setCladisticData={setCladisticData} currentLevel={currentLevel} setCurrentLevel={setCurrentLevel} fetchingBirds={fetchingBirds} setFetchingBirds={setFetchingBirds} isFetchingFullData={isFetchingFullData} setIsFetchingFullData={setIsFetchingFullData} />
+                <BirdsGlossary cladisticData={cladisticData} setCladisticData={setCladisticData} currentLevel={currentLevel} setCurrentLevel={setCurrentLevel} fetchingBirds={fetchingBirds} setFetchingBirds={setFetchingBirds} isFetchingFullData={isFetchingFullData} setIsFetchingFullData={setIsFetchingFullData} sightings={sightings} />
             </div>
         </div>
     )

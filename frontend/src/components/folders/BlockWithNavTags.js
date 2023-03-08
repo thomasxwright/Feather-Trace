@@ -60,13 +60,13 @@ const BlockWithNavTags = ({ taxonomies = {}, children, setActiveTaxonomy, stylin
                 handleClick={handleClick}
             >
                 {children}
-                
-                {(plusMore > 0 || birdTotal > 9) && <div style={styling.total}>
+
+                {(plusMore > 0 || birdTotal > 9) && (birdTotal > 1) && <div style={styling.total}>
                     <span style={styling.totalNumeral}>
                         {birdTotal}
                     </span>
                     <span style={{ fontSize: '0.75em', color: theme.dark ? theme.text : 'white' }}>
-                        birds
+                        bird{birdTotal !== 1 && 's'}
                     </span>
                     <span style={{ fontSize: '0.75em', color: theme.dark ? theme.text : 'white' }}>
                         inside

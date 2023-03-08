@@ -18,6 +18,23 @@ module.exports = {
         }
     },
 
+    getAllSightings: async (req, res) => {
+        try {
+            const sightingsData = await Sighting.aggregate([
+                { $match: { userId: req.user.id } },
+                { $match: { image: { $exists: true } } },
+                { $project: { birdId: true, image: true, _id: false } }
+            ])
+            const condensedSightingsData = {}
+            for (const sighting of sightingsData) {
+                condensedSightingsData[sighting.birdId] = (condensedSightingsData[sighting.birdId] || []).concat(sighting.image)
+            }
+            res.json(condensedSightingsData)
+        } catch (err) {
+            console.log(err)
+        }
+    },
+
     submitSighting: async (req, res) => {
         try {
             // console.log(req.user)

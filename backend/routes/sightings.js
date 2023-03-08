@@ -7,6 +7,8 @@ const { ensureAuth, ensureGuest } = require('../middleware/auth')
 // router.get('/:id', ensureAuth, sightingsController.getSightings)
 router.get('/:id', sightingsController.getSightings)
 
+router.get('/', sightingsController.getAllSightings)
+
 router.post('/submitSighting', upload.single('birdFile'), sightingsController.submitSighting)
 
 router.delete('/deleteSighting/:id', sightingsController.deleteSighting)

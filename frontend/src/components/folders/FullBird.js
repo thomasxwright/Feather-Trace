@@ -6,9 +6,11 @@ import useElementOnScreen from '../../utils/UseElementOnScreen'
 import BirdCall from './BirdCall'
 import InfoSegment from './InfoSegment'
 
-const FullBird = ({ data }) => {
+const FullBird = ({ data, sightings }) => {
     const screenMode = useScreenModeContext()
     const { theme } = useContext(ThemeContext)
+
+    const myPhoto = sightings[data._id] ? sightings[data._id][0] : null
 
     const offsetFromHoveringNavBar = 85
     const [leftContainerRef, leftIsVisible] = useElementOnScreen({
@@ -130,6 +132,10 @@ const FullBird = ({ data }) => {
                             </li>
                         )
                         )}
+                        {myPhoto && <li key={data.images.length} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                            <img src={myPhoto} style={{ width: '80%', marginBottom: '16px', ...theme.darkAdjust }} />
+                        </li>
+                        }
                     </ul>
                 </section>
             </section>
@@ -170,6 +176,10 @@ const FullBird = ({ data }) => {
                                 </div>
                             </li>
                         ))}
+                            {myPhoto && <li key={data.images.length} style={{ marginBottom: '8px' }}>
+                                <img src={myPhoto} style={{ width: '90%', borderRadius: '8px', ...theme.darkAdjust }} />
+                            </li>
+                            }
                         </ul>
                     </section>
                     {/* <section><img src={bird.images[0]} style={styling.image} /></section> */}
