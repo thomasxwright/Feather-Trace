@@ -1,16 +1,29 @@
-import * as React from 'react'
 import axios from 'axios'
+import { createContext, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'
 
-const authContext = React.createContext()
+const authContext = createContext()
 
 function useAuth() {
 	let navigate = useNavigate();
 
-	const [authed, setAuthed] = React.useState(false)
-	const [user, setUser] = React.useState({})
+	const [authed, setAuthed] = useState(false)
+	const [user, setUser] = useState({})
+	const [sightings, setSightings] = useState([])
 
-	React.useEffect(() => {
+	const fetchSightings = async () => {
+		const res = await fetch(`/sightings/`, { credentials: 'include' })
+		const data = await res.json()
+		return data
+	}
+
+	const getSightings = async () => {
+		const sightingsFromServer = await fetchSightings()
+		console.log(new Date().toLocaleTimeString(), 'found sightings:', sightingsFromServer)
+		return sightingsFromServer
+	}
+
+	useEffect(() => {
 		(async () => {
 			try {
 				const response = await axios({
@@ -21,6 +34,8 @@ function useAuth() {
 				if (response.status === 200) {
 					setAuthed(true)
 					setUser(response.data)
+					const sightings = await getSightings()
+					setSightings(sightings)
 				} else {
 					setAuthed(false)
 					setUser({})
@@ -34,9 +49,12 @@ function useAuth() {
 	return {
 		authed,
 		user,
-		handleLogin(user) {
+		sightings,
+		async handleLogin(user) {
 			setUser(user)
 			setAuthed(true)
+			const sightings = await getSightings()
+			setSightings(sightings)
 		},
 		async handleLogout() {
 			try {
@@ -48,6 +66,7 @@ function useAuth() {
 				console.log('From Server:', response.data.message.msgBody)
 				setAuthed(false)
 				setUser(null)
+				setSightings([])
 				// navigate('/');
 			} catch (err) {
 				console.log(err)
@@ -65,5 +84,5 @@ export function AuthProvider({ children }) {
 }
 
 export default function AuthConsumer() {
-	return React.useContext(authContext)
+	return useContext(authContext)
 }

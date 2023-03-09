@@ -1,11 +1,11 @@
 {
   "files": {
     "main.css": "/static/css/main.4364788e.css",
-    "main.js": "/static/js/main.a0d4319b.js",
+    "main.js": "/static/js/main.53df6bd4.js",
     "static/media/recording.png": "/static/media/recording.5526135f6adc9e20b353.png",
     "static/media/quacksmall.gif": "/static/media/quacksmall.69062313be5e69a9f8b9.gif",
-    "static/media/whale.jpg": "/static/media/whale.a1f9941689015415ba5c.jpg",
     "static/media/taxonomies2.svg": "/static/media/taxonomies2.e9c5c6dcaf1b3cc914929aca6a553ca9.svg",
+    "static/media/fraug.png": "/static/media/fraug.c1eba61c39888668789c.png",
     "static/media/Jumper-Regular.ttf": "/static/media/Jumper-Regular.f6d8afb6fd6b181e2cff.ttf",
     "static/media/taxonomy navigation dark.svg": "/static/media/taxonomy navigation dark.4c60895b6673b0b8b2e31a5e6ba9ceee.svg",
     "static/media/taxonomy navigation short dark.svg": "/static/media/taxonomy navigation short dark.7fdce61966924e2be921771a37febb2c.svg",
@@ -28,10 +28,10 @@
     "static/media/menu.svg": "/static/media/menu.90cf5a14db998212927245ea2902ac79.svg",
     "static/media/home.svg": "/static/media/home.1733b4e67ec43baad5d5d2e92e6758d5.svg",
     "main.4364788e.css.map": "/static/css/main.4364788e.css.map",
-    "main.a0d4319b.js.map": "/static/js/main.a0d4319b.js.map"
+    "main.53df6bd4.js.map": "/static/js/main.53df6bd4.js.map"
   },
   "entrypoints": [
     "static/css/main.4364788e.css",
-    "static/js/main.a0d4319b.js"
+    "static/js/main.53df6bd4.js"
   ]
 }

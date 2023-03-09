@@ -5,15 +5,16 @@ import '../App.css';
 import { useLocation } from 'react-router-dom';
 import { useScreenModeContext } from '../auth/useScreenMode';
 import { ThemeContext } from '../utils/ThemeContextManagement';
+import useAuth from '../auth/useAuth'
 
 function BirdBrowser() {
     const [cladisticData, setCladisticData] = useState({})
     const [currentLevel, setCurrentLevel] = useState({})
     const [fetchingBirds, setFetchingBirds] = useState(true)
     const [isFetchingFullData, setIsFetchingFullData] = useState(true)
-    const [sightings, setSightings] = useState({})
     const state = useLocation()
     const screenMode = useScreenModeContext()
+    const { authed, sightings } = useAuth()
 
     const { theme } = useContext(ThemeContext)
     const styling = {
@@ -62,27 +63,13 @@ function BirdBrowser() {
             setCladisticData(resultCladisticBirdData)
             const needsAnotherLoad = stepIntoFirstDivergingTaxonomy(resultCladisticBirdData)
             setFetchingBirds(false)
-            const sightings = await getSightings()
-            setSightings(sightings)
         }
         getBirds()
-
-        const getSightings = async () => {
-            const sightingsFromServer = await fetchSightings()
-            console.log(new Date().toLocaleTimeString(), 'found sightings:', sightingsFromServer)
-            return sightingsFromServer
-        }
 
     }, [state])
 
     const fetchBirds = async () => {
         const res = await fetch(`/birds${state.search}`, { credentials: 'include' })
-        const data = await res.json()
-        return data
-    }
-
-    const fetchSightings = async () => {
-        const res = await fetch(`/sightings/`, { credentials: 'include' })
         const data = await res.json()
         return data
     }

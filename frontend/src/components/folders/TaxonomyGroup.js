@@ -61,7 +61,7 @@ const TaxonomyGroup = ({ data, taxonomies, setActiveTaxonomy, sightings }) => {
         <BlockWithNavTags taxonomies={taxonomies} setActiveTaxonomy={setActiveTaxonomy} images={images}>
             <ul style={styling}>
                 {imageCart.map((bird, i) => (
-                    <CollageImage bird={bird} sighting={sightings[bird.id]?.[0]} keyNum={i} stylingAdjustments={styling.li} />
+                    <CollageImage bird={bird} sighting={sightings[bird.id]?.[0]} key={i} stylingAdjustments={styling.li} />
                 )
                 )}
                 {plusMore > 0 && <li key={imageCart.length} style={styling.li}>
