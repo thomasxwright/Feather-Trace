@@ -1,6 +1,6 @@
 import { useState, createRef, useContext } from "react"
 import { ThemeContext } from '../../utils/ThemeContextManagement'
-import { useScreenModeContext } from "../../auth/useScreenMode"
+import { useScreenModeContext } from "../../utils/useScreenMode"
 
 const SightingForm = ({ birdId, addNewSighting, showForm }) => {
 

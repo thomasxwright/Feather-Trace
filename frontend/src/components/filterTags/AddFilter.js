@@ -1,5 +1,5 @@
 import { useContext } from "react"
-import { useScreenModeContext } from "../../auth/useScreenMode"
+import { useScreenModeContext } from "../../utils/useScreenMode"
 import { ThemeContext } from "../../utils/ThemeContextManagement"
 
 const AddFilter = () => {

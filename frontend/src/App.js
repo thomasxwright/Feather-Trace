@@ -1,14 +1,14 @@
 import './App.css'
-import { RequireAuth } from './auth/RequireAuth';
+import { RequireAuth } from './utils/auth/RequireAuth';
 import BirdBrowser from './components/BirdBrowser'
 import { Routes, Route, BrowserRouter as Router } from 'react-router-dom'
 import Sightings from './components/sightings/Sightings'
-import { useScreenModeContext } from './auth/useScreenMode';
+import { useScreenModeContext } from './utils/useScreenMode';
 import { ThemeContextProvider } from './utils/ThemeContextManagement';
 import HeaderBar from './components/HeaderBar';
-import OverlayMessage from './components/OverlayMessage';
+import OverlayMessage from './components/menus/OverlayMessage';
 import { useEffect, useState } from 'react';
-import About from './components/folders/About';
+import About from './components/menus/About';
 
 const styling = {
   outer: {

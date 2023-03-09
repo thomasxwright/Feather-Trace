@@ -1,4 +1,4 @@
-import { useScreenModeContext } from "../../auth/useScreenMode"
+import { useScreenModeContext } from "../../utils/useScreenMode"
 import {ReactComponent as AddButton} from "../../images/add new.svg"
 const StartNewSighting = ({ showForm }) => {
 

@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import { ThemeContext } from '../../utils/ThemeContextManagement'
 import { ReactComponent as UnfilledDelete } from '../../images/delete (unfilled).svg'
 import { ReactComponent as FilledDelete } from '../../images/delete (filled).svg'
-import { useScreenModeContext } from '../../auth/useScreenMode'
+import { useScreenModeContext } from '../../utils/useScreenMode'
 
 const Sighting = ({ sighting, hideDeletedSighting }) => {
 
@@ -79,7 +79,11 @@ const Sighting = ({ sighting, hideDeletedSighting }) => {
 
   return (
     <section style={styling.outer}>
-      <UnfilledDelete onClick={deleteSighting} style={{ ...styling.delete, ...styling.delete[screenMode] }} />
+      {screenMode !== 'narrow' ?
+        <UnfilledDelete onClick={deleteSighting} style={{ ...styling.delete, ...styling.delete[screenMode] }} />
+        :
+        <FilledDelete onClick={deleteSighting} style={{ ...styling.delete, ...styling.delete[screenMode] }} />
+      }
       <div style={styling.details}>
         <div style={styling.timeSection}>
           <p style={styling.date}>{new Date(sighting.createdAt).toLocaleDateString()}</p>

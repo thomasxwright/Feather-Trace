@@ -1,11 +1,11 @@
 import { useState, useEffect, useContext } from 'react'
-import BirdsGlossary from "./folders/BirdsGlossary"
-import SearchTags from "./SearchTags"
+import BirdsGlossary from "./birdGroupings/BirdsGlossary"
+import SearchTags from "./filterTags/SearchTags"
 import '../App.css';
 import { useLocation } from 'react-router-dom';
-import { useScreenModeContext } from '../auth/useScreenMode';
+import { useScreenModeContext } from '../utils/useScreenMode';
 import { ThemeContext } from '../utils/ThemeContextManagement';
-import useAuth from '../auth/useAuth'
+import useAuth from '../utils/auth/useAuth'
 
 function BirdBrowser() {
     const [cladisticData, setCladisticData] = useState({})

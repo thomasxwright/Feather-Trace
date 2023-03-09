@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { useScreenModeContext } from '../../auth/useScreenMode'
+import { useScreenModeContext } from '../../utils/useScreenMode'
 import { ThemeContext } from '../../utils/ThemeContextManagement'
 import { ReactComponent as CloseIcon } from '../../images/close.svg'
 
@@ -13,7 +13,8 @@ const FilterTag = ({ filterValue, children, resetFilterValue }) => {
             backgroundColor: filterValue ? theme.filters.active : theme.filters.inactive,
             display: 'flex',
             height: screenMode !== 'narrow' ? '55px' : '38px',
-            margin: screenMode !== 'narrow' ? '7px 15px' : '4px 8px'
+            margin: screenMode !== 'narrow' ? '7px 15px' : '4px 8px',
+            overflow: 'hidden'
         },
         outerBox: {
             display: 'flex',

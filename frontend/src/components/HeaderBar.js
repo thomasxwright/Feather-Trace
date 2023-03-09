@@ -1,12 +1,12 @@
-import { useContext, useState } from 'react'
-import { useScreenModeContext } from '../auth/useScreenMode'
+import { useContext } from 'react'
+import { useScreenModeContext } from '../utils/useScreenMode'
 import { ThemeContext } from '../utils/ThemeContextManagement'
 import { ReactComponent as Menu } from '../images/menu.svg'
 import { ReactComponent as UserIcon } from '../images/account circle.svg'
-import useAuth from '../auth/useAuth'
-import AccountSection from './Login/Alternate/AccountSection'
-import Options from './folders/Options'
-import Logo from './folders/Logo'
+import useAuth from '../utils/auth/useAuth'
+import AccountSection from './menus/login/AccountSection'
+import Options from './menus/Options'
+import Logo from './Logo'
 
 const HeaderBar = ({ setMessage }) => {
     const { authed, user } = useAuth()

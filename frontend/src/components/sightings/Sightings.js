@@ -4,7 +4,7 @@ import AddSighting from './AddSighting';
 import Sighting from './Sighting';
 import SightingsCount from './SightingsCount';
 import { ThemeContext } from '../../utils/ThemeContextManagement'
-import { useScreenModeContext } from '../../auth/useScreenMode'
+import { useScreenModeContext } from '../../utils/useScreenMode'
 
 const Sightings = () => {
     const { theme } = useContext(ThemeContext)
