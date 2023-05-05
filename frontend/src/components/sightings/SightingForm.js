@@ -107,9 +107,9 @@ const SightingForm = ({ birdId, addNewSighting, showForm }) => {
                 <span>Save your location to this sighting</span>
             </label>
 
-            <div style={{ display: 'flex' }}>
-                <input style={{...styling.button, border: 'none', borderRadius: '4px', padding: '8px', margin: '4px', fontFamily: "'Roboto Slab', 'Roboto', 'Helvetica Neue', sans-serif"}} type='submit' value='Submit' />
-                <button style={styling.button} onClick={() => showForm(false)}>Cancel</button>
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <input style={{...styling.button, border: 'none', borderRadius: '4px', padding: '16px', margin: '4px', fontSize: '1.2em', fontFamily: "'Roboto Slab', 'Roboto', 'Helvetica Neue', sans-serif"}} type='submit' value='Record sighting' />
+                {/* <button style={styling.button} onClick={() => showForm(false)}>Cancel</button> */}
             </div>
         </form>
     )

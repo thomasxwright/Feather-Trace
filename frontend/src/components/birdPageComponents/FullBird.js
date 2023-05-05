@@ -10,7 +10,7 @@ const FullBird = ({ data, sightings }) => {
     const screenMode = useScreenModeContext()
     const { theme } = useContext(ThemeContext)
 
-    const myPhoto = sightings[data._id] ? sightings[data._id][0] : null
+    const myPhotos = sightings[data._id]
 
     const offsetFromHoveringNavBar = 85
     const [leftContainerRef, leftIsVisible] = useElementOnScreen({
@@ -55,10 +55,17 @@ const FullBird = ({ data, sightings }) => {
             zIndex: '1',
             position: 'relative'
         },
+        top: {
+            margin: '0 0 10px',
+            display: 'flex',
+            minHeight: '30px',
+            alignItems: 'center'
+        },
         name: {
             margin: '20px 0',
             fontWeight: '550',
             fontSize: '24px',
+            minWidth: '40%',
             narrow: {
                 fontSize: '18px'
             }
@@ -92,7 +99,6 @@ const FullBird = ({ data, sightings }) => {
                     {data.generalDescription.map((paragraph, i) => <p key={i} >{paragraph}</p>)}
                     {data.infoSegments.map((segment, i) => (
                         <>
-
 
                             {data.images[i + 1] && <>
                                 {data.images[i + 1].alt ? (
@@ -132,8 +138,8 @@ const FullBird = ({ data, sightings }) => {
                             </li>
                         )
                         )}
-                        {myPhoto && <li key={data.images.length} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                            <img src={myPhoto} style={{ width: '80%', marginBottom: '16px', ...theme.darkAdjust }} />
+                        {myPhotos && <li key={data.images.length} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                            <img src={myPhotos[0]} style={{ width: '80%', marginBottom: '16px', ...theme.darkAdjust }} />
                         </li>
                         }
                     </ul>
@@ -173,8 +179,8 @@ const FullBird = ({ data, sightings }) => {
                                 </div>
                             </li>
                         ))}
-                            {myPhoto && <li key={data.images.length} style={{ marginBottom: '8px' }}>
-                                <img src={myPhoto} style={{ width: '90%', borderRadius: '8px', ...theme.darkAdjust }} />
+                            {myPhotos && <li key={data.images.length} style={{ marginBottom: '8px' }}>
+                                <img src={myPhotos[0]} style={{ width: '90%', borderRadius: '8px', ...theme.darkAdjust }} />
                             </li>
                             }
                         </ul>

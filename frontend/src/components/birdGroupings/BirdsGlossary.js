@@ -171,13 +171,13 @@ const BirdsGlossary = ({ cladisticData, setCladisticData, currentLevel, setCurre
                     <FullBird data={activeData} sightings={sightings} />
                 ) :
                     <ul style={styling.outer}>
-                        {Object.entries(activeData).map(([name, data]) => (
+                        {Object.entries(activeData).map(([name, data], i) => (
                             <li key={name} style={{ margin: '0 10px 20px', ...styling.innerLiResponsive[screenMode] }} ref={refs[name]}>
                                 {
                                     depth === 'genus' ?
-                                        <Bird data={data} isFetchingFullData={isFetchingFullData} setActiveTaxonomy={setActiveTaxonomy} sightings={sightings} />
+                                        <Bird data={data} isFetchingFullData={isFetchingFullData} setActiveTaxonomy={setActiveTaxonomy} sightings={sightings} i={i} />
                                         :
-                                        <TaxonomyGroup data={data} taxonomies={{ [nextLayer]: name }} setActiveTaxonomy={setActiveTaxonomy} sightings={sightings} />
+                                        <TaxonomyGroup data={data} taxonomies={{ [nextLayer]: name }} setActiveTaxonomy={setActiveTaxonomy} sightings={sightings} i={i} />
                                 }
                             </li>
                         ))}

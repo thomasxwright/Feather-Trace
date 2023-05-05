@@ -3,8 +3,9 @@ import { useScreenModeContext } from '../../utils/useScreenMode'
 import { ThemeContext } from '../../utils/ThemeContextManagement'
 import RoundedBlock from '../RoundedBlock'
 import TaxonomyTag from '../navigation/TaxonomyTag'
+import { motion } from 'framer-motion'
 
-const BlockWithNavTags = ({ taxonomies = {}, children, setActiveTaxonomy, stylingAdjustments = {}, images }) => {
+const BlockWithNavTags = ({ taxonomies = {}, children, setActiveTaxonomy, stylingAdjustments = {}, images, i }) => {
 
     const screenMode = useScreenModeContext()
     const { theme } = useContext(ThemeContext)
@@ -50,7 +51,10 @@ const BlockWithNavTags = ({ taxonomies = {}, children, setActiveTaxonomy, stylin
     const handleClick = () => setActiveTaxonomy[innermostLevel](innermostName)
 
     return (
-        <section>
+        <motion.section
+            initial={{ opacity: 0, y: -15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: .4, delay: 0.03 * i}}>
             {/* <TaxonomyNavigation taxonomies={taxonomyList} zIndex={2} setActiveTaxonomy={setActiveTaxonomy} stylingAdjustments={{ marginBottom: '-8px' }} /> */}
 
             <TaxonomyTag taxonomy={innermostTaxonomy} setActiveTaxonomy={() => setActiveTaxonomy[innermostTaxonomy[0]](innermostTaxonomy[1])} stylingAdjustments={{ backgroundColor: theme.taxonomies[innermostTaxonomy[0]], marginLeft: '4px', marginBottom: '-8px' }} />
@@ -73,7 +77,7 @@ const BlockWithNavTags = ({ taxonomies = {}, children, setActiveTaxonomy, stylin
                 </div>
                 }
             </RoundedBlock>
-        </section >
+        </motion.section >
     )
 }
 

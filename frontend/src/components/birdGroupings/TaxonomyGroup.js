@@ -5,7 +5,7 @@ import { ThemeContext } from '../../utils/ThemeContextManagement'
 import BlockWithNavTags from './BlockWithNavTags'
 import CollageImage from './CollageImage'
 
-const TaxonomyGroup = ({ data, taxonomies, setActiveTaxonomy, sightings }) => {
+const TaxonomyGroup = ({ data, taxonomies, setActiveTaxonomy, sightings, i }) => {
 
     const screenMode = useScreenModeContext()
     const { theme } = useContext(ThemeContext)
@@ -58,10 +58,10 @@ const TaxonomyGroup = ({ data, taxonomies, setActiveTaxonomy, sightings }) => {
     return (
 
 
-        <BlockWithNavTags taxonomies={taxonomies} setActiveTaxonomy={setActiveTaxonomy} images={images}>
+        <BlockWithNavTags taxonomies={taxonomies} setActiveTaxonomy={setActiveTaxonomy} images={images} i={i}>
             <ul style={styling}>
                 {imageCart.map((bird, i) => (
-                    <CollageImage bird={bird} sighting={sightings[bird.id]?.[0]} key={i} stylingAdjustments={styling.li} />
+                    <CollageImage bird={bird} sighting={sightings[bird.id]?.[0]} key={i} stylingAdjustments={styling.li} i={i} />
                 )
                 )}
                 {plusMore > 0 && <li key={imageCart.length} style={styling.li}>

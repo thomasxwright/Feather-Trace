@@ -2,8 +2,9 @@ import { useContext } from 'react'
 import { ThemeContext } from '../../utils/ThemeContextManagement'
 import BirdPhoto from './BirdPhoto'
 import PlaceholderBird from './PlaceholderBird'
+import { motion } from 'framer-motion'
 
-const Bird = ({ data, isFetchingFullData, setActiveTaxonomy, sightings }) => {
+const Bird = ({ data, isFetchingFullData, setActiveTaxonomy, sightings, i }) => {
 
     const abbreviateFirstSentence = text => {
         const paragraph = text.split('.')
@@ -49,13 +50,17 @@ const Bird = ({ data, isFetchingFullData, setActiveTaxonomy, sightings }) => {
             WebkitMaskImage: `linear-gradient(to top, rgba(0,0,0,0.35) 0%,rgba(0,0,0,1) 20%)`
         }}>
             {isFetchingFullData ?
-                <PlaceholderBird />
+                <PlaceholderBird i={i} />
                 :
                 (
-                    <section onClick={() => setActiveTaxonomy.species(data.species)}>
+                    <motion.section
+                        onClick={() => setActiveTaxonomy.species(data.species)}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.35, delay: 0.1 * i }}>
                         <section style={styling.name} >
                             <h2 style={{ fontSize: '24px' }}>{data.commonName}</h2>
-                            <div style={{ flexGrow: '1', display: 'flex', justifyContent: 'flex-end', height: '100%'}}>
+                            <div style={{ flexGrow: '1', display: 'flex', justifyContent: 'flex-end', height: '100%' }}>
                                 {myPhoto !== null && <img src={myPhoto} alt='' style={styling.myPhoto} />}
                             </div>
                         </section>
@@ -67,7 +72,7 @@ const Bird = ({ data, isFetchingFullData, setActiveTaxonomy, sightings }) => {
                             }
                             {data.infoSegments.map((segment, i) => <li key={i + data.generalDescription.length} style={{ fontWeight: '700', margin: '8px' }}><span>{segment.title}</span></li>)}
                         </ul>
-                    </section>
+                    </motion.section>
                 )
             }
         </section >

@@ -1,8 +1,9 @@
 import { ThemeContext } from '../../utils/ThemeContextManagement'
 import { useContext, useState } from 'react'
 import { ReactComponent as PhotoIcon } from '../../images/photo.svg'
+import {motion} from 'framer-motion'
 
-const CollageImage = ({ bird, sighting = null, stylingAdjustments }) => {
+const CollageImage = ({ bird, sighting = null, stylingAdjustments, i }) => {
 
     const { theme } = useContext(ThemeContext)
 
@@ -29,11 +30,14 @@ const CollageImage = ({ bird, sighting = null, stylingAdjustments }) => {
         }
     }
     return (
-        <li style={stylingAdjustments} >
+        <motion.li style={stylingAdjustments}
+        initial={{opacity: 0}}
+        animate={{opacity: 1}}
+        transition={{duration: 0.15, delay: 0.012*i}}>
             <img src={bird.image.src} alt={bird.image.alt} style={styling.image} />
             {sighting && isHovering && <img src={sighting} alt='' style={{ ...styling.image, position: 'absolute', top: 0, left: 0 }} />}
             {sighting && <PhotoIcon style={styling.photoIcon} onMouseEnter={() => setIsHovering(true)} onMouseLeave={() => setIsHovering(false)} />}
-        </li>
+        </motion.li>
     )
 }
 
