@@ -81,10 +81,18 @@ const SightingForm = ({ birdId, addNewSighting, showForm }) => {
             body: formData,
             credentials: 'include',
         }
-        const result = await fetch('/sightings/submitSighting', requestOptions)
-        const json = await result.json()
-        addNewSighting(json)
-        showForm(false)
+        try {
+            const result = await fetch('/sightings/submitSighting', requestOptions)
+            if (result.status === 400) {
+                throw new Error(result.statusText)
+            }
+            const json = await result.json()
+            addNewSighting(json)
+            showForm(false)
+        }
+        catch (e) {
+            alert(e)
+        }
     }
 
 
@@ -108,7 +116,7 @@ const SightingForm = ({ birdId, addNewSighting, showForm }) => {
             </label>
 
             <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <input style={{...styling.button, border: 'none', borderRadius: '4px', padding: '16px', margin: '4px', fontSize: '1.2em', fontFamily: "'Roboto Slab', 'Roboto', 'Helvetica Neue', sans-serif"}} type='submit' value='Record sighting' />
+                <input style={{ ...styling.button, border: 'none', borderRadius: '4px', padding: '16px', margin: '4px', fontSize: '1.2em', fontFamily: "'Roboto Slab', 'Roboto', 'Helvetica Neue', sans-serif" }} type='submit' value='Record sighting' />
                 {/* <button style={styling.button} onClick={() => showForm(false)}>Cancel</button> */}
             </div>
         </form>

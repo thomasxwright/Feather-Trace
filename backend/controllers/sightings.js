@@ -2,6 +2,7 @@ const cloudinary = require("../middleware/cloudinary");
 const Sighting = require('../models/Sighting')
 const Bird = require('../models/Bird')
 
+
 module.exports = {
     getSightings: async (req, res) => {
         try {
@@ -43,16 +44,56 @@ module.exports = {
                 userId: req.user.id //req.user.id
             }
 
+            // If the note contains JSON data from a bird log, use that data.
+            const isJSON = note => {
+                let value = typeof note !== 'string' ? JSON.stringify(note) : note
+                try {
+                    value = JSON.parse(note)
+                } catch (e) {
+                    return false
+                }
+                return typeof value === 'object' && value !== null
+            }
+            // Check if it's valid JSON. if it isn't, then check if it's trying to be. If it isn't, then use it as a note.
+            //If it is trying to be JSON, alert that it's not working. If it is actual JSON, check that it has a t value. If it doesn't, alert that. If it does, use it.
+            const hasValidJson = isJSON(req.body.notes)
+            if (req.body.notes) {
+                if (!hasValidJson) {
+                    if (req.body.notes.match(/"custm"|"subnote"|"t"/)) {
+                        //alert error in JSON
+                        console.log("it bad data")
+                        res.statusMessage = "Misformatted JSON data sent for this bird sighting."
+                        res.status(400).end()
+                        throw new Error(res.statusMessage)
+                    }
+                }
+                else if (!JSON.parse(req.body.notes).hasOwnProperty('t')) {
+                    // throw error for lacking a timestamp
+                    res.statusMessage = "Missing timestamp for bird sighting entry."
+                    res.status(400).end()
+                    throw new Error(res.statusMessage)
+                }
+                else {
+                    const birdEntry = JSON.parse(req.body.notes)
+                    sightingParameters.createdAt = parseInt(birdEntry.t)
+                    if (birdEntry.subnote)
+                        sightingParameters.notes = birdEntry.subnote
+                    if (birdEntry.pos)
+                        sightingParameters.location = { latitude: parseFloat(birdEntry.pos.lat), longitude: parseFloat(birdEntry.pos.lon) }
+                }
+            }
+
+
             // If a file was added, send it to cloudinary and put that into our parameters.
             if (req.file) {
                 const result = await cloudinary.uploader.upload(req.file.path)
                 sightingParameters.image = result.secure_url
                 sightingParameters.cloudinary_id = result.public_id
             }
-            if (req.body.notes)
-                sightingParameters.notes = req.body.notes
+            if (req.body.notes && !hasValidJson)
+                sightingParameters.notes = sightingParameters.notes || req.body.notes
             if (req.body.location)
-                sightingParameters.location = JSON.parse(req.body.location)
+                sightingParameters.location = sightingParameters.location || JSON.parse(req.body.location)
 
             const result = await Sighting.create(sightingParameters)
 
